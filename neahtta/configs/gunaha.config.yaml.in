@@ -5,11 +5,14 @@ ApplicationSettings:
   render_template_errors: true
   short_name: "gunaha"
   paradigm_layouts: true
-  default_locale: "srs"
+  default_locale: "en"
   default_pair: ["srs", "eng"]
   mobile_default_pair: ["srs", "eng"]
+  hidden_locales:
+    - "srs"
   locales_available:
     - en
+    - "srs"
   meta_description: >
       Free online, mobile friendly dictionaries for Gunáhà’
   meta_keywords: >
@@ -26,7 +29,8 @@ Morphology:
   srs:
     tool: *FLOOKUP
     file: [*OPT, '/srs/bin/analyser-dict-gt-desc-mobile.foma']
-    inverse_file: [*OPT, '/srs/bin/generator-gt-norm.foma']
+    inverse_file: [*OPT, '/srs/bin/generator-dict-gt-norm.foma']
+    # NB: leave as hfst, parsing needs are same
     format: 'hfst'
     options: &MORPHOLOGY_OPTS
       # tagProcessor: "configs.language_specific_rules.srs_tags:process_srs_analysis"
@@ -68,11 +72,11 @@ ReaderConfig:
     # via gettext
     reader_symbol: "ʔ"
   #   # do not include scheme here, or things break
-  #   reader_api: "sapir.artsrn.ualberta.ca/gunaha/"
-  #   media_host: "sapir.artsrn.ualberta.ca/gunaha/"
+  #   reader_api: "sapir.artsrn.ualberta.ca/gunaha"
+  #   media_host: "sapir.artsrn.ualberta.ca/gunaha"
   srs:
     multiword_lookups: false
     word_regex: |
-      [\u00C0-\u1FFF\u2C00-\uD7FF\w\.\-']+
+      [\u00C0-\u1FFF\u2C00-\uD7FF\w\-']+
     word_regex_opts: "g"
 
