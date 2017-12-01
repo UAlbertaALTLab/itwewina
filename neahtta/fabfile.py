@@ -44,7 +44,6 @@ You may be asked for your SSH password.
 #        - mkdir:
 #            configs/language_specific_rules/tagsets/
 
-
 import os, sys
 
 from fabric.decorators import roles

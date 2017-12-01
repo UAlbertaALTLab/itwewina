@@ -504,7 +504,8 @@ rm-kidwinan-lexica: $(foreach xx, $(KIDWINAN_LANGS_LEXICA), $(xx)-all.xml) \
 
 .PHONY: kidwinan-install 
 kidwinan-install: GT_COMPILE_LANGS := $(KIDWINAN_LANGS_ANALYSERS)
-kidwinan-install: install_langs_fsts copy-kidwinan-glossers
+kidwinan-install: install_langs_fsts 
+# copy-kidwinan-glossers
 
 # include foma
 .PHONY: copy-kidwinan-glossers
