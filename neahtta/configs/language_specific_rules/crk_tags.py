@@ -7,7 +7,7 @@ pre_lemma_tags = [
 
 # TODO: replace PV/ with user-defined regex or something
 def process_crk_analysis(analysis_line):
-    """ Take an analysis line, and return a tuple of the lemma,
+    r""" Take an analysis line, and return a tuple of the lemma,
     followed by a reformatted tag where tags before the lemma are
     combined with tags after the lemma. Strings without any preverb
     material are not changed.
@@ -46,8 +46,14 @@ def process_crk_analysis(analysis_line):
 
     """
 
-
-    wordform, _, analysis_string = analysis_line.partition('\t')
+    # The output of the lookup tools is two or three tab-separated columns:
+    #  column 1: the input
+    #  column 2: the raw analysis
+    #  column 3: (optional) the weight of this analysis
+    # For our purposes, we can chuck out the weight.
+    columns = analysis_line.split("\t")
+    assert len(columns) in (2, 3)
+    wordform, analysis_string = columns[:2]
 
     lemma = False
 
