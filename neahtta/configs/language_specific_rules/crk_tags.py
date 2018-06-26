@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-import os, sys
 
 pre_lemma_tags = [
     'RdplW',
@@ -88,5 +87,6 @@ def main():
     # ('ninanahnipan', 'nipâw+RdplW+RdplS+V+AI+Ind+Prs+1Sg')
 
 if __name__ == "__main__":
+    import sys
     sys.exit(main())
 
