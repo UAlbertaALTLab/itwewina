@@ -107,5 +107,12 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-
 # End of https://www.gitignore.io/api/python
+
+# Downloaded dependencies
+/node_modules/
+
+# Logs and caches
+morph_log.txt
+user_log.txt
+/tmp/
