@@ -120,3 +120,4 @@ user_log.txt
 # FSTs
 /fsts/
 static/vendor
+secret_key.do.not.check.in
