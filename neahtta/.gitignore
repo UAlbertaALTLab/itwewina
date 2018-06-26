@@ -116,3 +116,6 @@ venv.bak/
 morph_log.txt
 user_log.txt
 /tmp/
+
+# FSTs
+/fsts/
