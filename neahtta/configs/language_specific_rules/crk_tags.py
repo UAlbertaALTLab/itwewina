@@ -29,6 +29,21 @@ def process_crk_analysis(analysis_line):
         >>> process_crk_analysis("ninanahnipan\tRdplW+RdplS+nipâw+V+AI+Ind+Prs+1Sg")
         ('ninanahnipan', 'nipâw+RdplW+RdplS+Tpl/Lemma+V+AI+Ind+Prs+1Sg')
 
+    hfst-lookup produces weights, even for unweighted FSTs. This can partition
+    those too.
+
+        >>> process_crk_analysis("wordform\tPV/asdf+PV/bbq+lemma+POS+Type+Sg1\t0.0000")
+        ('wordform', 'lemma+PV/asdf+PV/bbq+POS+Type+Sg1')
+        >>> process_crk_analysis("wordform\tlemma+POS+Type+Sg1\t0.0000")
+        ('wordform', 'lemma+POS+Type+Sg1')
+        >>> process_crk_analysis("wordform\tPV/asdf+PV/bbq+lemma\t0.0000")
+        ('wordform', 'lemma+PV/asdf+PV/bbq')
+        >>> process_crk_analysis("ninahnipan\tRdplS+nipâw+V+AI+Ind+Prs+1Sg\tinf")
+        ('ninahnipan', 'nipâw+RdplS+V+AI+Ind+Prs+1Sg')
+        >>> process_crk_analysis("ninanahnipan\tRdplW+RdplS+nipâw+V+AI+Ind+Prs+1Sg\t3.1415")
+        ('ninanahnipan', 'nipâw+RdplW+RdplS+V+AI+Ind+Prs+1Sg')
+
+
     """
 
 
