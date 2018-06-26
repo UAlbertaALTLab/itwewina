@@ -71,6 +71,19 @@ Now, install neahtta's additional dependencies:
 [Node.JS]: https://nodejs.org
 
 
+### Generating the secret key/token
+
+The secret key is required for session storage in Flask.
+
+To generate `secret_key.do.not.check.in`, use a cryptographically secure random number generator.
+
+For example, using `openssl`:
+
+	openssl rand -base64 32 > secret_key.do.not.check.in
+
+This will create a 32 byte secret token, encoded in Base-64.
+
+
 ## Running
 
 Activate the virtualenv, then:
