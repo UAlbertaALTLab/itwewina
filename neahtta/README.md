@@ -35,13 +35,20 @@ in.
 
 
 Update the [Babel][] library's locale data. Babel will probably not have locales
-created for 'crk', for example. Existing locales are in
+created for 'crk', for example. On Sapir, existing locales are in
 
-	/srv/apps/nds/babel_locales
+	/srv/apps/nds/babel_locales/crk.dat
+	/srv/apps/nds/babel_locales/crk_Macr.dat
+	/srv/apps/nds/babel_locales/crk_Syll.dat
 
-Copy the needed locales to the virtualenv.
+As a workaround if you don't have access to these, you can copy the locales for
+`en_CA.bin`, located in your virtualenv:
 
-	cp /srv/apps/nds/babel_locales/crk*.dat .env/env/lib/python2.7/site-packages/babel/localedata/
+	.env/lib/python2.7/site-packages/babel/localedata/en_CA.dat
+
+Copy the needed locales to the your virtualenv.
+
+	cp /srv/apps/nds/babel_locales/crk*.dat .env/lib/python2.7/site-packages/babel/localedata/
 
 [Babel]: http://babel.pocoo.org/en/latest/index.html
 [venv]: http://www.virtualenv.org/
