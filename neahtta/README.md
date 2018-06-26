@@ -21,7 +21,9 @@ For more information on package dependencies, see `requirements.txt`.
 
 You need:
   - Python 2.7.12, with Python virtualenv
-  - uglify-js (itself requiring Node.JS)
+  - [Node.JS][]
+
+### Python
 
 Use [virtualenv][venv] to create an environment with requirements.txt, and set up a
 webserver to direct requests to neahttadigisanit.fcgi. The virtualenv could
@@ -57,9 +59,16 @@ Copy the needed locales to the your virtualenv.
 [Babel]: http://babel.pocoo.org/en/latest/index.html
 [venv]: http://www.virtualenv.org/
 
-To install uglify-js, you need a recent version of Node.JS. Then,
+### Node.JS
 
-	npm install --global uglify-js
+
+Install [NodeJS], however is most convenient for your system.
+
+Now, install neahtta's additional dependencies:
+
+	npm install
+
+[Node.JS]: https://nodejs.org
 
 
 ## Running
