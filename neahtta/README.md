@@ -33,7 +33,29 @@ in.
 
     pip freeze > requirements.txt
 
- [venv]: http://www.virtualenv.org/
+
+Update the [Babel][] library's locale data. Babel will probably not have locales
+created for 'crk', for example. Existing locales are in
+
+	/srv/apps/nds/babel_locales
+
+Copy the needed locales to the virtualenv.
+
+	cp /srv/apps/nds/babel_locales/crk*.dat .env/env/lib/python2.7/site-packages/babel/localedata/
+
+[Babel]: http://babel.pocoo.org/en/latest/index.html
+[venv]: http://www.virtualenv.org/
+
+
+## Running
+
+Activate the virtualenv, then:
+
+	fab itwewina runserver
+
+Replace "itwewina" with the specific instance you need.
+
+
 
 ### Lexical and linguistic dependencies to check
 
