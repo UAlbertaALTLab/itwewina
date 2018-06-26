@@ -19,6 +19,10 @@ For more information on package dependencies, see `requirements.txt`.
 
 ## Installing
 
+You need:
+  - Python 2.7.12, with Python virtualenv
+  - uglify-js (itself requiring Node.JS)
+
 Use [virtualenv][venv] to create an environment with requirements.txt, and set up a
 webserver to direct requests to neahttadigisanit.fcgi. The virtualenv could
 really go anywhere, but I find it useful to keep it in a local directory so
@@ -52,6 +56,10 @@ Copy the needed locales to the your virtualenv.
 
 [Babel]: http://babel.pocoo.org/en/latest/index.html
 [venv]: http://www.virtualenv.org/
+
+To install uglify-js, you need a recent version of Node.JS. Then,
+
+	npm install --global uglify-js
 
 
 ## Running
