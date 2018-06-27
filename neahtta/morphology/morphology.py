@@ -639,6 +639,7 @@ class XFST(object):
         """ Execute a process, but kill it after 5 seconds. Generally
         we expect small things here, not big things.
         """
+        import os
         import subprocess
         from threading import Timer
 
@@ -647,11 +648,22 @@ class XFST(object):
         except:
             pass
 
+        # XXX: A typo in the configuration somewhere means that the locale is
+        # set as en_CS.UTF-8 on Sapir. This locale does not exist. hfst tries
+        # to load the locale, and crashes immediately.  To prevent that, patch
+        # the environment with a valid locale (e.g., en_CA.UTF-8, probably
+        # what the original was supposed to be).
+        env = {}
+        env.update(os.environ)
+        if os.environ.get('LC_ALL') == 'en_CS.UTF-8':
+            env['LC_ALL'] = 'en_CA.UTF-8'
+
         try:
             lookup_proc = subprocess.Popen(cmd.split(' '),
                                            stdin=subprocess.PIPE,
                                            stdout=subprocess.PIPE,
-                                           stderr=subprocess.PIPE)
+                                           stderr=subprocess.PIPE,
+                                           env=env)
         except OSError:
             raise Exception("Error executing lookup command for this request, confirm that lookup utilities and analyzer files are present.")
         except Exception, e:
