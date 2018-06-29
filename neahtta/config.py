@@ -88,7 +88,7 @@ def validate_variants(variants, lexicon):
         if len(missing_keys) > 0:
             print >> sys.stderr, "Missing settings in `input_variants`:%d for lexicon <%s>" % (variant_count, repr(lexicon))
             print >> sys.stderr, "    " + ','.join(missing_keys)
-            sys.exit()
+            sys.exit(-1)
         variant_count += 1
 
     return variants
@@ -236,7 +236,7 @@ class Config(Config):
                 print >> sys.stderr, ""
                 print >> sys.stderr, "See also: geo/README.md"
                 print >> sys.stderr, ""
-                sys.exit()
+                raise
         if _p:
             return _p
         else:
@@ -491,7 +491,7 @@ class Config(Config):
                 except Exception, e:
                     print " * YAML parsing error in <%s>\n\n" % tagset_path
                     print e
-                    sys.exit()
+                    sys.exit(-1)
                 self._paradigm_contexts[language].update(
                     reformat_context_set(tagset_path, file_context_set)
                 )
@@ -702,7 +702,7 @@ class Config(Config):
                     except Exception, e:
                         print " * YAML parsing error in <%s>\n\n" % relabel_path
                         print e
-                        sys.exit()
+                        raise e
                     filter_sets.update(relabel_yaml)
                     print "   - found: " + ', '.join(
                         [k[0] + ' -> ' + k[1] for k in relabel_yaml.keys()]
@@ -737,7 +737,7 @@ class Config(Config):
                     except Exception, e:
                         print " * YAML parsing error in <%s>\n\n" % tagset_path
                         print e
-                        sys.exit()
+                        raise e
                     sets[language] = tagset_yaml
 
         self._tagset_definitions = sets
@@ -762,7 +762,7 @@ class Config(Config):
                     print >> sys.stderr, "Missing some name translations for"
                     print >> sys.stderr, ', '.join(list(_missing))
                     print >> sys.stderr, "Check Languages in app.config.yaml"
-                    sys.exit()
+                    sys.exit(-1)
 
                 _default_korp = {
                     'lemma_search_path': '/?mode=TARGET_LANG_ISO#page=0&search-tab=2&search=SEARCH_QUERY',
@@ -921,12 +921,12 @@ class Config(Config):
 
             if not conf_format:
                 print "No format specified"
-                sys.exit()
+                sys.exit(-1)
 
             m_format = formats.get(conf_format, False)
             if not m_format:
                 print "Undefined format"
-                sys.exit()
+                sys.exit(-1)
 
             if 'tool' in _kwargs_in:
                 if isinstance(_kwargs_in['tool'], list):
@@ -936,7 +936,7 @@ class Config(Config):
                 kwargs['lookup_tool'] = _kwt
             else:
                 print "Lookup tool missing"
-                sys.exit()
+                sys.exit(-1)
 
             if 'file' in _kwargs_in:
                 if isinstance(_kwargs_in['file'], list):
@@ -1007,7 +1007,7 @@ class Config(Config):
         except Exception, e:
             print " * Unable to find multiword_list <%s>" % path
             print e
-            sys.exit()
+            raise
 
         def drop_line_comment(l):
             if not l.startswith('#'):
@@ -1085,7 +1085,7 @@ class Config(Config):
                         print '  or '
                         print '    multiword_range: "0,+2"'
                         print e
-                        sys.exit()
+                        sys.exit(-1)
                 # mwe_l = conf.get('multiword_list', False)
                 # if mwe and mwe_l:
                 #     is_file = mwe_l.get('file', False)

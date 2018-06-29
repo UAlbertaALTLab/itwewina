@@ -139,6 +139,18 @@ def get_project():
     return proj_arg
 
 
+def run_or_die(cmd, *args, **kwargs):
+    """
+    The same thing as env.run(), but automatically aborts if a command fails.
+    """
+    import sys
+    result = env.run(cmd, *args, **kwargs)
+    if result.return_code != 0:
+        print(red("%r exited with status %d" % (cmd, result.return_code)))
+        sys.exit(1)
+    return result
+
+
 @task(aliases=get_projects())
 def set_proj():
     """ Set the project. This is aliased to whatever existing project
@@ -748,7 +760,7 @@ def doctest():
     doctest_cmd = 'python -m doctest -v %s'
 
     for _file in doctests:
-        test_cmd = env.run(doctest_cmd % _file)
+        test_cmd = run_or_die(doctest_cmd % _file)
 
 @task
 def test_project():
@@ -762,16 +774,13 @@ def test_project():
         print(cyan("** Running tests for %s" % _dict))
 
         cmd ="NDS_CONFIG=%s python -m unittest tests.yaml_tests" % (yaml_path)
-        test_cmd = env.run(cmd)
+        run_or_die(cmd)
 
-        if test_cmd.failed:
-            print(red("** Something went wrong while testing <%s> **" % _dict))
-
+# TODO: this is going away in favor of the better new thing: `test_project`, `doctest`, and `test`
 @task
 def unittests():
-    """ Test the configuration and check language files for errors.
-
-        TODO: this is going away in favor of the better new thing: `test_project`, `doctest`, and `test`
+    """
+    DEPRECATED: Test the configuration and check language files for errors.
     """
 
     yaml_path = 'configs/%s.config.yaml' % env.current_dict
@@ -787,7 +796,7 @@ def unittests():
                 _y = yaml.load(F)
         else:
             print(red("** Production config not found, and on a production server. Exiting."))
-            sys.exit()
+            sys.exit(-1)
 
     # TODO: this assumes virtualenv is enabled, need to explicitly enable
     _dict = env.current_dict
@@ -801,7 +810,7 @@ def unittests():
             print >> sys.stderr, '     - "tests.LANG1_lexicon"'
             print >> sys.stderr, '     - "tests.LANG2_lexicon"'
             print >> sys.stderr, ""
-            sys.exit()
+            sys.exit(-1)
 
         for unittest in unittest_modules:
 
@@ -815,14 +824,17 @@ def unittests():
             print(cyan("** Running tests for %s" % unittest))
 
             cmd ="NDS_CONFIG=%s python -m unittest %s" % (yaml_path, unittest)
-            test_cmd = env.run(cmd)
+            test_cmd = run_or_die(cmd)
 
             if test_cmd.failed:
                 print(red("** Something went wrong while testing <%s> **" % _dict))
+                sys.exit(-1)
 
 @task
 def test():
+    test_configuration()
     doctest()
+    unittests()
     test_project()
 
 def commit_gtweb_tag():
@@ -874,3 +886,4 @@ def test_running():
             msg = ''
         print(col(msg + h))
 
+# vim: set ts=4 sw=4 sts=4 et:
