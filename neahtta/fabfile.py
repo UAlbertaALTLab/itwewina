@@ -741,6 +741,9 @@ def runserver():
             print(red("** Production config not found, and on a production server. Exiting."))
             sys.exit(-1)
 
+    # TODO: request a signal
+    # TODO: option to turn on or off reloader.
+
     cmd ="NDS_CONFIG=%s python neahtta.py dev --reload" % _path
     print(green("** Go."))
     run_cmd = env.run(cmd)
@@ -830,12 +833,47 @@ def unittests():
                 print(red("** Something went wrong while testing <%s> **" % _dict))
                 sys.exit(-1)
 
+
 @task
 def test():
     test_configuration()
     doctest()
     unittests()
     test_project()
+
+
+def development_server():
+    """
+    Starts the developer server in another process.
+
+    with development_server():
+        # do things here
+    """
+    import os
+    import signal
+    from signal import SIGUSR1, SIGTERM
+    # Basically, fork(), wait for a signal before continuing.
+    # Then politely request to quit.
+
+    pid = os.fork()
+    if pid == 0:
+        # Child process.
+        # Make this process the new session leader/process group leader.
+        # This means that killpg(pid) will terminate this process and all its
+        # children..
+        os.setsid()
+        runserver()
+    else:
+      # Parent process.
+
+      # Wait for the SIGUSR1...
+      # TODO:
+
+      yield pid
+
+      # Terminate the process and all its children.
+      os.killpg(pid, signal.SIGTERM)
+
 
 def commit_gtweb_tag():
     """
