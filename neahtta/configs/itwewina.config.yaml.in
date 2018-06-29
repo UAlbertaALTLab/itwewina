@@ -53,10 +53,10 @@ Morphology:
     options: *MORPHOLOGY_OPTS
   # syllabics
   crkS:
-    tool: *LOOKUP
-    file: [*OPT, '/crk/bin/analyser-dict-gt-desc-cans.xfst']
-    inverse_file: [*OPT, '/crk/bin/generator-dict-gt-norm-cans.xfst']
-    format: 'xfst'
+    tool: *HLOOKUP
+    file: [*OPT, '/crk/bin/analyser-gt-desc.Cans-to-Cans.hfstol']
+    inverse_file: [*OPT, '/crk/bin/generator-gt-norm.Cans-to-Cans.hfstol']
+    format: 'hfst'
     options: *MORPHOLOGY_OPTS
 
 Languages:

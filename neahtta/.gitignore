@@ -117,7 +117,6 @@ morph_log.txt
 user_log.txt
 /tmp/
 
-# FSTs
-/fsts/
+# Generated or private data
 static/vendor
 secret_key.do.not.check.in
