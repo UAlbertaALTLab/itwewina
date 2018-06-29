@@ -4,7 +4,7 @@
 
 describe('Display of syllabic codas', function () {
   it('should render wâpamêw+V+TA+Ind+Prs+3Sg+4Sg/PlO as ᐘᐸᒣᐤ', function () {
-    cy.visit('http://localhost:5000/itwewina');
+    cy.visit('/');
 
     cy.get('#left_nav')
       .contains('ᒐᐦᑲᓯᓇᐦᐃᑲᐣ') // Use syllabics written variant.
