@@ -38,9 +38,14 @@ describe('Display of syllabic codas', function () {
     cy.contains('full')
       .click();
 
-    // This row should have the proper derivation!
-    cy.contains('3s → 4')
+    cy.get('#paradigm-tab-3')
+      .should('be.visible', true);
+
+    // Find the derivation in the full paradigm tab.
+    cy.get('#paradigm-tab-3')
+      .contains('3s → 4')
       .parents('tr').first()
-      .contains('ᐚᐸᒣᐤ');
+      .contains('ᐚᐸᒣᐤ')
+      .should('be.visible', true);
   });
 });
