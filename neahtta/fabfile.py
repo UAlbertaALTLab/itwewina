@@ -727,13 +727,14 @@ def runserver():
             print(yellow("** Production config not found, using development (*.in)"))
         else:
             print(red("** Production config not found, and on a production server. Exiting."))
-            sys.exit()
+            sys.exit(-1)
 
-    cmd ="NDS_CONFIG=%s python neahtta.py dev" % _path
+    cmd ="NDS_CONFIG=%s python neahtta.py dev --reload" % _path
     print(green("** Go."))
     run_cmd = env.run(cmd)
     if run_cmd.failed:
         print(red("** Starting failed for some reason."))
+        sys.exit(-1)
 
 @task
 def doctest():

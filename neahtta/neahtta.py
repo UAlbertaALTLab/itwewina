@@ -9,6 +9,7 @@ endpoint functionality.
 
 """
 from application import create_app
+import sys
 
 app = create_app()
 config = app.config
@@ -22,6 +23,11 @@ if __name__ == "__main__":
         app.production = True
         print "!! Running in production mode"
 
-    app.run(debug=True, use_reloader=False)
+    # Extra arguments to use the reloader, if specified.
+    kwargs = {}
+    if '--reload' in sys.argv:
+        kwargs.update(use_reloader=True)
+
+    app.run(debug=True, **kwargs)
 
 # vim: set ts=4 sw=4 tw=72 syntax=python expandtab :
