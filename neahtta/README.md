@@ -39,7 +39,6 @@ in.
 
     pip freeze > requirements.txt
 
-
 Update the [Babel][] library's locale data. Babel will probably not have locales
 created for 'crk', for example. On Sapir, existing locales are in
 
@@ -61,7 +60,6 @@ Copy the needed locales to the your virtualenv.
 
 ### Node.JS
 
-
 Install [NodeJS], however is most convenient for your system.
 
 Now, install neahtta's additional dependencies:
@@ -75,16 +73,13 @@ Now, install neahtta's additional dependencies:
 
 The secret key is required for session storage in Flask.
 
-To generate `secret_key.do.not.check.in`, use a cryptographically secure random number generator.
+To generate `secret_key.do.not.check.in`, use a cryptographically secure random
+number generator. You can use the included script that will do this for you:
 
-For example, using `openssl`:
-
-	openssl rand -base64 32 > secret_key.do.not.check.in
-
-This will create a 32 byte secret token, encoded in Base-64.
+	python generate_key.py > secret_key.do.not.check.in
 
 
-## Running
+## Running (development server)
 
 Activate the virtualenv, then:
 
@@ -93,8 +88,33 @@ Activate the virtualenv, then:
 Replace "itwewina" with the specific instance you need.
 
 
+## Testing
+
+This project uses [cypress.io][] for in-browser (integration) tests.
+
+First, start the development server (see above). It should be accessible at
+<http://localhost:5000/itwewina/>.
+
+Assuming you already ran `npm install`, you should be able to run the UI tests
+with the following command:
+
+	npm test
+
+**Note**: You probably need an up-to-date browser for this to work. On my
+machine, this starts up a new Google Chrome 67 window and does all its testing
+in there.
+
+For help with writing new tests, follow the [Cypress test writing
+guide][cypress-guide].
+
+[cypress.io]: https://www.cypress.io/
+[cypress-guide]: https://docs.cypress.io/guides/getting-started/writing-your-first-test.html
+
 
 ### Lexical and linguistic dependencies to check
+
+You should have the dictionaries in `/dict` and models in `/opt/smi/{lang}/src`
+(where `{lang}` is a language ISO code).
 
  * svn up main/words/dicts/
  * svn up main/gt/
