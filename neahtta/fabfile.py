@@ -44,7 +44,11 @@ You may be asked for your SSH password.
 #        - mkdir:
 #            configs/language_specific_rules/tagsets/
 
-import os, sys
+import os
+import sys
+import signal
+from contextlib import contextmanager
+from signal import SIGUSR1, SIGTERM
 
 from fabric.decorators import roles
 
@@ -354,7 +358,7 @@ def update_gtsvn():
                     red("  Correct this (maybe with `svn cleanup`) and rerun the command, or run with `no_svn_up`.")
                 )
 
-    # TODO: necessary to run autogen just in case? 
+    # TODO: necessary to run autogen just in case?
     print(cyan("** Compiling giella-core **"))
     giella_core = os.path.join(env.svn_path , 'giella-core')
     with cd(giella_core):
@@ -601,7 +605,7 @@ def compile_strings():
             langs = _y.get('ApplicationSettings', {}).get('locales_available')
 
         for lang in langs:
-            # run for each language 
+            # run for each language
             cmd = "pybabel compile -d translations -l %s" % lang
             compile_cmd = env.run(cmd)
             if compile_cmd.failed:
@@ -724,7 +728,7 @@ def restart_running():
             print (s, pid)
 
 @task
-def runserver():
+def runserver(send_sigusr1=False):
     """ Run the development server."""
 
     cmd = "pybabel compile -d translations"
@@ -744,9 +748,21 @@ def runserver():
     # TODO: request a signal
     # TODO: option to turn on or off reloader.
 
-    cmd ="NDS_CONFIG=%s python neahtta.py dev --reload" % _path
-    print(green("** Go."))
-    run_cmd = env.run(cmd)
+    cmd = ['NDS_CONFIG=%s' % _path,
+           'python neahtta.py dev']
+    if send_sigusr1:
+        cmd.append('--send-sigusr1')
+
+    # when instructed to send SIGUSR1, the parent of this process must know
+    # about it.
+    def forward_sigusr1(signum, _frame):
+        assert signum == SIGUSR1
+        os.kill(os.getppid(), SIGUSR1)
+
+    with temporary_signal_handler(SIGUSR1, forward_sigusr1):
+        print(green("** Starting development server."))
+        run_cmd = env.run(' '.join(cmd))
+
     if run_cmd.failed:
         print(red("** Starting failed for some reason."))
         sys.exit(-1)
@@ -842,16 +858,33 @@ def test():
     test_project()
 
 
+@task
+def integration_tests():
+    """
+    Run Cypress integration tests. This starts a development server on
+    http://localhost:5000, and shuts it down when the tests are done.
+
+    Integrations can ONLY be run locally.
+    """
+    from fabric.operations import local as lrun
+
+    if env.hosts != ['localhost']:
+        print >>sys.stderr, red("** can only run integration tests on localhost")
+        sys.exit(2)
+
+    with development_server():
+        lrun("npm run cypress:run")
+
+@contextmanager
 def development_server():
     """
     Starts the developer server in another process.
 
     with development_server():
-        # do things here
+        # run tests and things here
+    # server will terminate here.
+
     """
-    import os
-    import signal
-    from signal import SIGUSR1, SIGTERM
     # Basically, fork(), wait for a signal before continuing.
     # Then politely request to quit.
 
@@ -859,20 +892,57 @@ def development_server():
     if pid == 0:
         # Child process.
         # Make this process the new session leader/process group leader.
-        # This means that killpg(pid) will terminate this process and all its
-        # children..
+        # This means that killpg(pid) will terminate the server and all its
+        # children.
         os.setsid()
-        runserver()
-    else:
-      # Parent process.
+        runserver(send_sigusr1=True)
+        sys.exit()
 
-      # Wait for the SIGUSR1...
-      # TODO:
+    # Parent process.
 
-      yield pid
+    # Python 2 work around. Since there is non nonlocal keyword, we need to
+    # mutate a variable in the closure in order for that to be reflected
+    # outside of the inner function. In other words, we can't just say
+    # child_ready = True inside wait_for_sigusr1, because a new variable is
+    # created only in the signal handler :/
+    child_ready = []
 
-      # Terminate the process and all its children.
-      os.killpg(pid, signal.SIGTERM)
+    def wait_for_sigusr1(signum, _stack_frame):
+        assert signum == SIGUSR1
+        child_ready.append(True)
+
+    try:
+        # Wait for the SIGUSR1...
+        with temporary_signal_handler(SIGUSR1, wait_for_sigusr1):
+            while not child_ready:
+                signal.pause()
+
+        # The server is ready!
+        print(green("** development server ready!"))
+        yield
+    finally:
+        # No matter what happens, *always* kill the child process group, lest they
+        # become orphaned zombies.
+        assert os.getsid(pid) == pid, "Child PID must be session leader, but it's not!"
+        os.killpg(pid, SIGTERM)
+
+
+@contextmanager
+def temporary_signal_handler(signalnum, handler):
+    """
+    Sets a signal handler temporarily within a context manager. Usage:
+
+    with temporary_signal_handler(SIG, handler_function):
+        # do things
+    # signal handler reset.
+    """
+    original_handler = signal.getsignal(signalnum)
+    signal.signal(signalnum, handler)
+    try:
+        yield
+    finally:
+        # *Always* reset the orignal handler
+        signal.signal(signalnum, original_handler)
 
 
 def commit_gtweb_tag():

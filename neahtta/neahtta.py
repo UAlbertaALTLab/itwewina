@@ -8,8 +8,11 @@ This is the main file which handles initializing the app and providing
 endpoint functionality.
 
 """
-from application import create_app
+import os
 import sys
+from signal import SIGUSR1
+
+from application import create_app
 
 app = create_app()
 config = app.config
@@ -25,8 +28,9 @@ if __name__ == "__main__":
 
     # Extra arguments to use the reloader, if specified.
     kwargs = {}
-    if '--reload' in sys.argv:
-        kwargs.update(use_reloader=True)
+    kwargs.update(use_reloader='--reload' in sys.argv)
+    if '--send-sigusr1' in sys.argv:
+        os.kill(os.getppid(), SIGUSR1)
 
     app.run(debug=True, **kwargs)
 
