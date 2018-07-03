@@ -92,6 +92,12 @@ Replace "itwewina" with the specific instance you need.
 
 This project uses [cypress.io][] for in-browser (integration) tests.
 
+If you just want to run the tests, do the following:
+
+	fab local itwewina integration_tests
+
+If you are developing new tests or features, do the following:
+
 First, start the development server (see above). It should be accessible at
 <http://localhost:5000/itwewina/>.
 
@@ -103,6 +109,10 @@ with the following command:
 **Note**: You probably need an up-to-date browser for this to work. On my
 machine, this starts up a new Google Chrome 67 window and does all its testing
 in there.
+
+If you want to write tests interactively, use Cypress's dashboard:
+
+	npm run cypress:open
 
 For help with writing new tests, follow the [Cypress test writing
 guide][cypress-guide].

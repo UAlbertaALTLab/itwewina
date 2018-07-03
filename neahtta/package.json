@@ -9,7 +9,8 @@
   "scripts": {
     "postinstall": "bower install",
     "test": "cypress run",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open"
   },
   "author": "",
   "license": "GNU",
