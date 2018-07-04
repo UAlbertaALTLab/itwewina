@@ -1,5 +1,7 @@
 /**
- * Test MD_validation_170602.pptx
+ * Test the scenario described in MD_validation_170602.pptx:
+ *
+ * https://drive.google.com/open?id=0B3eCGz24iHRmSGpLUHNUakxxWFE
  */
 
 describe('scenario', function () {
@@ -82,7 +84,17 @@ describe('scenario', function () {
     // XXX: however the conjunct form is missing!
     expect(() => {
       // TODO: Use a new FST and this should work
-      cy.contains('ê-nisitohtawêw')
+      cy.contains('ê-nisitohtawât')
+        .should('be.visible');
+    }).to.throw;
+
+    cy.get('.nav')
+      .contains('full').click();
+
+    // X→3g (unspecified actor to 3rd person) should be in the full paradigm
+    // XXX: But it's not :(
+    expect(() => {
+      cy.contains('kâ-nistohtâht')
         .should('be.visible');
     }).to.throw;
   });
