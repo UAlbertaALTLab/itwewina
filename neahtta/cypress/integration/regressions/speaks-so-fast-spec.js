@@ -29,13 +29,8 @@ describe('scenario', function () {
       .contains('English → Plains Cree') // translate from English to nêhiyawêwin
       .click();
 
-    // search for "speak".
-    cy.get('form#neahttasaanit')
-      .get('input[name=lookup]')
-      .type('speak');
-    cy.get('form#neahttasaanit')
-      .get('button[type=submit]')
-      .click();
+    // Search for "speak".
+    cy.neahttaSearch('speak');
 
     // check that we're on the results page.
     cy.contains("speak (verb");
@@ -45,12 +40,7 @@ describe('scenario', function () {
     cy.visit('/eng/crk/');
 
     // search for "fast".
-    cy.get('form#neahttasaanit')
-      .get('input[name=lookup]')
-      .type('fast');
-    cy.get('form#neahttasaanit')
-      .get('button[type=submit]')
-      .click();
+    cy.neahttaSearch('fast');
 
     // Find "talking fast" on the results page.
     cy.contains('cacâstapiwêw')
@@ -66,12 +56,7 @@ describe('scenario', function () {
     cy.visit('/eng/crk/');
 
     // Search for "understand".
-    cy.get('form#neahttasaanit')
-      .get('input[name=lookup]')
-      .type('understand');
-    cy.get('form#neahttasaanit')
-      .get('button[type=submit]')
-      .click();
+    cy.neahttaSearch('understand');
 
     // Click on the correct search result.
     cy.contains('nisitohtawêw')

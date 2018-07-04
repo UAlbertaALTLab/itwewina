@@ -23,3 +23,11 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('neahttaSearch', (term) => {
+  cy.get('form#neahttasaanit')
+    .get('input[name=lookup]')
+    .type(term);
+  cy.get('form#neahttasaanit')
+    .get('button[type=submit]:visible')
+    .click();
+});
