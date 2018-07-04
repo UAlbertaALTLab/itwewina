@@ -41,9 +41,7 @@ Customizations made here:
             </ul>
 
             {{- rendered_templates.audio_links -}}
-
-            {% set entry_source = lexicon_entry|xpath('@src')|first %}
-            {% if entry_source %}<span class="entry_source">{{ entry_source }}</span>{% endif %}</li>
+        </li>
 
 
         {% else %}&nbsp;{% endif %}
