@@ -33,16 +33,25 @@
             <ul class="meanings">
                 {{- rendered_templates.definition -}}
             </ul>
+
+            {% set entry_sources = lexicon_entry|xpath('@src') %}
+            {% if entry_sources|length > 0 %}
+            <ul class="sources">
+               {% for source in entry_sources %}
+               <li class="entry_source">{{ source }}</li>
+               {% endfor %}
+            </ul>
+            {% endif %}
             <div class="span3 visible-phone hidden-tablet hidden-desktop floatingparadigm">
                 <div class="row-fluid">
                     {%- set lemma_key = lexicon_entry|xpath('lg/l')|first|text %}
 
                     <div class="span6">
-                        <button href="#" 
-                                class="btn btn-info pull-right" 
-                                data-toggle="collapse" 
-                                data-target="#paradigm-{{ lexicon_entry|hash_node }}" 
-                                type="button" 
+                        <button href="#"
+                                class="btn btn-info pull-right"
+                                data-toggle="collapse"
+                                data-target="#paradigm-{{ lexicon_entry|hash_node }}"
+                                type="button"
                                 lang="{{ current_locale }}">
                             {% trans %}Paradigm{% endtrans %}
                         </button>

@@ -41,9 +41,6 @@ Customizations made here:
             </ul>
 
             {{- rendered_templates.audio_links -}}
-        </li>
-
-
         {% else %}&nbsp;{% endif %}
     </div>
     <div class="span4 hidden-phone lexeme_analyses">
