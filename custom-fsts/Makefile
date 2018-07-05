@@ -12,8 +12,6 @@
 # : A generator that accepts a morphological analysis in Canadian Aboriginal syllabics,
 #   and produces an orthographically correct surface form, also in syllabics.
 
-# TODO: XXX: exchange 'gt' and 'desc'/'norm', to match convention of other
-# FSTs.
 FSTs = analyser-gt-desc.Cans-to-Cans.hfstol generator-gt-norm.Cans-to-Cans.hfstol
 
 all: $(FSTs)
