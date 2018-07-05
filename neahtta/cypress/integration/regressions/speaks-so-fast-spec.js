@@ -7,7 +7,6 @@
 describe('Masckwacîs Dictionary validation', function () {
   it('should find "nistohtat"', function () {
     cy.visit('/crk/eng');
-    // cy.screenshot();
 
     // Type "nistohtat" and do the search.
     cy.get('form#neahttasaanit')
