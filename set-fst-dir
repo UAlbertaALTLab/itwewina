@@ -27,7 +27,7 @@ ensure_exists() {
 }
 
 ensure_exists analyser-gt-desc.hfstol
-ensure_exists generator-gt-dict-norm.hfstol
+ensure_exists generator-gt-norm.hfstol
 ensure_exists generator-gt-norm.Cans-to-Cans.hfstol
 ensure_exists analyser-gt-desc.Cans-to-Cans.hfstol
 

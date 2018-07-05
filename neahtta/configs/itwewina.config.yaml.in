@@ -37,7 +37,7 @@ Morphology:
   crk:
     tool: *HLOOKUP
     file: [*OPT, '/crk/bin/analyser-gt-desc.hfstol']
-    inverse_file: [*OPT, '/crk/bin/generator-gt-dict-norm.hfstol']
+    inverse_file: [*OPT, '/crk/bin/generator-gt-norm.hfstol']
     format: 'hfst'
     options: &MORPHOLOGY_OPTS
       tagProcessor: "configs/language_specific_rules/crk_tags.py:process_crk_analysis"
@@ -47,8 +47,8 @@ Morphology:
       inverse_tagsep: '+'
   crkMacr:
     tool: *HLOOKUP
-    file: [*OPT, '/crk/bin/analyser-dict-gt-desc.macron.hfstol']
-    inverse_file: [*OPT, '/crk/bin/generator-dict-gt-norm.macron.hfstol']
+    file: [*OPT, '/crk/bin/analyser-gt-desc.macron.hfstol']
+    inverse_file: [*OPT, '/crk/bin/generator-gt-norm.macron.hfstol']
     format: 'hfst'
     options: *MORPHOLOGY_OPTS
   # syllabics
@@ -78,7 +78,7 @@ Dictionaries:
     path: 'dicts/crkeng.xml'
     input_variants: &spell_relax
       - type: "standard"
-        description: !gettext "aio âêîô" # " 
+        description: !gettext "aio âêîô" # "
         # NB: must be same as analyser name
         short_name: "crk"
         # this is what appears in place of 'crk' in some
@@ -86,7 +86,7 @@ Dictionaries:
         user_friendly_short_name: "âêîô"
         # force locale: (but because english isn't specified, we don't change
         # anything)
-        force_locale: 
+        force_locale:
           crk: "crk"
           crk_Macr: "crk"
         onscreen_keyboard: &CRK_KEYS_CIRC
@@ -95,12 +95,12 @@ Dictionaries:
           - "î"
           - "ô"
       # - type: "syllabics"
-      #   description: !gettext "syllabics" # " 
+      #   description: !gettext "syllabics" # "
       #   path: 'dicts/crkeng_syllabics.xml'
       #   short_name: "crkS"
 
       - type: "macron"
-        description: !gettext "aio āēīō" # " 
+        description: !gettext "aio āēīō" # "
         # NB: must be same as analyser name
         path: 'dicts/crkeng-macron.xml'
         short_name: "crkMacr"
@@ -110,7 +110,7 @@ Dictionaries:
         user_friendly_short_name: "āēīō"
         # force locale: (but because english isn't specified, we don't change
         # anything)
-        force_locale: 
+        force_locale:
           crk: "crk_Macr"
           crk_Macr: "crk_Macr"
         onscreen_keyboard: &CRK_KEYS_MACR
@@ -120,10 +120,10 @@ Dictionaries:
           - "ō"
 
       - type: "syllabics"
-        description: !gettext "ᒐᐦᑲᓯᓇᐦᐃᑲᐣ" 
+        description: !gettext "ᒐᐦᑲᓯᓇᐦᐃᑲᐣ"
         path: 'dicts/crkeng-cans.xml'
         short_name: "crkS"
-        force_locale: 
+        force_locale:
           crk: "crk"
           crk_Macr: "crk_Macr"
 
@@ -134,23 +134,23 @@ Dictionaries:
   - source: eng
     target: crk
     path: 'dicts/engcrk.xml'
-    input_variants: 
+    input_variants:
       - type: "standard"
-        description: !gettext "aio âêîô" # " 
+        description: !gettext "aio âêîô" # "
         short_name: "crk"
         path: 'dicts/engcrk.xml'
         user_friendly_short_name: "âêîô"
         display_variant: true
 
       - type: "macron"
-        description: !gettext "aio āēīō" # " 
+        description: !gettext "aio āēīō" # "
         path: 'dicts/engcrk-macron.xml'
         short_name: "crkMacr"
         user_friendly_short_name: "āēīō"
         display_variant: true
 
       - type: "syllabics"
-        description: !gettext "ᒐᐦᑲᓯᓇᐦᐃᑲᐣ" 
+        description: !gettext "ᒐᐦᑲᓯᓇᐦᐃᑲᐣ"
         path: 'dicts/engcrk-cans.xml'
         short_name: "crkS"
         display_variant: true
@@ -159,13 +159,13 @@ Dictionaries:
     # display_variants:
     #  - short_name: "crk"
     #    path: "dicts/engcrk.xml"
-    #    description: !gettext "aio āēīō" # " 
+    #    description: !gettext "aio āēīō" # "
     #  - short_name: "crkMacr" # search_variant_substring_match.jinja
     #    path: "dicts/engcrk-macron.xml"
-    #    description: !gettext "aio āēīō" # " 
+    #    description: !gettext "aio āēīō" # "
     #  - short_name: "crkS" # search_variant_substring_match.jinja
     #    path: "dicts/engcrk-cans.xml"
-    #    description: !gettext "ᒐᐦᑲᓯᓇᐦᐃᑲᐣ" 
+    #    description: !gettext "ᒐᐦᑲᓯᓇᐦᐃᑲᐣ"
 
 
     # search_variants:
@@ -178,21 +178,21 @@ Dictionaries:
     #
     # input_variants:
     #   - type: "standard"
-    #     description: !gettext "aio âêîô" # " 
+    #     description: !gettext "aio âêîô" # "
     #     # NB: must be same as analyser name
     #     short_name: "eng"
     #     # force locale: (but because english isn't specified, we don't change
     #     # anything)
-    #     force_locale: 
+    #     force_locale:
     #       crk: "crk"
     #   - type: "macron"
-    #     description: !gettext "aio āēīō" # " 
+    #     description: !gettext "aio āēīō" # "
     #     # NB: must be same as analyser name
     #     path: 'dicts/engcrk-macron.xml'
     #     short_name: "engM"
     #     # force locale: (but because english isn't specified, we don't change
     #     # anything)
-    #     force_locale: 
+    #     force_locale:
     #       crk: "crk_Macr"
 
   # - source: crkS
