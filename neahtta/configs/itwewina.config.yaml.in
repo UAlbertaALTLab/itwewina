@@ -36,8 +36,8 @@ Morphology:
   # normative
   crk:
     tool: *HLOOKUP
-    file: [*OPT, '/crk/bin/analyser-dict-gt-desc.hfstol']
-    inverse_file: [*OPT, '/crk/bin/generator-dict-gt-norm.hfstol']
+    file: [*OPT, '/crk/bin/analyser-gt-desc.hfstol']
+    inverse_file: [*OPT, '/crk/bin/generator-gt-dict-norm.hfstol']
     format: 'hfst'
     options: &MORPHOLOGY_OPTS
       tagProcessor: "configs/language_specific_rules/crk_tags.py:process_crk_analysis"
