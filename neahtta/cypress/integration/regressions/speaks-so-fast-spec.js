@@ -4,7 +4,7 @@
  * https://drive.google.com/open?id=0B3eCGz24iHRmSGpLUHNUakxxWFE
  */
 
-describe('scenario', function () {
+describe('Masckwacîs Dictionary validation', function () {
   it('should find "nistohtat"', function () {
     cy.visit('/crk/eng');
     // cy.screenshot();
@@ -82,5 +82,42 @@ describe('scenario', function () {
       cy.contains('kâ-nistohtâht')
         .should('be.visible');
     }).to.throw;
+  });
+
+  it('should find "âyiman"', function () {
+    cy.visit('/crk/eng/');
+
+    cy.neahttaSearch('ayiman');
+    // We should be on the results page now.
+    cy.contains('√âyiman');
+
+    // There should be at least two entries: one for a noun, and one for a
+    // verb.
+    cy.get('a').contains('âyiman (Noun');
+    cy.get('a').contains('âyiman (Verb');
+  });
+
+  it('should find "iyikohk"', function () {
+    cy.visit('/crk/eng/');
+
+    cy.neahttaSearch('iyikohk');
+    // We should be on the results page now.
+
+    // There should be at least this entry:
+    cy.get('a').contains('iyikohk (particle');
+  });
+
+  it('should find "wanihtawêw"', function () {
+    cy.visit('/eng/crk/');
+    cy.neahttaSearch('misunderstand');
+    cy.get('a')
+      .contains('wanihtawêw');
+  });
+
+  it('should find "wani-"', function () {
+    cy.visit('/crk/eng/');
+    cy.neahttaSearch('wani-');
+    cy.get('a')
+      .contains('indistinctly, blurred');
   });
 });

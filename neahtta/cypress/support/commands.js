@@ -28,6 +28,6 @@ Cypress.Commands.add('neahttaSearch', (term) => {
     .get('input[name=lookup]')
     .type(term);
   cy.get('form#neahttasaanit')
-    .get('button[type=submit]:visible')
+    .get('button[name=search]:visible')
     .click();
 });
