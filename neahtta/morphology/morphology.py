@@ -897,10 +897,13 @@ class Morphology(object):
         # TODO: occasionally lemma is not lemma, but first part of a
         # tag, need to fix with the tagsets 
         def make_lemma(r):
+            # TODO: reject when tags and forms are blank [u'']
             lems = []
 
+            # TODO: rename "tag" to "tags"
             tag, forms = r
             if isinstance(forms, list):
+                # TODO: sometimes tag and forms are both [u'']
                 for f in forms:
                     lem = GeneratedForm(tag, _input=f, tool=self.tool,
                                         tagsets=self.tagsets)
