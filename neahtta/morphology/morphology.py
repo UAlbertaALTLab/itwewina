@@ -343,14 +343,11 @@ def word_generation_context(generated_result, *generation_input_args, **generati
         #([u'viessat', u'V', u'Ind', u'Prt', u'Pl1'], [u'viesaimet'])
         # ==>  (u'viessat', [u'V', u'Ind', u'Prt', u'Pl1'], [u'viesaimet'])
 
-
         # XXX: hack to make this work in Plains Cree.
         # The next branch in this code assumes the lemma is always
         # the first element in the list of tags --- this is very wrong
         # in Plains Cree! Special case it, and tease out the tags from the
-        #
-        if language == 'crk' and len(form) == 2:
-            # TODO: determine this from configs/language_specific_rules#prelemma_tags
+        if language.startswith('crk') and len(form) == 2:
             form = parse_form_for_plains_cree(form)
         # fix for the bug 2406
         elif len(form) == 2:
@@ -1194,6 +1191,8 @@ def parse_form_for_plains_cree(form):
     assert len(form) == 2
     tags, wordforms = form
 
+    # Figure out the index of the first tag that is not a prefix (i.e., it's
+    # the lemma).
     for i, tag in enumerate(tags):
         if not looks_like_a_plains_cree_prefix(tag):
             break
@@ -1209,4 +1208,5 @@ def parse_form_for_plains_cree(form):
 
 
 def looks_like_a_plains_cree_prefix(tag):
+    # TODO: determine this from configs/language_specific_rules#prelemma_tags
     return tag in (u"PV/e", u"RdplW", u"RdplS", u"PV/ka", u"PV/ta") or tag.startswith(u'PV/')
