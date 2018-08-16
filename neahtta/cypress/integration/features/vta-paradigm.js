@@ -43,13 +43,13 @@ describe("The full VTA paradigm table", function () {
     ]);
   });
 
-  it('should display Prt, all independent forms', function () {
+  it('should display all Prt, independent forms', function () {
     findAllWordforms([
       'kikî-kîskison', 'kikî-kîskisonân', 'kikî-kîskisonân', 'kikî-kîskisonâwâw', 'kikî-kîskisotin', 'kikî-kîskisotinân', 'kikî-kîskisotinân', 'kikî-kîskisotinâwâw',
     ]);
   });
 
-  it('should display Prt, all conjunct forms', function () {
+  it('should display all Prt, conjunct forms', function () {
     findAllWordforms([
       'ê-kî-kîskisoyan', 'ê-kî-kîskisoyâhk', 'ê-kî-kîskisoyâhk', 'ê-kî-kîskisoyêk', 'ê-kî-kîskisotân', 'ê-kî-kîskisotâhk', 'ê-kî-kîskisotâhk', 'ê-kî-kîskisotakok',
     ]);
