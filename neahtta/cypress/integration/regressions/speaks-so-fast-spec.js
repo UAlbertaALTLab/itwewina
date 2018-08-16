@@ -65,12 +65,8 @@ describe('Masckwacîs Dictionary validation', function () {
     cy.contains('nisitohtawêw')
       .should('be.visible');
 
-    // XXX: however the conjunct form is missing!
-    expect(() => {
-      // TODO: Use a new FST and this should work
-      cy.contains('ê-nisitohtawât')
-        .should('be.visible');
-    }).to.throw;
+    cy.contains('ê-nisitohtawât')
+      .should('be.visible');
 
     cy.get('.nav')
       .contains('full').click();
