@@ -72,11 +72,8 @@ describe('Masckwacîs Dictionary validation', function () {
       .contains('full').click();
 
     // X→3g (unspecified actor to 3rd person) should be in the full paradigm
-    // XXX: But it's not :(
-    expect(() => {
-      cy.contains('kâ-nistohtâht')
-        .should('be.visible');
-    }).to.throw;
+    cy.contains('kâ-nistohtâht')
+      .should('be.visible');
   });
 
   it('should find "âyiman"', function () {
