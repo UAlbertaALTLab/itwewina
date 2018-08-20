@@ -410,9 +410,9 @@ class ParadigmTable(object):
                 [("lemma", ['Tag1', 'Tag2', 'Tag3'], ['fullform1', 'fullform2']), etc ...]
         """
 
-        as_list = self.table.to_list()  # TODO: call this only once! It's not memoized!
+        as_list = self.table.to_list()
 
-        return FilledParadigmTable(paradigm_table=self, as_list=self.table.to_list())
+        return FilledParadigmTable(paradigm_table=self, as_list=as_list)
 
 DEFAULT_OPTIONS = {
     'layout': {
