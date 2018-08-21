@@ -14,7 +14,14 @@ describe('Orthographical normatization and presentations of word-form matching s
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('ekakwenohtewawahwapamat');
-    cy.contains('ê-kakwê-nôhtê-wa-wâh-wâpamât');
+    /* XXX:  match either wa- or wâ-
+     * NDS currently will only show *one* of these two forms, but which of the
+     * two is unclear without FST weighting. Hence, expect either one of them.
+     *
+     * See discussion at:
+     * https://github.com/UAlbertaALTLab/itwewina/issues/12#issuecomment-414729826
+     */
+    cy.contains(/ê-kakwê-nôhtê-w[aâ]-wâh-wâpamât/);
   });
 
   it('normatizes "ma-mah-miyo-na-nah-nipaw"', function () {
