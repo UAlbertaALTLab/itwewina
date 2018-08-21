@@ -1,0 +1,20 @@
+#!/bin/sh
+
+usage() {
+    echo "Usage:"
+    printf "\t%s (generate|analyze) query\n" "$0"
+}
+
+case "$1" in
+    generate)
+        MODEL=/opt/smi/crk/bin/generator-gt-norm.hfstol
+        ;;
+    analyze)
+        MODEL=/opt/smi/crk/bin/analyser-gt-desc.hfstol
+        ;;
+    *)
+        usage 1>&2
+        exit 2
+esac
+
+echo "$2" | hfst-lookup -q "$MODEL"
