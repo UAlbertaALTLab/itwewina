@@ -1,10 +1,13 @@
-﻿from morphology import generation_overrides as morphology
+﻿import re
+
+from morphology import generation_overrides as morphology
 from morpholex import morpholex_overrides as morpholex
 from lexicon import lexicon_overrides
 
 from lexicon import search_types, CustomLookupType
 from lxml import etree
 
+from morphology.morphology import TagPart
 from views.custom_rendering import template_rendering_overrides
 
 from flask import current_app, g
@@ -367,62 +370,67 @@ def adjust_tags_for_gen(lemma, tags, node=None, **kwargs):
     if 'template_tag' not in kwargs:
         return lemma, tags, node
 
-    from flask import current_app, g
-    import re
     # get tagset for pre-lemma stuff
-
     morph = current_app.config.morphologies.get(g._from, False)
-
     tagsets = morph.tagsets.sets
 
     prelemmas = tagsets.get('prelemma_tags')
-    # TODO: where is the lemma
 
-    # print g._from
-    # print lemma
-    # print list(prelemmas.members)
+    prelemma_pattern = create_prelemma_matcher(prelemmas.members)
 
     cleaned_tags = []
     for t in tags:
-        # print t
+        # Figure out which tags goes BEFORE the lemma.
+        prefixes = []
+        suffixes = []
 
-        cleaned_tag = []
+        for tag in t:
+            if prelemma_pattern.match(tag):
+                prefixes.append(tag)
+            else:
+                suffixes.append(tag)
 
-        for pl in prelemmas.members:
-            before = []
-            rest = []
-
-            pl = unicode(pl)
-
-            try:
-                _pl = re.compile(pl)
-            except Exception, e:
-                _pl = False
-
-            for part in t:
-                if _pl:
-                    if _pl.match(part) or pl == part:
-                        before.append(part)
-                        continue
-                else:
-                    if pl == part:
-                        before.append(part)
-                        continue
-                rest.append(part)
-
-        cleaned_tag.extend(before)
-        cleaned_tag.append(lemma)
-        cleaned_tag.extend(rest)
-
-        # print cleaned_tag
-
+        cleaned_tag = prefixes + [lemma] + suffixes
         cleaned_tags.append(cleaned_tag)
-
 
     if len(cleaned_tags) == 0 and len(tags) > 0:
         tags = cleaned_tags
 
-    # print cleaned_tags
-
     return lemma, cleaned_tags, node
 
+
+def create_prelemma_matcher(prelemmas):
+    """
+    Given a sequence of prelemma tags, spits out a compiled regular expression that will match a tag.
+    This pattern is helpful for filtering prelemma tagparts in a taglist.
+
+    >>> rdplw = TagPart('RdplW')
+    >>> rdpls = TagPart('RdplS')
+    >>> pv = TagPart({'match': '^PV', 'regex': True})
+    >>> prelemmas = [rdplw, rdpls, pv]
+    >>> p = create_prelemma_matcher(prelemmas)
+    >>> p.pattern
+    u'(?:^RdplW$)|(?:^RdplS$)|(?:^PV)'
+    >>> bool(p.match(u'RdplW'))
+    True
+    >>> bool(p.match(u'PV/e'))
+    True
+    >>> bool(p.match(u'pve'))
+    False
+    >>> bool(p.match(u'lemmaRdplW'))
+    False
+
+    :param prelemmas: Sequence of prelemma tags
+    :return: a compiled regular expression
+    """
+
+    alternatives = []
+
+    for tagpart in prelemmas:
+        assert isinstance(tagpart, TagPart)
+        if tagpart.regex:
+            alternatives.append(unicode(tagpart.val))
+        else:
+            alternatives.append(u'^' + unicode(tagpart) + u'$')
+
+    return re.compile(u'|'.join(u'(?:' + regex + u')' for regex in alternatives))
