@@ -7,14 +7,14 @@ describe('Orthographical normatization and presentations of word-form matching s
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('e-wapamat');
-    cy.contains('ê-wâpamâ');
+    cy.contains('ê-wâpamât');
   });
 
   it('normatizes "ekakwenohtewawahwapamat"', function () {
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('ekakwenohtewawahwapamat');
-    cy.contains('ê-kakwê-nôhtê-wâ-wâh-wâpamât');
+    cy.contains('ê-kakwê-nôhtê-wa-wâh-wâpamât');
   });
 
   it('normatizes "ma-mah-miyo-na-nah-nipaw"', function () {
