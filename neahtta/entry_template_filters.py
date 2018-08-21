@@ -159,9 +159,11 @@ def register_template_filters(app):
         # TODO: strip nds_dummy_tags
         tag_string = []
         for tp in tag.parts:
-            if tp == lemma:
-                continue
-            if tp in dummy:
+            # The lemma is added in at a later stage, so get rid of it now.
+            # There are configurable dummy tags, which may include the Err/Orth tag,
+            # however, we're getting rid of it here, so the that the normative generator
+            # doesn't see it (or else some normative generators won't transduce anything at all!)
+            if tp == lemma or tp in dummy or tp == u'Err/Orth':
                 continue
             tag_string.append(tp)
 
