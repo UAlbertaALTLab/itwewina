@@ -52,8 +52,10 @@ msgid "Mobile friendly"
 msgstr "wēhci-masinahikēwin"
 
 #: configs/itwewina.config.yaml.in:4
-msgid "itwēwina"
-msgstr ""
+msgid "itwêwina"
+# WARNING: this value is **IGNORED** in views/context_processors.py for the display
+# in the main banner!
+msgstr "itwēwina"
 
 #: configs/itwewina.config.yaml.in:5
 msgid "Online Plains Cree dictionary"

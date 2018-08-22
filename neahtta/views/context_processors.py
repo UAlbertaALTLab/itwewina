@@ -1,7 +1,11 @@
+# -*- coding: UTF-8 -*-
+import warnings
+
 from flask import current_app, request, g, session
 from . import blueprint
 
 from i18n.utils import get_locale
+
 
 @blueprint.context_processor
 def project_css():
@@ -79,7 +83,15 @@ def define_app_name():
     """ Add the custom current_app name from configs to global context for
     templates.
     """
-    return dict(app_name=current_app.config.app_name)
+    # HACK: I don't really understand the locale system, so
+    # I'm hard-coding here instead of using the default
+    localized_app_name = {
+        'crk': u'itwêwina',
+        'crk_Macr': u'itwēwina',
+        #'crkSyl': u'ᐃᑘᐏᓇ'
+    }.get(get_locale(), current_app.config.app_name)
+    warnings.warn('Using hard-coded app names instead of PO file.')
+    return dict(app_name=localized_app_name)
 
 @blueprint.context_processor
 def nav_style():
