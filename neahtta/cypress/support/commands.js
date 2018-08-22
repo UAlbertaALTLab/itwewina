@@ -31,3 +31,11 @@ Cypress.Commands.add('neahttaSearch', (term) => {
     .get('button[name=search]:visible')
     .click();
 });
+
+/**
+ * Check the logo if it contains certain text.
+ */
+Cypress.Commands.add('logoContains', (content) => {
+    cy.get('a.brand')
+      .contains('*', content, { timeout: 0 });
+});

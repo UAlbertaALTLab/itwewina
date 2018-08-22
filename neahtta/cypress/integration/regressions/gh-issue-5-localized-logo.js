@@ -3,21 +3,23 @@
  */
 
 describe('The "itwêwina" logo', function () {
-  it('should display with a circumflexed ê by default', function () {
+  it('should display with a circumflexed ê in crk', function () {
     cy.visit('/crk/eng');
-    cy.get('a.brand')
-      .contains('*', 'itwêwina', { timeout: 0 });
+    cy.logoContains('itwêwina');
   });
 
   it("should display with a macron'd ē in crkMacr", function () {
     cy.visit('/crkMacr/eng');
-    cy.get('a.brand')
-      .contains('*', 'itwēwina', { timeout: 0 });
+    cy.logoContains('itwēwina');
   });
 
   it('should display in syllabics in crkS', function () {
     cy.visit('/crkS/eng');
-    cy.get('a.brand')
-      .contains('*', 'ᐃᑘᐏᓇ', { timeout: 0 });
+    cy.logoContains('ᐃᑘᐏᓇ');
+  });
+
+  it('should display with a circumflexed ê by default', function () {
+    cy.visit('/');
+    cy.logoContains('itwêwina');
   });
 });
