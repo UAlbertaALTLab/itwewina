@@ -83,14 +83,16 @@ def define_app_name():
     """ Add the custom current_app name from configs to global context for
     templates.
     """
-    # HACK: I don't really understand the locale system, so
-    # I'm hard-coding here instead of using the default
+    # XXX: HACK: I don't really understand the locale system, so
+    # I'm hard-coding the translations here instead of using gettext.
     localized_app_name = {
         'crk': u'itwêwina',
-        'crk_Macr': u'itwēwina',
-        #'crkSyl': u'ᐃᑘᐏᓇ'
-    }.get(get_locale(), current_app.config.app_name)
-    warnings.warn('Using hard-coded app names instead of PO file.')
+        'crkMacr': u'itwēwina',
+        'crkS': u'ᐃᑘᐏᓇ'
+    }.get(g._from,
+          # Fallback to the app name written in the config file.
+          current_app.config.app_name)
+    warnings.warn('Using hard-coded app name instead of consulting gettext MO files.')
     return dict(app_name=localized_app_name)
 
 @blueprint.context_processor
