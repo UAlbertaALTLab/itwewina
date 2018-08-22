@@ -14,4 +14,10 @@ describe('The "itwêwina" logo', function () {
     cy.get('a.brand')
       .contains('*', 'itwēwina', { timeout: 0 });
   });
+
+  it('should display in syllabics in crkS', function () {
+    cy.visit('/crkS/eng');
+    cy.get('a.brand')
+      .contains('*', 'ᐃᑘᐏᓇ', { timeout: 0 });
+  });
 });
