@@ -23,10 +23,19 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+/**
+ * Executes a search. Should land on the search page.
+ * 
+ * NOTE: This skips waiting for autocompletion!
+ * (Autocompletion makes these tests rather
+ */
 Cypress.Commands.add('neahttaSearch', (term) => {
   cy.get('form#neahttasaanit')
     .get('input[name=lookup]')
-    .type(term);
+    // Force the textbox to have the text we want, without "typing" it in, one
+    // character at a time, as .type() would do.
+    .invoke('val', term);
   cy.get('form#neahttasaanit')
     .get('button[name=search]:visible')
     .click();
