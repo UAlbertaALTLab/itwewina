@@ -36,10 +36,10 @@ describe('Orthographical normatization and presentations of word-form matching s
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('nipihk');
-    cy.contains('nipîhk');
-    cy.contains('nîpîhk');
-    cy.contains('nipihk');
-    cy.contains('nîpihk');
-    cy.contains('nipik');
+    cy.contains('.possible_analyses *', /\bnipîhk\b/);
+    cy.contains('.possible_analyses *', /\bnîpîhk\b/);
+    cy.contains('.possible_analyses *', /\bnipihk\b/);
+    cy.contains('.possible_analyses *', /\bnîpihk\b/);
+    cy.contains('.possible_analyses *', /\bnipik\b/);
   });
 });
