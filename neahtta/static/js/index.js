@@ -17,9 +17,11 @@ $(document).ready( function() {
         }, 120);
     }
 
+    // Setup the autocomplete dropdown box with an old version of Bootstrap Typeahead:
     var item_count = parseInt($('input[name="lookup"]').attr('data-items')) || 5;
     $('input[name="lookup"]').typeahead({
         items: item_count,
+        // Load the autocomplete results via an AJAX call.
         source: function (typeahead, query) {
             if (query.length > 1) {
                 var _from = typeahead.$element.attr('data-language-from')
@@ -33,7 +35,12 @@ $(document).ready( function() {
             } else {
                 return [] ;
             }
-        }
+        },
+        // Immediately perform search when selected.
+        onselect: function (_value) {
+            // XXX: I guess there can only be one <form> on the page?
+            $('form').submit();
+        },
     });
     $('input').focus(function(evt) {
         $('input').attr('readonly', false);
