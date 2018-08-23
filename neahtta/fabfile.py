@@ -233,15 +233,54 @@ def deploy():
 
     with cd(env.itwewina_path):
         if git_branch() != 'sapir':
-            abort('Expected to be on the `sapir` branch; actually on `%s`' % git_branch())
+            abort(('Expected to be on the `sapir` branch; actually on `%s`. '
+                   'Please log into Sapir and git checkout development') %
+                  git_branch())
 
         if git_has_uncommited_changes():
-            abort('Refusing to pull with uncommited changes.')
+            abort('Refusing to pull with uncommited changes. '
+                  'Please commit, stash, or reset the changes as needed')
 
         run('git pull')
         with prefix('source venv/bin/activate'):
             # TODO: Check if deps have changed before doing this:
             run('pip install -r requirements.txt')
+
+
+@task
+def provision():
+    """
+    Provisions (setup for the first time) itwêwina on Sapir.
+
+    This means cloning the repository, setting up the virtualenv, and patching
+    the Babel locales.
+    """
+
+    require_sapir()
+    require_itwewina()
+
+    # Clone the repo
+    clone_url = lrun('git remote get-url origin', capture=True)
+    with cd(env.clone_path):
+        run('git clone %s itwewina' % clone_url)
+
+    assert env.itwewina_path.startswith(env.clone_path),\
+        'did not find itwewina within the clone path'
+
+    # Setup the virtualenv
+    with cd(env.itwewina_path):
+        run('virtualenv %s' % env.virtualenv_path)
+        with prefix('source %s/bin/activate' % env.virtualenv_path):
+            run('pip install -r requirements.txt')
+
+    # Create dummy locales for 'crk'. Python-Babel crashes if these files aren't
+    # there, but it doesn't actually use them for anything important ¯\_(ツ)_/¯
+    locale_dir = os.path.join(
+        env.virtualenv_path, 'lib', 'python2.7', 'site-packages', 'babel', 'localedata'
+    )
+    with cd(locale_dir):
+        for locale in ('crk', 'crk_Macr', 'crk_Syll'):
+            run('cp en_CA.dat %s.dat' % locale)
 
 
 def require_itwewina():
@@ -296,10 +335,13 @@ def sapir():
     """
     Runs commands on Sapir.
     """
+    _ = os.path.join
     env.run = run
     env.hosts = ['sapir.artsrn.ualberta.ca']
-    env.path_base = '/home/neahtta'
-    env.itwewina_path = '/home/ARTSRN/easantos/itwewina/neahtta'
+    env.path_base = '/home/ARTSRN/easantos'
+    env.clone_path = env.path_base
+    env.itwewina_path = _(env.path_base, 'itwewina', 'neahtta')
+    env.virtualenv_path = _(env.itwewina_path, '.venv')
 
     env.svn_path = env.path_base + '/gtsvn'
     env.dict_path = env.path_base + '/neahtta/dicts'
