@@ -54,7 +54,7 @@ from config import yaml
 from contextlib import contextmanager
 from signal import SIGTERM, SIGUSR1
 
-from fabric.api import cd, env, local, prompt, run, settings, task
+from fabric.api import cd, env, local, prefix, prompt, run, settings, task
 from fabric.api import local as lrun
 from fabric.colors import cyan, green, red, yellow
 from fabric.contrib.console import confirm
@@ -239,9 +239,9 @@ def deploy():
             abort('Refusing to pull with uncommited changes.')
 
         run('git pull')
-        # Check if deps have changed before doing this:
-        # TODO: virtualenv non-sense
-        run('pip install -r requirements.txt')
+        with prefix('source venv/bin/activate'):
+            # TODO: Check if deps have changed before doing this:
+            run('pip install -r requirements.txt')
 
 
 def require_itwewina():
@@ -390,9 +390,6 @@ def read_config(proj):
         config = yaml.load(F)
 
     return config
-
-# @task
-# def install_geo():
 
 
 @task
