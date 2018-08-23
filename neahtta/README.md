@@ -25,13 +25,12 @@ You need:
 
 ### Python
 
-Use [virtualenv][venv] to create an environment with requirements.txt, and set up a
-webserver to direct requests to neahttadigisanit.fcgi. The virtualenv could
-really go anywhere, but I find it useful to keep it in a local directory so
-that I always know where it is.
+Use [virtualenv][venv] to create an environment with requirements.txt.
+The virtualenv could really go anywhere, but I find it useful to keep it in
+a local directory so that I always know where it is.
 
-    virtualenv .env
-    . .env/bin/activate
+    virtualenv .venv
+    source .venv/bin/activate
     pip install -r requirements.txt
 
 If more requirements become necessary, be sure to update the file and check it
@@ -39,21 +38,22 @@ in.
 
     pip freeze > requirements.txt
 
-Update the [Babel][] library's locale data. Babel will probably not have locales
-created for 'crk', for example. On Sapir, existing locales are in
+Update the [Babel][] library's locale data. Babel probably will not have locales
+created for 'crk' and its written variants. On Sapir, existing locales are in
+located here:
 
-	/srv/apps/nds/babel_locales/crk.dat
-	/srv/apps/nds/babel_locales/crk_Macr.dat
-	/srv/apps/nds/babel_locales/crk_Syll.dat
+    /srv/apps/nds/babel_locales/crk.dat
+    /srv/apps/nds/babel_locales/crk_Macr.dat
+    /srv/apps/nds/babel_locales/crk_Syll.dat
 
-As a workaround if you don't have access to these, you can copy the locales for
-`en_CA.bin`, located in your virtualenv:
+As a sloppy workaround, if you don't have access to these, you can copy the
+locales for `en_CA.bin`, located in your virtualenv:
 
-	.env/lib/python2.7/site-packages/babel/localedata/en_CA.dat
+    .venv/lib/python2.7/site-packages/babel/localedata/en_CA.dat
 
 Copy the needed locales to the your virtualenv.
 
-	cp /srv/apps/nds/babel_locales/crk*.dat .env/lib/python2.7/site-packages/babel/localedata/
+    cp /srv/apps/nds/babel_locales/crk*.dat .venv/lib/python2.7/site-packages/babel/localedata/
 
 [Babel]: http://babel.pocoo.org/en/latest/index.html
 [venv]: http://www.virtualenv.org/
@@ -64,7 +64,7 @@ Install [NodeJS], however is most convenient for your system.
 
 Now, install neahtta's additional dependencies:
 
-	npm install
+    npm install
 
 [Node.JS]: https://nodejs.org
 
@@ -76,14 +76,14 @@ The secret key is required for session storage in Flask.
 To generate `secret_key.do.not.check.in`, use a cryptographically secure random
 number generator. You can use the included script that will do this for you:
 
-	python generate_key.py > secret_key.do.not.check.in
+    python generate_key.py > secret_key.do.not.check.in
 
 
-## Running (development server)
+## Running the development server
 
 Activate the virtualenv, then:
 
-	fab itwewina runserver
+    fab itwewina runserver
 
 Replace "itwewina" with the specific instance you need.
 
@@ -94,7 +94,7 @@ This project uses [cypress.io][] for in-browser (integration) tests.
 
 If you just want to run the tests, do the following:
 
-	fab local itwewina integration_tests
+    fab itwewina integration_tests
 
 If you are developing new tests or features, do the following:
 
@@ -104,7 +104,7 @@ First, start the development server (see above). It should be accessible at
 Assuming you already ran `npm install`, you should be able to run the UI tests
 with the following command:
 
-	npm test
+    npm test
 
 **Note**: You probably need an up-to-date browser for this to work. On my
 machine, this starts up a new Google Chrome 67 window and does all its testing
@@ -112,13 +112,34 @@ in there.
 
 If you want to write tests interactively, use Cypress's dashboard:
 
-	npm run cypress:open
+    npm run cypress:open
 
 For help with writing new tests, follow the [Cypress test writing
 guide][cypress-guide].
 
 [cypress.io]: https://www.cypress.io/
 [cypress-guide]: https://docs.cypress.io/guides/getting-started/writing-your-first-test.html
+
+## Deployment
+
+Always merge code you want to deploy into the `development` branch.
+Then use the following command:
+
+    fab sapir itwewina ship_it
+
+This runs the integration tests (see [Testing]). Once the test pass,
+this updates the `sapir` branch to be up-to-date with development, and the
+pushes the newly updated branch to GitHub. Then it pulls the changes on Sapir,
+including installing any new requirements and restarts the `mod_wsgi` server.
+
+If you just want to pull the latest changes from the `sapir` branch, you can use
+this instead:
+
+    fab sapir itwewina deploy
+
+The code runs using [mod_wsgi].
+
+[mod_wsgi]: http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
 
 
 ### Lexical and linguistic dependencies to check
@@ -166,6 +187,4 @@ individual Python files. A short overview follows:
 See http://giellatekno.uit.no/doc/dicts/dictionarywork.html
 
 
-
-
-vim: set ts=4 sw=4 tw=0 syntax=markdown :
+vim: set ts=4 sw=4 tw=80 et syntax=markdown :

@@ -245,6 +245,10 @@ def deploy():
         with prefix('source %s/bin/activate' % env.virtualenv_path):
             run('pip install -r requirements.txt')
 
+    # If the .wsgi file is changed, the server will restart.
+    # http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/#support-for-automatic-reloading
+    run('touch %s' % os.path.join(env. itwewina_path, 'neahtta.wsgi'))
+
 
 @task
 def provision():
@@ -280,6 +284,8 @@ def provision():
     with cd(locale_dir):
         for locale in ('crk', 'crk_Macr', 'crk_Syll'):
             run('cp en_CA.dat %s.dat' % locale)
+
+    # TODO: create neahtta.wsgi from template.
 
 
 def require_itwewina():
