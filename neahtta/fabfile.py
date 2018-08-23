@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """
 Tools for compiling dictionaries automatically.
 
@@ -54,6 +55,7 @@ from contextlib import contextmanager
 from signal import SIGTERM, SIGUSR1
 
 from fabric.api import cd, env, local, prompt, run, settings, task
+from fabric.api import local as lrun
 from fabric.colors import cyan, green, red, yellow
 from fabric.contrib.console import confirm
 from fabric.decorators import roles
@@ -157,8 +159,6 @@ def set_proj():
                     if cont != 'Y':
                         sys.exit()
 
-    return
-
 
 @task
 def local(*args, **kwargs):
@@ -194,20 +194,108 @@ env.no_svn_up = False
 env.use_ssh_config = True
 # env.key_filename = '~/.ssh/neahtta'
 
-if ['local', 'gtweb', 'gtoahpa'] not in sys.argv:
+# set up environments
+# Assume local unless otherwise noted
+if ['local', 'gtweb', 'gtoahpa', 'sapir'] not in sys.argv:
     env = local(env)
 
 
 env.real_hostname = socket.gethostname()
 
 
-# set up environments
-# Assume local unless otherwise noted
+@task
+def ship_it(tests='run'):
+    """
+    Tests and ships itwêwina on to Sapir.
+    """
+    if tests == 'run':
+        integration_tests()
+    # Fast-forward to development.
+    lrun('git fetch . development:sapir')
+    lrun('git push origin sapir:sapir')
+    deploy()
+
+
+@task
+def deploy():
+    """
+    Deploys itwêwina on Sapir.
+    """
+
+    require_sapir()
+    require_itwewina()
+
+    # This will ONLY run on Sapir
+    sapir()
+    no_svn_up()
+
+    # TODO: nice to have: have the dictionaries changed?
+    # TODO: nice to have: have the FSTs changed?
+
+    with cd(env.itwewina_path):
+        if git_branch() != 'sapir':
+            abort('Expected to be on the `sapir` branch; actually on `%s`' % git_branch())
+
+        if git_has_uncommited_changes():
+            abort('Refusing to pull with uncommited changes.')
+
+        run('git pull')
+        # Check if deps have changed before doing this:
+        # TODO: virtualenv non-sense
+        run('pip install -r requirements.txt')
+
+
+def require_itwewina():
+    if env.get('current_dict') != 'itwewina':
+        abort('please run as `fab [server] itwewina [commands ...]`')
+
+
+def require_sapir():
+    if not all('sapir' in hostname for hostname in env.hosts):
+        print(env.hosts)
+        abort('please run as `fab sapir [app] [commands ...]`')
+
+
+def git_branch():
+    """
+    Returns the remote git branch.
+    """
+    branches = run('git branch --no-color').split('\n')
+    for branch_line in branches:
+        # Get rid of trailing newline
+        branch_line = branch_line.rstrip()
+        if branch_line.startswith('* '):
+            return branch_line[2:]
+    abort('could not detect current git branch in %r' % branches)
+
+
+def git_has_uncommited_changes():
+    run('git status --porcelain --untracked-files=no').split('\n')
+
 
 @task
 def no_svn_up():
     """ Do not SVN up """
     env.no_svn_up = True
+
+
+@task
+def sapir():
+    """
+    Runs commands on Sapir.
+    """
+    env.run = run
+    env.hosts = ['sapir.artsrn.ualberta.ca']
+    env.path_base = '/home/neahtta'
+    env.itwewina_path = '/home/ARTSRN/easantos/itwewina/neahtta'
+
+    env.svn_path = env.path_base + '/gtsvn'
+    env.dict_path = env.path_base + '/neahtta/dicts'
+    env.neahtta_path = env.path_base + '/neahtta'
+    env.i18n_path = env.path_base + '/neahtta/translations'
+
+    env.make_cmd = "make -C %s -f %s" % (env.dict_path, os.path.join(env.dict_path, 'Makefile'))
+    env.remote_no_fst = False
 
 
 @task
@@ -866,9 +954,7 @@ def integration_tests():
     from fabric.operations import local as lrun
 
     if env.hosts != ['localhost']:
-        print >>sys.stderr, red(
-            "** can only run integration tests on localhost")
-        sys.exit(2)
+        abort(red("** can only run integration tests on localhost"))
 
     with development_server():
         lrun("npm run cypress:run")
