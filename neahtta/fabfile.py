@@ -210,7 +210,7 @@ def ship_it(tests='run'):
     """
     if tests == 'run':
         integration_tests()
-    # Fast-forward to development.
+    # Fast-forward production's branch to development, and push!
     lrun('git fetch . development:sapir')
     lrun('git push origin sapir:sapir')
     deploy()
@@ -226,7 +226,6 @@ def deploy():
     require_itwewina()
 
     # This will ONLY run on Sapir
-    sapir()
     no_svn_up()
 
     # TODO: nice to have: have the dictionaries changed?
@@ -246,11 +245,17 @@ def deploy():
 
 
 def require_itwewina():
+    """
+    Check that we're using deploying itwewina; abort otherwise.
+    """
     if env.get('current_dict') != 'itwewina':
         abort('please run as `fab [server] itwewina [commands ...]`')
 
 
 def require_sapir():
+    """
+    Check that we're using deploying on sapir; abort otherwise.
+    """
     if not all('sapir' in hostname for hostname in env.hosts):
         print(env.hosts)
         abort('please run as `fab sapir [app] [commands ...]`')
@@ -270,7 +275,14 @@ def git_branch():
 
 
 def git_has_uncommited_changes():
-    run('git status --porcelain --untracked-files=no').split('\n')
+    """
+    Return whether the remote git repository has uncommited changes.
+
+    Ignores untracked files.
+    """
+    output = run('git status --porcelain --untracked-files=no')
+    # If there's any output at all, that means there's untracked changes.
+    return len(output) > 0
 
 
 @task
