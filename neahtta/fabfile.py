@@ -242,8 +242,7 @@ def deploy():
                   'Please commit, stash, or reset the changes as needed')
 
         run('git pull')
-        with prefix('source venv/bin/activate'):
-            # TODO: Check if deps have changed before doing this:
+        with prefix('source %s/bin/activate' % env.virtualenv_path):
             run('pip install -r requirements.txt')
 
 
@@ -262,7 +261,7 @@ def provision():
     # Clone the repo
     clone_url = lrun('git remote get-url origin', capture=True)
     with cd(env.clone_path):
-        run('git clone %s itwewina' % clone_url)
+        run('git clone %s itwewina --branch sapir' % clone_url)
 
     assert env.itwewina_path.startswith(env.clone_path),\
         'did not find itwewina within the clone path'
