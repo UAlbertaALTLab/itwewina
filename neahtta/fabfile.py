@@ -87,6 +87,11 @@ location_restriction_notice = {
 }
 
 
+# Staging is the machine I test things on before I move them to "production"
+# (i.e., Sapir).
+STAGING_HOST = 'vagrant@localhost:2222'
+
+
 def get_projects():
     """ Find all existing projects which can be included as an env
     argument """
@@ -222,7 +227,7 @@ def deploy():
     Deploys itwêwina on Sapir.
     """
 
-    require_sapir()
+    require_sapir_or_staging()
     require_itwewina()
 
     # This will ONLY run on Sapir
@@ -259,7 +264,7 @@ def provision():
     the Babel locales.
     """
 
-    require_sapir()
+    require_sapir_or_staging()
     require_itwewina()
 
     # Clone the repo
@@ -305,6 +310,19 @@ def require_sapir():
         abort('please run as `fab sapir [app] [commands ...]`')
 
 
+def require_sapir_or_staging():
+    """
+    Check whether using staging or production environment.
+
+    Aborts when not staging or production
+    """
+    if all(STAGING_HOST in hostname for hostname in env.hosts):
+        # Because this function is supposed to abort if there's something
+        # wrong, when there's something right, do nothing:
+        return
+    require_sapir()
+
+
 def git_branch():
     """
     Returns the remote git branch.
@@ -333,6 +351,28 @@ def git_has_uncommited_changes():
 def no_svn_up():
     """ Do not SVN up """
     env.no_svn_up = True
+
+
+@task
+def staging():
+    """
+    Runs commands on the staging envionment.
+
+    In this case, it's a local virtual machine managed by Vagrant.
+
+    Check:
+
+        vagrant port
+
+    ...to discover what port SSH is running on.
+    """
+    _ = os.path.join
+    sapir()  # inherit most of the config from Sapir
+    env.hosts = [STAGING_HOST]
+    env.path_base = '/home/vagrant'
+    env.clone_path = env.path_base
+    env.itwewina_path = _(env.path_base, 'itwewina', 'neahtta')
+    env.virtualenv_path = _(env.itwewina_path, '.venv')
 
 
 @task
