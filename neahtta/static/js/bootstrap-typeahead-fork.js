@@ -30,6 +30,7 @@
     this.$menu = $(this.options.menu).appendTo('body')
     this.source = this.options.source
     this.onselect = this.options.onselect
+    this.onenter = this.options.onenter
     this.strings = true
     this.shown = false
     this.listen()
@@ -222,7 +223,10 @@
           break
 
         case 13: // enter
-          true
+          this.hide()
+          if (this.onenter)
+            this.onenter();
+          break;
 
         case 27: // escape
           this.hide()
@@ -297,6 +301,7 @@
   , menu: '<ul class="typeahead dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   , onselect: null
+  , onenter: null
   , property: 'value'
   }
 

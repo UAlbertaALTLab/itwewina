@@ -5,6 +5,7 @@ $(window).bind("unload", function() {
 });
 
 $(document).ready( function() {
+    var $searchForm = $('form#neahttasaanit');
     // Select everything when the document loads
     // $('input[name="lookup"]').select();
 
@@ -36,11 +37,9 @@ $(document).ready( function() {
                 return [] ;
             }
         },
-        // Immediately perform search when selected.
-        onselect: function (_value) {
-            // XXX: I guess there can only be one <form> on the page?
-            $('form').submit();
-        },
+        // Immediately perform search when selected or when <enter> is pressed.
+        onselect: performSearch,
+        onenter: performSearch,
     });
     $('input').focus(function(evt) {
         $('input').attr('readonly', false);
@@ -73,6 +72,10 @@ $(document).ready( function() {
 
     });
 
+    // Initiates the search with whatever's typed in the form.
+    function performSearch() {
+        $searchForm.submit();
+    }
 });
 
 // vim: set ts=4 sw=4 tw=0 syntax=javascript :
