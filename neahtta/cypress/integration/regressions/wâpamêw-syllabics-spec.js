@@ -13,6 +13,7 @@ describe('Display of syllabic codas', function () {
     // Type "ᐘᐸᒣᐤ" in the search box, and do the search.
     cy.get('form#neahttasaanit')
       .get('input[name=lookup]')
+      .wait(50) /* Wait a bit so that typing won't eat keypresses! */
       .type('ᐘᐸᒣᐤ');
     cy.get('form#neahttasaanit')
       .contains('.hidden-phone *', 'Search') // Click the desktop visible link

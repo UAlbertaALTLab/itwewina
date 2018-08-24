@@ -11,6 +11,7 @@ describe('Masckwacîs Dictionary validation', function () {
     // Type "nistohtat" and do the search.
     cy.get('form#neahttasaanit')
       .get('input[name=lookup]')
+      .wait(50) /* Wait a bit so that the autocomplete doesn't eat up the first keypress. */
       .type('nistohtat');
     cy.get('form#neahttasaanit')
       .contains('.hidden-phone *', 'Search') // Click the desktop visible link
