@@ -77,5 +77,13 @@ Vagrant.configure("2") do |config|
     a2enmod proxy_http
     a2enmod alias
     service apache2 restart
+    pushd /tmp
+    curl -sLO http://apertium.projectjj.com/apt/nightly/pool/main/h/hfst/libhfst51_3.14.0+g3647~99dc9ffd-1~xenial1_amd64.deb
+    curl -sLO http://apertium.projectjj.com/apt/nightly/pool/main/h/hfst/libhfst-dev_3.14.0+g3647~99dc9ffd-1~xenial1_amd64.deb
+    curl -sLO http://apertium.projectjj.com/apt/nightly/pool/main/h/hfst/hfst_3.14.0+g3647~99dc9ffd-1~xenial1_amd64.deb
+    dpkg --install libhfst51_*.deb
+    dpkg --install libhfst51-dev_*.deb
+    dpkg --install hfst_*.deb
+    popd
   SHELL
 end
