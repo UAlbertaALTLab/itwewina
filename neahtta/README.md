@@ -50,11 +50,11 @@ located here:
 As a sloppy workaround, if you don't have access to these, you can copy the
 locales for `en_CA.bin`, located in your virtualenv:
 
-    .venv/lib/python2.7/site-packages/babel/localedata/en_CA.dat
+    .venv/lib/python2.7/site-packages/babel/locale-data/en_CA.dat
 
 Copy the needed locales to the your virtualenv.
 
-    cp /srv/apps/nds/babel_locales/crk*.dat .venv/lib/python2.7/site-packages/babel/localedata/
+    cp /srv/apps/nds/babel_locales/crk*.dat .venv/lib/python2.7/site-packages/babel/locale-data/
 
 [Babel]: http://babel.pocoo.org/en/latest/index.html
 [venv]: http://www.virtualenv.org/

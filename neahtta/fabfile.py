@@ -284,7 +284,7 @@ def provision():
     # Create dummy locales for 'crk'. Python-Babel crashes if these files aren't
     # there, but it doesn't actually use them for anything important ¯\_(ツ)_/¯
     locale_dir = os.path.join(
-        env.virtualenv_path, 'lib', 'python2.7', 'site-packages', 'babel', 'localedata'
+        env.virtualenv_path, 'lib', 'python2.7', 'site-packages', 'babel', 'locale-data'
     )
     with cd(locale_dir):
         for locale in ('crk', 'crk_Macr', 'crk_Syll'):
