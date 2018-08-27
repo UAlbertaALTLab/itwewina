@@ -74,6 +74,12 @@ def register_babel(app):
         """ This function defines the behavior involved in selecting a
         locale. """
 
+        # TODO: redo this method such that it recieves the language from:
+        #   1. language requested in the query string
+        #   2. language associated with the session
+        #   3. guess from Accept-Language header:
+        # >>> request.accept_languages.best_match(['crk-Macr', 'crk-Cans', 'crk', 'en'])
+
         locales = app.config.locales_available
 
         # Does the locale exist already?
