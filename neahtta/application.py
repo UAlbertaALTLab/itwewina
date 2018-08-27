@@ -1,3 +1,4 @@
+
 __all__ = [
     'create_app'
 ]
@@ -8,7 +9,8 @@ ADMINS = [
 
 import sys, os
 import logging
-import urllib
+
+import yaml
 
 from   flask                          import ( Flask
                                              , request
@@ -58,7 +60,6 @@ def register_babel(app):
         """
 
         from i18n.utils import iso_filter
-        from socket import gethostname
         from itertools import izip_longest
 
         loc = get_locale()
@@ -207,24 +208,8 @@ def prepare_assets(app):
     # TODO: this requires preprocessing templates once so the function
     # runs.
 
-    #### @app.context_processor
-    #### def register_asset():
-
-    ####     def registerer_js(path):
-    ####         if not app.assets.prepared:
-    ####             print "add " + path
-    ####             app.assets.main_js_assets.append(path)
-    ####         return ''
-
-    ####     def registerer_css(path):
-    ####         if not app.assets.prepared:
-    ####             print "add " + path
-    ####             app.assets.main_css_assets.append(path)
-    ####         return ''
-
-    ####     return dict(register_js_asset=registerer_js, register_css_asset=registerer_css)
-
     return app
+
 
 def register_assets(app):
     """ After all assets have been collected from parsed templates...
@@ -270,23 +255,6 @@ def register_assets(app):
 
     return app
 
-# def check_dependencies():
-#     import distutils
-# 
-#     execs = [
-#         'node',
-#         'uglifyjs',
-#     ]
-# 
-#     print >> sys.stdout, sys.version
-# 
-#     for e in execs:
-#         p = distutils.spawn.find_executable(e)
-#         if p is None:
-#             print >> sys.stderr, "* Missing dependency in $PATH: " + e
-#             print >> sys.stderr, "  Install the executable, check that it is available in $PATH, "
-#             print >> sys.stderr, "  and check that it's executable. "
-#             sys.exit()
 
 def create_app():
     """ Set up the Flask app, cache, read app configuration file, and
@@ -300,28 +268,20 @@ def create_app():
     # but don't know why yet. Need to check. It only happens on the
     # first POST lookup, however...
 
-    # import inspect
-    # curframe = inspect.currentframe()
-    # calframe = inspect.getouterframes(curframe, 2)
-    # print "caller name", calframe[1]
-    import yaml
     with open(os.environ['NDS_CONFIG'], 'r') as F:
         static_prefix = yaml.load(F).get('ApplicationSettings').get('fcgi_script_path', '')
 
     os.environ['PATH'] += os.pathsep + os.path.join(os.path.dirname(__file__), 'node_modules/.bin')
-    # check_dependencies()
 
     app = Flask(__name__,
-        static_url_path=static_prefix+'/static',
-        template_folder=cwd('templates')
-   )
+                static_url_path=static_prefix+'/static',
+                template_folder=cwd('templates'))
 
     app = jinja_options_and_filters(app)
     app.production = False
 
-    DEFAULT_CONF = os.path.join( os.path.dirname(__file__)
-                               , 'configs'
-                               )
+    DEFAULT_CONF = os.path.join(os.path.dirname(__file__),
+                                'configs')
 
     app.config['cache'] = cache
     # TODO: make sure this isn't being specified by an env variable

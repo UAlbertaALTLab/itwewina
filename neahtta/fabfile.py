@@ -761,7 +761,7 @@ def find_babel():
 
 @task
 def compile_strings():
-    """ Compile .po strings to .mo strings for use in the live server. """
+    """ Compile .po translations to .mo strings for use in the live server. """
 
     if hasattr(env, 'current_dict'):
         config = 'configs/%s.config.yaml.in' % env.current_dict
