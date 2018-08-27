@@ -123,3 +123,4 @@ secret_key.do.not.check.in
 
 # PyCharm
 .idea/
+itwewina.wsgi

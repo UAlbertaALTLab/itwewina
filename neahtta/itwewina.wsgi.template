@@ -1,0 +1,23 @@
+# CHANGE THE PATHS HERE AS APPROPRIATE:
+VIRTUALENV_PATH  = '/path/to/itwewina/neahtta/.venv/'
+APP_PATH         = '/path/to/itwewina/neahtta'
+# MAKE SURE YOU CREATE THIS FILE:
+NDS_CONFIG_FILE  = 'configs/itwewina.config.yaml'
+
+import os
+import sys
+
+activate_this = os.path.join(VIRTUALENV_PATH, 'bin/activate_this.py')
+execfile(activate_this, dict(__file__=activate_this))
+
+sys.path.insert(0, APP_PATH)
+
+os.chdir(APP_PATH)
+
+os.environ['NDS_CONFIG'] = NDS_CONFIG_FILE
+from application import create_app
+
+application = create_app()
+
+
+# vim: set ft=python:

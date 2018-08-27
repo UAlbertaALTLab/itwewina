@@ -252,7 +252,7 @@ def deploy():
 
     # If the .wsgi file is changed, the server will restart.
     # http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/#support-for-automatic-reloading
-    run('touch %s' % os.path.join(env. itwewina_path, 'neahtta.wsgi'))
+    run('touch %s' % os.path.join(env. itwewina_path, 'itwewina.wsgi'))
 
 
 @task

@@ -160,6 +160,9 @@ The code runs using [mod_wsgi].
 
 [mod_wsgi]: http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
 
+Copy `itwewina.wsgi.template` to `itwewina.wsgi` and customized as is required,
+following the documentation for both Flask and [mod_wsgi].
+
 
 ## Loose documentation
 
