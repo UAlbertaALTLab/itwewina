@@ -2,6 +2,7 @@
 import warnings
 
 from flask import current_app, request, g, session
+from flask.ext.babel import gettext, force_locale
 from . import blueprint
 
 from i18n.utils import get_locale
@@ -83,20 +84,24 @@ def define_app_name():
     """ Add the custom current_app name from configs to global context for
     templates.
     """
-    # Fallback to the app name written in the config file.
-    default = current_app.config.app_name
+
+    default_app_name = current_app.config.app_name
+
+    # For requests that have an explict "from" language, use the translation from that language.
     if hasattr(g, '_from'):
-        warnings.warn('Using hard-coded app name instead of consulting gettext MO files.')
-        # XXX: HACK: I don't really understand the locale system, so
-        # I'm hard-coding the translations here instead of using gettext.
-        localized_app_name = {
-            'crk': u'itwêwina',
-            'crkMacr': u'itwēwina',
-            'crkS': u'ᐃᑘᐏᓇ'
-        }.get(g._from, default)
+        # Translate the language in the URL to an actual locale name.
+        tmp_locale = {
+            'crkMacr': 'crk_Macr', 'crkS': 'crk_Syll'
+        }.get(g._from, g._from)
+        # Make gettext() fetch from the translation for the request instead
+        # of the global translation.
+        with force_locale(tmp_locale):
+            localized_app_name = gettext(default_app_name)
     else:
-        localized_app_name = default
-    return dict(app_name=localized_app_name)
+        # Get the current app's translation.
+        localized_app_name = gettext(default_app_name)
+    return dict(app_name=ensure_unicode(localized_app_name))
+
 
 @blueprint.context_processor
 def nav_style():
@@ -176,3 +181,17 @@ def detail_page_search_form():
         detail_page_search_template = False
 
     return {'has_detail_page_search_form': detail_page_search_template}
+
+
+def ensure_unicode(text):
+    """
+    Returns a unicode object, regardless if text is a str or unicode object.
+    Decodes str objects as UTF-8.
+
+    :param text:
+    :return:
+    """
+    if isinstance(text, str):
+        return text.decode('UTF-8')
+    else:
+        return text

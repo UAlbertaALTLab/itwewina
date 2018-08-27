@@ -53,6 +53,8 @@ def register_babel(app):
 
     app.babel = babel
 
+    # TODO: stop if translations don't exist!
+
     @app.before_request
     def append_session_globals():
         """ Add two-character and three-char session locale to global

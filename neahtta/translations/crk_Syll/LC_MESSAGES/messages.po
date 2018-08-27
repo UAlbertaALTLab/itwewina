@@ -53,7 +53,7 @@ msgstr "ᐍᐦᒋ ᒪᓯᓇᐦᐃᑫᐏᐣ"
 
 #: configs/itwewina.config.yaml.in:4
 msgid "itwêwina"
-msgstr ""
+msgstr "ᐃᑘᐏᓇ"
 
 #: configs/itwewina.config.yaml.in:5
 msgid "Online Plains Cree dictionary"
