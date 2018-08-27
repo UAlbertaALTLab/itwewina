@@ -20,6 +20,7 @@ For more information on package dependencies, see `requirements.txt`.
 ## Installing
 
 You need:
+
   - Python 2.7.12, with Python virtualenv
   - [Node.JS][]
 
@@ -38,8 +39,8 @@ in.
 
     pip freeze > requirements.txt
 
-Update the [Babel][] library's locale data. Babel probably will not have locales
-created for 'crk' and its written variants. On Sapir, existing locales are in
+Update [Babel][]'s locale data. Babel probably will not have locales
+created for 'crk' and its written variants. On Sapir, existing locales are
 located here:
 
     /srv/apps/nds/babel_locales/crk.dat
@@ -78,6 +79,24 @@ number generator. You can use the included script that will do this for you:
 
     python generate_key.py > secret_key.do.not.check.in
 
+
+## The FSTs and the dictionaries
+
+Make sure you copy the latest FSTs and dictionaries to the appriopriate places.
+
+What I do is copy all the dictionaries (XML files) from the server's copy of
+itwêwina to my local copy:
+
+    scp sapir.artsrn.ualberta.ca:/data/exps/itwewina/neahtta/dicts/*.xml dicts/
+
+As for the FSTs, ask Antti (or me, Eddie) where the latest FSTs are, and copy
+them somewhere accessible. On Sapir, this is
+
+    /home/ARTSRN/easantos/crk-fsts
+
+
+You will need configure this directory in `configs/itwewina.config.yml`. See
+later for "Configuration".
 
 ## Running the development server
 
@@ -140,6 +159,60 @@ this instead:
 The code runs using [mod_wsgi].
 
 [mod_wsgi]: http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
+
+
+## Loose documentation
+
+I wrote this documentation as I was setting up the new deployment of itwêwina on
+Sapir. It is not very well edited :/
+
+> Okay so you need to have the FSTs in a readable place.
+> 
+> Probably set them to 444 permissions (all read permissions).
+> The directory is 774 (list directory and write new files) -- gotta let that webserver process create temp
+> files if it wants to.
+> 
+> Then you need to have the dictionaries in the right place. I am doing
+> this.
+> 
+> OH, and you need to generate the translations :/
+> 
+>     fab itwewina compile_strings
+> 
+> You need node.js...
+> 
+>     npm install
+> 
+> GENERATE A SECRET KEY:
+> 
+>     python ./generate_key.py > secret_key.do.not.check.in
+> 
+> Setup the WSGI config:
+> 
+> In general, follow:
+> 
+> http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
+> 
+> But here's the config we have:
+> 
+> Part of /etc/apache2/sites-available/000-default.conf:
+> 
+>     WSGIDaemonProcess itwewina user=neahtta group=www-data threads=3
+>     WSGIScriptAlias /itwewina /data/exps/itwewina/neahtta/itwewina.wsgi/itwewina
+>     WSGIScriptReloading On
+> 
+>     <Directory /data/exps/itwewina/neahtta>
+>         WSGIProcessGroup itwewina
+>         WSGIApplicationGroup %{GLOBAL}
+>         Require all granted
+>     </Directory>
+> 
+> ---
+> 
+> Finally, you're able to
+> 
+>    fab itwewina runserver
+
 
 
 ### Lexical and linguistic dependencies to check
