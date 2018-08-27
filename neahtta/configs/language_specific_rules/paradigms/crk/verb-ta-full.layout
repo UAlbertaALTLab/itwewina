@@ -1,5 +1,5 @@
 name: "Transitive animate verb full paradigm"
-paradigm: 'verb-ta.paradigm'
+'paradigm: ''verb-ta.paradigm'''
 layout:
   type: "full"
 tooltips:
@@ -7,9 +7,9 @@ tooltips:
     "2s → 1s": "2nd person singular actor → 1st person singular goal"
     "2s → 1p": "2nd person singular actor → 1st person plural goal"
     "2p → 1s": "2nd person plural actor → 1st person singular goal"
-    "2p → 1p": "2nd person plural actor → 1st person plural goal"
-    "1s → 2s": "1st person plural actor → 2nd person singular goal"
-    "1s → 2p": "1st person singular actor → 2nds person singular goal"
+    "2p → 1p": "2nd person plural actor → 1st person plural goal" "
+    "1s → 2s": "1st person singular actor → 2nd person singular goal"
+    "1s → 2p": "1st person singular actor → 2nd person plural goal"
     "1p → 2s": "1st person plural actor → 2nd person singular goal"
     "1p → 2p": "1st person plural actor → 2nd person plural goal"
     "1s → 3s": "1st person singular actor → 3rd person singular goal"
@@ -289,7 +289,7 @@ tooltips:
 | "4 → 21"                       | Ind+Fut+Def+4Sg/Pl+12PlO       |                                |
 | "4 → 2p"                       | Ind+Fut+Def+4Sg/Pl+2PlO        |                                |
 |                                |                                |                                |
-| "Third person participants"    | : "Independent: ka-"           | : "Independent: ta-"           |
+| "Third person participants"    | : "Independent"                |                                |
 | "3s → 4"                       | Ind+Fut+Def+3Sg+4Sg/PlO        |                                |
 | "3p → 4"                       | Ind+Fut+Def+3Pl+4Sg/PlO        |                                |
 | "4 → 5"                        | Ind+Fut+Def+4Sg/Pl+5Sg/PlO     |                                |
@@ -310,7 +310,7 @@ tooltips:
 | "1s → 2p"                      | PV/ka+*+Cnj+Prs+1Sg+2PlO       | PV/ta+*+Cnj+Prs+1Sg+2PlO       |
 | "1p → 2s"                      | PV/ka+*+Cnj+Prs+1Pl+2SgO       | PV/ta+*+Cnj+Prs+1Pl+2SgO       |
 | "1p → 2p"                      | PV/ka+*+Cnj+Prs+1Pl+2PlO       | PV/ta+*+Cnj+Prs+1Pl+2PlO       |
-|                                |                                |                                |
+| "                              |                                |                                |
 | "Mixed participants"           | : "Conjunct: ka-"              | : "Conjunct: ta-"              |
 | "1s → 3s"                      | PV/ka+*+Cnj+Prs+1Sg+3SgO       | PV/ta+*+Cnj+Prs+1Sg+3SgO       |
 | "2s → 3s"                      | PV/ka+*+Cnj+Prs+2Sg+3SgO       | PV/ta+*+Cnj+Prs+2Sg+3SgO       |
