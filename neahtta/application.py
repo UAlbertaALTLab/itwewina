@@ -53,7 +53,8 @@ def register_babel(app):
 
     app.babel = babel
 
-    # TODO: stop if translations don't exist!
+    locales = app.config.locales_available
+    ensure_translations_exist(locales)
 
     @app.before_request
     def append_session_globals():
@@ -76,13 +77,11 @@ def register_babel(app):
         """ This function defines the behavior involved in selecting a
         locale. """
 
-        # TODO: redo this method such that it recieves the language from:
+        # TODO: redo this method such that it receives the language from:
         #   1. language requested in the query string
         #   2. language associated with the session
         #   3. guess from Accept-Language header:
         # >>> request.accept_languages.best_match(['crk-Macr', 'crk-Cans', 'crk', 'en'])
-
-        locales = app.config.locales_available
 
         # Does the locale exist already?
         ses_lang = session.get('locale', None)
@@ -262,6 +261,49 @@ def register_assets(app):
     app.assets.prepared = True
 
     return app
+
+
+def ensure_translations_exist(locales):
+    """
+    Ensures that the messages.mo file exists before running.
+
+    The messages.mo files are created using:
+
+        fab itwewina compile_strings
+
+    :param locales: list of locales to check
+    """
+    # translations / <locale> / LC_MESSAGES / messages.{po,mo}
+    j = os.path.join
+
+    ensure_file_exists('translations', directory=True)
+
+    for locale in locales:
+        locale_dir = j('translations', locale)
+        ensure_file_exists(locale_dir, directory=True)
+        translation = j(locale_dir, 'LC_MESSAGES', 'messages.po')
+
+        try:
+            ensure_file_exists(translation)
+        except EnvironmentError as e:
+            print >> sys.stderr, "Could not find translation. Please see: fab itwewina extract_strings"
+            raise e
+
+        compiled_translation = j(locale_dir, 'LC_MESSAGES', 'messages.mo')
+
+        try:
+            ensure_file_exists(compiled_translation)
+        except EnvironmentError as e:
+            print >> sys.stderr, "Could not find compiled translation. Please run: fab itwewina compile_strings"
+            raise e
+
+
+def ensure_file_exists(path, directory=False):
+    if not os.path.exists(path):
+        raise EnvironmentError('Could not find file: %s' % path)
+
+    if directory and not os.path.isdir(path):
+        raise EnvironmentError('Not a directory: %s' % path)
 
 
 def create_app():
