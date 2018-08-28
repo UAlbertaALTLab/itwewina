@@ -150,14 +150,14 @@ def prepare_assets(app):
     # assumes you've npm install uglify
     if not os.path.exists('./node_modules/uglify-js/bin/uglifyjs'):
         print >> sys.stderr, "Couldn't find uglify js: `npm install uglify-js`"
-        sys.exit()
+        sys.exit(1)
 
     app.assets.config['UGLIFYJS_BIN'] = './node_modules/uglify-js/bin/uglifyjs'
     app.assets.init_app(app)
 
     proj_css = []
     if app.config.has_project_css:
-        proj_css.append(app.config.has_project_css.replace('static/',''))
+        proj_css.append(app.config.has_project_css.replace('static/', ''))
 
     # assets
     app.assets.main_js_assets = [
