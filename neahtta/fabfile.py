@@ -249,6 +249,7 @@ def deploy():
         run('git pull')
         with prefix('source %s/bin/activate' % env.virtualenv_path):
             run('pip install -r requirements.txt')
+            compile_strings()
 
     # If the .wsgi file is changed, the server will restart.
     # http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/#support-for-automatic-reloading
@@ -906,8 +907,6 @@ def restart_running():
 def runserver(send_sigusr1=False):
     """ Run the development server."""
 
-    cmd = "pybabel compile -d translations"
-
     _path = 'configs/%s.config.yaml' % env.current_dict
 
     try:
@@ -921,9 +920,9 @@ def runserver(send_sigusr1=False):
                 red("** Production config not found, and on a production server. Exiting."))
             sys.exit(-1)
 
-    # TODO: request a signal
-    # TODO: option to turn on or off reloader.
+    compile_strings()
 
+    # TODO: option to turn on or off reloader.
     cmd = ['NDS_CONFIG=%s' % _path,
            'python neahtta.py dev']
     if send_sigusr1:
