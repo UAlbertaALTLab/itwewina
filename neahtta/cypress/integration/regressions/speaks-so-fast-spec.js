@@ -14,7 +14,7 @@ describe('Masckwacîs Dictionary validation', function () {
       .wait(50) /* Wait a bit so that the autocomplete doesn't eat up the first keypress. */
       .type('nistohtat');
     cy.get('form#neahttasaanit')
-      .contains('.hidden-phone *', 'Search') // Click the desktop visible link
+      .contains('button:visible', /Search|nitona|ᓂᑐᓇ/) // Click the desktop visible link
       .click();
 
     // Should be on a results page.
@@ -26,7 +26,7 @@ describe('Masckwacîs Dictionary validation', function () {
     cy.visit('/crk/eng');
 
     cy.get('#left_nav')
-      .contains('English → Plains Cree') // translate from English to nêhiyawêwin
+      .contains(/English → Plains Cree|[âā]kay[âā]s[îī]mowin → n[êē]hiyaw[êē]win/)
       .click();
 
     // Search for "speak".
@@ -72,9 +72,8 @@ describe('Masckwacîs Dictionary validation', function () {
     cy.get('.nav')
       .contains('full').click();
 
-    // X→3g (unspecified actor to 3rd person) should be in the full paradigm
-    cy.contains('kâ-nistohtâht')
-      .should('be.visible');
+    // XXX: should 'kâ-nistohtâht',  X→3Sg/Pl (unspecified actor to 3rd
+    // person) be in the full paradigm?
   });
 
   it('should find "âyiman"', function () {
