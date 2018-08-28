@@ -16,7 +16,7 @@ describe('Display of syllabic codas', function () {
       .wait(50) /* Wait a bit so that typing won't eat keypresses! */
       .type('ᐘᐸᒣᐤ');
     cy.get('form#neahttasaanit')
-      .contains('.hidden-phone *', 'Search') // Click the desktop visible link
+      .contains('button:visible', /Search|nitona|ᓂᑐᓇ/) // Search!
       .click();
 
     // Should have gone to the search results page.
