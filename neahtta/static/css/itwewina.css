@@ -1,5 +1,15 @@
-.footer {
-    height: 550px;
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    flex-shrink: 0;
+    height: auto;
+}
+
+div#wrap {
+    flex: 1 0 auto;
 }
 
 .more-detail, .more-detail-link {
@@ -30,7 +40,7 @@
 
 .partners-desktop {
     width: 660px;
-    height: 300px;
+    overflow: hidden;
 }
 
 .partners li {
