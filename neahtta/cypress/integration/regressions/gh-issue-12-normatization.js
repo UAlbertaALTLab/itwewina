@@ -30,22 +30,4 @@ describe('Orthographical normatization and presentations of word-form matching s
     cy.neahttaSearch('ma-mah-miyo-na-nah-nipaw');
     cy.containsInterpretation('ma-mâh-miyo-na-nâh-nipâw');
   });
-
-
-  it('finds multiple possibilities for "nipihk"', function () {
-    cy.visit('/crk/eng');
-
-    cy.neahttaSearch('nipihk');
-    cy.containsInterpretation('nipîhk');
-    cy.containsInterpretation('nîpîhk');
-    cy.containsInterpretation('nîpihk');
-    /**
-     * XXX: The lemma for 'nipihk' and 'nipik' is 'nipiw',
-     * however currently NDS will only show one analysis. It should show both
-     * analyses, however, this is tracked by issue #25.
-     *
-     * See: https://github.com/UAlbertaALTLab/itwewina/issues/25
-     */
-    cy.containsInterpretation(/\bnipih?k\b/);
-  });
 });
