@@ -507,6 +507,12 @@ class Lexicon(object):
               for k, v in settings.dictionaries.iteritems() ]
         )
 
+        # TODO: Create "derivative" dictionaries that parse a "base" dictinonary once,
+        # but act as spelling variant dictionaries.
+        #
+        # e.g.,
+        #  - crkeng-Macron.xml derives from crkeng.xml
+        #  - crkeng-Cans.xml derives from crkeng.xml
         alternate_dicts = dict(
             [ (k, reg_type(filename=v.get('path'), options=settings.dictionary_options.get(k, {})))
               for k, v in settings.variant_dictionaries.iteritems() ]
