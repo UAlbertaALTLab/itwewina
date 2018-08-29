@@ -842,8 +842,10 @@ class LanguagePairSearchView(DictionaryView, SearcherMixin):
 
             if current_app.config.strip_spaces:
                 user_input = user_input.strip()
+
+            context = self.get_shared_context(_from, _to, user_input=user_input)
             # This performs lots of the work...
-            search_result_context = self.search_to_context(user_input, **self.get_shared_context(_from, _to))
+            search_result_context = self.search_to_context(user_input, **context)
 
             self.log_in_session(user_input)
 
@@ -863,6 +865,7 @@ class LanguagePairSearchView(DictionaryView, SearcherMixin):
         if current_app.config.strip_spaces:
             user_input = user_input.strip()
 
+        # TODO: wtf is this even?
         if user_input in ['teksti-tv', 'tekst tv', 'teaksta tv']:
             session['text_tv'] = True
 
@@ -872,8 +875,10 @@ class LanguagePairSearchView(DictionaryView, SearcherMixin):
 
         self.log_in_session(user_input)
 
+        # "shared context" includes the search form, which needs to know the user_input.
+        context = self.get_shared_context(_from, _to, user_input=user_input)
         # This performs lots of the work...
-        search_result_context = self.search_to_context(user_input, **self.get_shared_context(_from, _to))
+        search_result_context = self.search_to_context(user_input, **context)
 
 
         # missing current_pair_settings
