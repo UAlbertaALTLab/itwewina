@@ -7,7 +7,7 @@ describe('Orthographical normatization and presentations of word-form matching s
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('e-wapamat');
-    cy.contains('ê-wâpamât');
+    cy.containsInterpretation('ê-wâpamât');
   });
 
   it('normatizes "ekakwenohtewawahwapamat"', function () {
@@ -21,14 +21,14 @@ describe('Orthographical normatization and presentations of word-form matching s
      * See discussion at:
      * https://github.com/UAlbertaALTLab/itwewina/issues/12#issuecomment-414729826
      */
-    cy.contains(/ê-kakwê-nôhtê-w[aâ]-wâh-wâpamât/);
+    cy.containsInterpretation(/^ê-kakwê-nôhtê-w[aâ]-wâh-wâpamât$/);
   });
 
   it('normatizes "ma-mah-miyo-na-nah-nipaw"', function () {
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('ma-mah-miyo-na-nah-nipaw');
-    cy.contains('ma-mâh-miyo-na-nâh-nipâw');
+    cy.containsInterpretation('ma-mâh-miyo-na-nâh-nipâw');
   });
 
 
@@ -36,9 +36,9 @@ describe('Orthographical normatization and presentations of word-form matching s
     cy.visit('/crk/eng');
 
     cy.neahttaSearch('nipihk');
-    containsInterpretation('nipîhk');
-    containsInterpretation('nîpîhk');
-    containsInterpretation('nîpihk');
+    cy.containsInterpretation('nipîhk');
+    cy.containsInterpretation('nîpîhk');
+    cy.containsInterpretation('nîpihk');
     /**
      * XXX: The lemma for 'nipihk' and 'nipik' is 'nipiw',
      * however currently NDS will only show one analysis. It should show both
@@ -46,14 +46,6 @@ describe('Orthographical normatization and presentations of word-form matching s
      *
      * See: https://github.com/UAlbertaALTLab/itwewina/issues/25
      */
-    containsInterpretation(/\bnipih?k\b/);
+    cy.containsInterpretation(/\bnipih?k\b/);
   });
-
-  function containsInterpretation(wordform) {
-    var content = wordform instanceof RegExp ?
-      wordform :
-      new RegExp('\\b' + wordform + '\\b');
-
-    cy.contains('.possible_analyses *', content);
-  }
 });

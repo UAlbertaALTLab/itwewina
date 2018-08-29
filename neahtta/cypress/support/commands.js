@@ -26,7 +26,7 @@
 
 /**
  * Executes a search. Should land on the search page.
- * 
+ *
  * NOTE: This skips waiting for autocompletion!
  * (Autocompletion makes these tests rather
  */
@@ -47,4 +47,25 @@ Cypress.Commands.add('neahttaSearch', (term) => {
 Cypress.Commands.add('logoContains', (content) => {
     cy.get('a.brand')
       .contains('*', content, { timeout: 0 });
+});
+
+/**
+ * On the search results page, this command asserts that the given normatized
+ * wordform interpretation is present.
+ *
+ * e.g., when you search for "miskinak", you would use this assertion to
+ * ensure that "miskinâhk" is a search result.
+ *
+ * @param String|RegExp wordform
+ *        When a String, searches for that EXACT wordform (i.e., it cannot be
+ *        part of another word). You may also provide a RegExp which will be
+ *        searched verbatim.
+ */
+Cypress.Commands.add('containsInterpretation', (wordform) => {
+  var content = wordform instanceof RegExp ?
+    /* NOTE: JavaScript's "\b" doesn't work with non-ASCII characters (boo!)
+     * so we may have to be creative with how we define word boundaries. */
+    wordform : new RegExp(`\\b${wordform}\\b|^${wordform}$`);
+
+  cy.contains('.possible_analyses *', content);
 });
