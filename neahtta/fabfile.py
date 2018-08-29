@@ -136,11 +136,11 @@ def run_or_die(cmd, *args, **kwargs):
 
 
 @task(aliases=get_projects())
-def set_proj():
+def set_proj(name=None):
     """ Set the project. This is aliased to whatever existing project
     names there are. ... Assuming no project name will be 'local' or
     'compile' """
-    proj = get_project()
+    proj = name or get_project()
 
     env.clean_first = False
 
@@ -209,7 +209,18 @@ env.real_hostname = socket.gethostname()
 
 
 @task
-def ship_it(tests='run'):
+def d():
+    """
+    Same as: fab itwewina deploy:no-integration-tests
+
+    (I run this all the time to deploy already tested code).
+    """
+    set_proj('itwewina')
+    deploy(tests='no-integration-tests')
+
+
+@task
+def deploy(tests='run'):
     """
     Tests and ships itwêwina on to Sapir.
     """
@@ -218,13 +229,13 @@ def ship_it(tests='run'):
     # Fast-forward production's branch to development, and push!
     lrun('git fetch . development:sapir')
     lrun('git push origin sapir:sapir')
-    deploy()
+    ship_it()
 
 
 @task
-def deploy():
+def ship_it():
     """
-    Deploys itwêwina on Sapir.
+    Updates itwêwina's code on Sapir.
     """
 
     require_sapir_or_staging()
