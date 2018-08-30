@@ -549,6 +549,22 @@ class DictionaryEntryXMLDictCompat(DictionaryEntry):
         # TODO: interpret queries as requests for data.
         raise NotImplementedError
 
+    def find(self, query):
+        raise NotImplementedError
+
+    def get(self, attr):
+        """
+        Fake an <e> attribute access.
+        :param attr:
+        :return:
+        """
+        if attr == 'left':
+            return self.lemma
+        elif attr == 'right':
+            # XXX: hacky code to account for the "right" side of the thingymabober.
+            raise NotImplementedError
+        raise NotImplementedError
+
     def __len__(self):
         raise NotImplementedError
 
