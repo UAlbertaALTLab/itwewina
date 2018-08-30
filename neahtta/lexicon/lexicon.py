@@ -376,6 +376,7 @@ class XMLDict(object):
         _xp = etree.XPath(_xpath_expr , namespaces={'re': regexpNS})
         return _xp(self.tree)
 
+
 class AutocompleteFilters(object):
 
     def autocomplete_filter_for_lang(self, language_iso):
@@ -438,6 +439,7 @@ class AutocompleteTrie(XMLDict):
         else:
             self.trie = PARSED_TREES['auto-'+filename]
 
+
 class ReverseLookups(XMLDict):
     """
 
@@ -478,6 +480,53 @@ class ReverseLookups(XMLDict):
         )
         return self.XPath(_xpath)
 
+
+class AlternateOrthographyDict(object):
+    """
+    A lexicon/Dict (not to be confused with Python's dict) that wraps an existing Dict,
+    however, it produces results in an alternate orthography.
+    """
+
+    def __init__(self, language_pair, orthography, original_dict):
+        """
+
+        :param original_dict: XMLDict
+        :param source_language_code: string
+        """
+        self._original_dict = original_dict
+        self.language_pair = language_pair
+        source, _, self.script = orthography.partition('-')
+        if source != self.language_pair[0]:
+            raise ValueError('Mismatched language pair and orthography: %r %r' %
+                             (language_pair, orthography))
+        assert self.script, 'empty script for orthography: ' + self.orthography
+        # TODO: figure out orthography!
+
+    @property
+    def orthography(self):
+        """
+        :return: the language tag of the source language, with orthography.
+        Something like 'crk-Cans'.
+        """
+        return '%s-%s' % (self.source, self.script)
+
+    @property
+    def source(self):
+        """
+        :return: the source language, without the orthography or script.
+        """
+        return self.language_pair[0]
+
+    # TODO: implement lookupLemmaStartsWith(...)
+    # TODO: implement lookupLemma(...)
+    # TODO: implement lookupLemmaPOS(...)
+    # TODO: implement lookupLemmaPOSAndType(...)
+    # TODO: implement iterate_entries(...)
+    # TODO: implement iterate_letter_pages(...)
+    # TODO: implement iterate_entries_count(...)
+    # TODO: implement lookupOtherLemmaAttr(...)
+
+
 class Lexicon(object):
 
     def __init__(self, settings):
@@ -513,10 +562,10 @@ class Lexicon(object):
         # e.g.,
         #  - crkeng-Macron.xml derives from crkeng.xml
         #  - crkeng-Cans.xml derives from crkeng.xml
-        alternate_dicts = dict(
-            [ (k, reg_type(filename=v.get('path'), options=settings.dictionary_options.get(k, {})))
-              for k, v in settings.variant_dictionaries.iteritems() ]
-        )
+        alternate_dicts = {
+            k: self.create_variant_dictionary(k, v, reg_type, settings, language_pairs)
+            for k, v in settings.variant_dictionaries.iteritems()
+        }
 
         # run through variant searches for overrides
         variant_searches = dict()
@@ -566,6 +615,17 @@ class Lexicon(object):
                                                             )
 
         self.autocomplete_tries = autocomplete_tries
+
+    @staticmethod
+    def create_variant_dictionary(name, dictionary_info, reg_type, settings, language_pairs):
+        if 'derivative_orthography' in dictionary_info:
+            language_pair = dictionary_info['orig_pair']
+            original_dict = language_pairs[language_pair]
+            orthography = dictionary_info['derivative_orthography']
+            return AlternateOrthographyDict(language_pair, orthography, original_dict)
+        else:
+            return reg_type(filename=dictionary_info.get('path'),
+                            options=settings.dictionary_options.get(name, {}))
 
     def get_lookup_type(self, lexicon, lemma, pos, pos_type, lem_args):
         """ Determine what type of lookup to perform based on the

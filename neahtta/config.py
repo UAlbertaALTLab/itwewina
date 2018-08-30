@@ -573,11 +573,10 @@ class Config(Config):
                                 'orig_pair': (source, target),
                                 'path': path,
                             }
-                            # Keep track of the dictionary that this is a variant of.
-                            # This presupposes that the "canonical dictionary" list is already parsed.
-                            derivative_of = v.get('derive_from', None)
-                            if derivative_of is not None:
-                                info['dictionary'] =self.dictionaries[(source, target)]
+                            # Keep track of what orthography this variant dictionary uses.
+                            derivative = v.get('derivative_orthography', None)
+                            if derivative is not None:
+                                info['derivative_orthography'] = derivative
                             language_pairs[(v.get('short_name'), target)] = info
                     else:
                         # This is the "source" dictinary..
