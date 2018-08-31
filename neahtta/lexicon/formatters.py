@@ -1,5 +1,3 @@
-import warnings
-
 from lexicon import lexicon_overrides
 from morphology.utils import tagfilter
 from utils.data import flatten
@@ -7,10 +5,8 @@ from flask import current_app
 
 from .lexicon import hash_node
 
-
 class FormattingError(Exception):
     pass
-
 
 class EntryNodeIterator(object):
     """ A class for iterating through the result of an LXML XPath query,
@@ -22,14 +18,6 @@ class EntryNodeIterator(object):
     """
 
     def l_node(self, entry):
-        try:
-            # Pretend that this is a DictionaryEntry instance.
-            return entry.lemma, entry.pos, None, None, None
-        except AttributeError:
-            pass
-
-        warning.warn("Using an XML element instead of DictionaryEntry class. ")
-
         l = entry.find('lg/l')
         try:
             lemma = l.text
@@ -184,11 +172,6 @@ class EntryNodeIterator(object):
     def __iter__(self):
         from lxml import etree
         for node in self.nodes:
-            # TODO: deal with DictionaryEntry type.
-            if hasattr(node, 'lemma'):
-                yield node
-                continue
-
             try:
                 yield self.clean(node)
             except Exception, e:
@@ -373,9 +356,6 @@ class FrontPageFormat(EntryNodeIterator):
         return right_node, lang
 
     def clean(self, e):
-        """
-        Cleans an etree.Element.
-        """
         lemma, lemma_pos, lemma_context, lemma_type, lemma_hid = self.l_node(e)
         tgs, ts = self.tg_nodes(e)
 
