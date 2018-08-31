@@ -562,16 +562,24 @@ class Config(Config):
             path = item.get('path')
             variants = item.get('input_variants')
             if variants:
+                base_dictionaries = {}
                 for v in variants:
                     path = v.get('path', item.get('path'))
                     target_variant = v.get('display_variant', False)
                     if not target_variant:
                         if v.get('short_name') != source:
-                            language_pairs[(v.get('short_name'), target)] = {
+                            # This is a spelling-variant dictionary!
+                            info = {
                                 'orig_pair': (source, target),
                                 'path': path,
                             }
+                            # Keep track of what orthography this variant dictionary uses.
+                            derivative = v.get('derivative_orthography', None)
+                            if derivative is not None:
+                                info['derivative_orthography'] = derivative
+                            language_pairs[(v.get('short_name'), target)] = info
                     else:
+                        # This is the "source" dictinary..
                         if v.get('short_name') != target:
                             language_pairs[(source, v.get('short_name'))] = {
                                 'orig_pair': (source, target),

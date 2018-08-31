@@ -104,7 +104,8 @@ Dictionaries:
         # NB: must be same as analyser name
         path: 'dicts/crkeng-macron.xml'
         short_name: "crkMacr"
-        #
+        # Derives from crk
+        derivative_orthography: 'crk-Macr'
         # this is what appears in place of 'crkMacr' in some
         # spots
         user_friendly_short_name: "āēīō"

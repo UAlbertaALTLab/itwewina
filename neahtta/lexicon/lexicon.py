@@ -1,7 +1,12 @@
-﻿from lxml import etree
+﻿# -*- coding: UTF-8 -*-
+""" Our project-wide search_types repository. """
+
+import sys
+from lxml import etree
+from unicodedata import normalize
+
 from lookups import SearchTypes
 
-""" Our project-wide search_types repository. """
 search_types = SearchTypes({})
 
 ##
@@ -9,14 +14,15 @@ search_types = SearchTypes({})
 ##
 ##
 
-import sys
 
 DEFAULT_XPATHS = {
     'pos': 'lg/l/@pos',
 }
 
+
 def hash_node(node):
     return unicode(hash(etree.tostring(node)))
+
 
 class LexiconOverrides(object):
     """ Class for collecting functions marked with decorators that
@@ -376,6 +382,7 @@ class XMLDict(object):
         _xp = etree.XPath(_xpath_expr , namespaces={'re': regexpNS})
         return _xp(self.tree)
 
+
 class AutocompleteFilters(object):
 
     def autocomplete_filter_for_lang(self, language_iso):
@@ -438,6 +445,7 @@ class AutocompleteTrie(XMLDict):
         else:
             self.trie = PARSED_TREES['auto-'+filename]
 
+
 class ReverseLookups(XMLDict):
     """
 
@@ -478,6 +486,101 @@ class ReverseLookups(XMLDict):
         )
         return self.XPath(_xpath)
 
+
+class AlternateOrthographyDict(object):
+    """
+    A lexicon/Dict (not to be confused with Python's dict) that wraps an existing Dict,
+    however, it produces results in an alternate orthography.
+
+    It does this by MUTATING the element, adding a lemma_ir attribute to the
+    <l> element.
+    """
+
+    def __init__(self, language_pair, orthography, original_dict):
+        """
+        :param language_pair: (source, target) langauges
+        :param orthography: str. Language tag including the script code
+        :param original_dict: The original XMLDict instance.
+        """
+        self._original_dict = original_dict
+        self.language_pair = language_pair
+        source, _, self.script = orthography.partition('-')
+        if source != self.language_pair[0]:
+            raise ValueError('Mismatched language pair and orthography: %r %r' %
+                             (language_pair, orthography))
+        assert self.script, 'empty script for orthography: ' + self.orthography
+        # TODO: figure out orthography!
+
+    @property
+    def orthography(self):
+        """
+        :return: the language tag of the source language, with orthography.
+        Something like 'crk-Cans'.
+        """
+        return '%s-%s' % (self.source, self.script)
+
+    @property
+    def source(self):
+        """
+        :return: the source language, without the orthography or script.
+        """
+        return self.language_pair[0]
+
+    def lookupLemmaStartsWith(self, *args, **kwargs):
+        return self._remap(self._original_dict.lookupLemmaStartsWith(*args, **kwargs))
+
+    def lookupLemma(self, *args, **kwargs):
+        return self._remap(self._original_dict.lookupLemma(*args, **kwargs))
+
+    def lookupLemmaPOS(self, *args, **kwargs):
+        return self._remap(self._original_dict.lookupLemmaPOS(*args, **kwargs))
+
+    def lookupLemmaPOSAndType(self, *args, **kwargs):
+        return self._remap(self._original_dict.lookupLemmaPOSAndType(*args, **kwargs))
+
+    def lookupOtherLemmaAttr(self, *args, **kwargs):
+        return self._remap(self._original_dict.lookupOtherLemmaAttr(*args, **kwargs))
+
+    # TODO: implement iterate_entries(...)
+    # TODO: implement iterate_letter_pages(...)
+    # TODO: implement iterate_entries_count(...)
+    # TODO: implement lookupOtherLemmaAttr(...)
+
+    def _remap(self, elements):
+        """
+        Returns MUTATED dictionary entry <e> elements. the <e lemma_ir="...">
+        attribute is added, which contains the "internal representation" of the lemma,
+        when generating forms.
+
+        :param elements: a list of etree.Element instances obtained from the XML dictionary.
+        :return: the same list, but the elements have the lemma_ir attribute added.
+        """
+        for e in elements:
+            # XXX: add lemma_ir attribute and exchange with orthography.
+            lemma_ir = ensure_unicode(e.findtext('.//l'))
+            assert lemma_ir is not None
+            e.attrib['lemma_ir'] = lemma_ir
+            # TODO: support more than JUST THIS ONE LOCALE!
+            if self.orthography != 'crk-Macr':
+                raise NotImplementedError("I can only support crk-Macr locale.")
+            # Replace the lemma with the "macron" lemma.
+            e.find('.//l').text = to_macrons(lemma_ir)
+        return elements
+
+
+
+def to_macrons(text):
+    """
+    :param text:
+    :return:
+    """
+    return normalize('NFC', text).\
+        replace(u'â', u'ā').\
+        replace(u'ê', u'ē').\
+        replace(u'î', u'ī').\
+        replace(u'ô', u'ō')
+
+
 class Lexicon(object):
 
     def __init__(self, settings):
@@ -507,10 +610,16 @@ class Lexicon(object):
               for k, v in settings.dictionaries.iteritems() ]
         )
 
-        alternate_dicts = dict(
-            [ (k, reg_type(filename=v.get('path'), options=settings.dictionary_options.get(k, {})))
-              for k, v in settings.variant_dictionaries.iteritems() ]
-        )
+        # TODO: Create "derivative" dictionaries that parse a "base" dictinonary once,
+        # but act as spelling variant dictionaries.
+        #
+        # e.g.,
+        #  - crkeng-Macron.xml derives from crkeng.xml
+        #  - crkeng-Cans.xml derives from crkeng.xml
+        alternate_dicts = {
+            k: self.create_variant_dictionary(k, v, reg_type, settings, language_pairs)
+            for k, v in settings.variant_dictionaries.iteritems()
+        }
 
         # run through variant searches for overrides
         variant_searches = dict()
@@ -560,6 +669,17 @@ class Lexicon(object):
                                                             )
 
         self.autocomplete_tries = autocomplete_tries
+
+    @staticmethod
+    def create_variant_dictionary(name, dictionary_info, reg_type, settings, language_pairs):
+        if 'derivative_orthography' in dictionary_info:
+            language_pair = dictionary_info['orig_pair']
+            original_dict = language_pairs[language_pair]
+            orthography = dictionary_info['derivative_orthography']
+            return AlternateOrthographyDict(language_pair, orthography, original_dict)
+        else:
+            return reg_type(filename=dictionary_info.get('path'),
+                            options=settings.dictionary_options.get(name, {}))
 
     def get_lookup_type(self, lexicon, lemma, pos, pos_type, lem_args):
         """ Determine what type of lookup to perform based on the
@@ -772,3 +892,17 @@ class Lexicon(object):
         success = any([res for l, res in results])
 
         return results, success
+
+
+def ensure_unicode(text):
+    """
+    Returns a unicode object, regardless if text is a str or unicode object.
+    Decodes str objects as UTF-8.
+
+    :param text:
+    :return:
+    """
+    if isinstance(text, str):
+        return text.decode('UTF-8')
+    else:
+        return text
