@@ -482,81 +482,6 @@ class ReverseLookups(XMLDict):
         return self.XPath(_xpath)
 
 
-class DictionaryEntry(object):
-    """
-    An entry from the XML dictionary.
-
-
-    """
-
-    def __init__(self, lemma_ir, pos, source, lemma_content, stem,
-                 translation, translation_language, translation_pos,
-                 lemma_alt=None):
-        """
-
-        :param lemma_ir: :text()
-        :param pos: .//l[@pos]
-        :param source: .//[@src]
-        :param lemma_content: .//lc:text()
-        :param stem: .//stem:text()
-        :param translation: .//t:text()
-        :param translation_language: .//tg[@xml:lang]
-        :param translation_pos: .//t[@pos]
-        :param lemma_alt: Alternate orthography representation.
-        """
-        self.lemma_ir = lemma_ir
-        self.pos = pos
-        self.source = source
-        self.lemma_content = lemma_content
-        self.stem = stem
-        self.translation = translation
-        self.translation_language = translation_language
-        self.translation_pos = translation_pos
-        self.lemma_alt = lemma_alt
-
-    @property
-    def lemma(self):
-        """
-        :return: The lemma, in the preferred orthography. If not available, then
-                 simply the lemma in the internal representation.
-        """
-        return self.lemma_alt or self.lemma_ir
-
-    @classmethod
-    def from_element(cls, element, lemma_alt=None):
-        """
-        Creates a DictionaryEntry (or subclass) from the etree.Element instance.
-        :param element: etree.Element <e src="..."></e>
-        :return: a DictionaryEntry
-        """
-        return cls(element.findtext('.//l'),
-                   element.findtext('.//l[@pos]'),
-                   element.attrib['src'],
-                   element.findtext('.//lc'),
-                   element.findtext('.//stem'),
-                   element.findtext('.//t'),
-                   NotImplemented, # This doesn't work: .findtext('.//tg[@xml:lang]'),
-                   element.findtext('.//t[@pos]'),
-                   lemma_alt=lemma_alt)
-
-
-class DictionaryEntryXMLDictCompat(DictionaryEntry):
-    """
-    Same as DictionaryEntry, but provides special functions to be compatible with
-    the deprecated, lxml.Element ways.
-    """
-
-    def findtext(self, query, default=None):
-        # TODO: interpret queries as requests for data.
-        raise NotImplementedError
-
-    def __len__(self):
-        raise NotImplementedError
-
-    def __bool__(self):
-        raise NotImplementedError
-
-
 class AlternateOrthographyDict(object):
     """
     A lexicon/Dict (not to be confused with Python's dict) that wraps an existing Dict,
@@ -593,33 +518,14 @@ class AlternateOrthographyDict(object):
         """
         return self.language_pair[0]
 
-    def lookupLemmaStartsWith(self, *args, **kwargs):
-        return self._remap(self._original_dict.lookupLemmaStartsWith(*args, **kwargs))
-
-    def lookupLemma(self, *args, **kwargs):
-        return self._remap(self._original_dict.lookupLemma(*args, **kwargs))
-
-    def lookupLemmaPOS(self, *args, **kwargs):
-        return self._remap(self._original_dict.lookupLemmaPOS(*args, **kwargs))
-
-    def lookupLemmaPOSAndType(self, *args, **kwargs):
-        return self._remap(self._original_dict.lookupLemmaPOSAndType(*args, **kwargs))
-
-    def lookupOtherLemmaAttr(self, *args, **kwargs):
-        return self._remap(self._original_dict.lookupOtherLemmaAttr(*args, **kwargs))
-
+    # TODO: implement lookupLemmaStartsWith(...)
+    # TODO: implement lookupLemma(...)
+    # TODO: implement lookupLemmaPOS(...)
+    # TODO: implement lookupLemmaPOSAndType(...)
     # TODO: implement iterate_entries(...)
     # TODO: implement iterate_letter_pages(...)
     # TODO: implement iterate_entries_count(...)
     # TODO: implement lookupOtherLemmaAttr(...)
-
-    def _remap(self, elements):
-        """
-        Maps each element to a DictionaryEntry instance.
-        :param elements: a list of etree.Element instances obtained from the XML dictionary.
-        :return: a list of DictionaryEntry instances
-        """
-        return [DictionaryEntryXMLDictCompat.from_element(e) for e in elements]
 
 
 class Lexicon(object):
