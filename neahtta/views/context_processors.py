@@ -6,6 +6,7 @@ from flask.ext.babel import gettext, force_locale
 from . import blueprint
 
 from i18n.utils import get_locale
+from utils.encoding import ensure_unicode
 
 
 @blueprint.context_processor
@@ -181,17 +182,3 @@ def detail_page_search_form():
         detail_page_search_template = False
 
     return {'has_detail_page_search_form': detail_page_search_template}
-
-
-def ensure_unicode(text):
-    """
-    Returns a unicode object, regardless if text is a str or unicode object.
-    Decodes str objects as UTF-8.
-
-    :param text:
-    :return:
-    """
-    if isinstance(text, str):
-        return text.decode('UTF-8')
-    else:
-        return text

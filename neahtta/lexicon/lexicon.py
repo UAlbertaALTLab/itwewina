@@ -6,6 +6,7 @@ from lxml import etree
 from unicodedata import normalize
 
 from lookups import SearchTypes
+from utils.encoding import ensure_unicode
 
 search_types = SearchTypes({})
 
@@ -894,15 +895,3 @@ class Lexicon(object):
         return results, success
 
 
-def ensure_unicode(text):
-    """
-    Returns a unicode object, regardless if text is a str or unicode object.
-    Decodes str objects as UTF-8.
-
-    :param text:
-    :return:
-    """
-    if isinstance(text, str):
-        return text.decode('UTF-8')
-    else:
-        return text
