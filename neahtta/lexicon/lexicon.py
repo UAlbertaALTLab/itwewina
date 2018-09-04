@@ -1,13 +1,8 @@
-﻿# -*- coding: UTF-8 -*-
-""" Our project-wide search_types repository. """
-
-import sys
-from lxml import etree
-from unicodedata import normalize
-
+﻿from lxml import etree
 from lookups import SearchTypes
 from utils.encoding import ensure_unicode
 
+""" Our project-wide search_types repository. """
 search_types = SearchTypes({})
 
 ##
@@ -15,15 +10,14 @@ search_types = SearchTypes({})
 ##
 ##
 
+import sys
 
 DEFAULT_XPATHS = {
     'pos': 'lg/l/@pos',
 }
 
-
 def hash_node(node):
     return unicode(hash(etree.tostring(node)))
-
 
 class LexiconOverrides(object):
     """ Class for collecting functions marked with decorators that
@@ -549,37 +543,15 @@ class AlternateOrthographyDict(object):
 
     def _remap(self, elements):
         """
-        Returns MUTATED dictionary entry <e> elements. the <e lemma_ir="...">
-        attribute is added, which contains the "internal representation" of the lemma,
-        when generating forms.
-
+        Maps each element to a DictionaryEntry instance.
         :param elements: a list of etree.Element instances obtained from the XML dictionary.
-        :return: the same list, but the elements have the lemma_ir attribute added.
+        :return: a list of DictionaryEntry instances
         """
-        for e in elements:
-            # XXX: add lemma_ir attribute and exchange with orthography.
-            lemma_ir = ensure_unicode(e.findtext('.//l'))
-            assert lemma_ir is not None
-            e.attrib['lemma_ir'] = lemma_ir
-            # TODO: support more than JUST THIS ONE LOCALE!
-            if self.orthography != 'crk-Macr':
-                raise NotImplementedError("I can only support crk-Macr locale.")
-            # Replace the lemma with the "macron" lemma.
-            e.find('.//l').text = to_macrons(lemma_ir)
-        return elements
-
-
-
-def to_macrons(text):
-    """
-    :param text:
-    :return:
-    """
-    return normalize('NFC', text).\
-        replace(u'â', u'ā').\
-        replace(u'ê', u'ē').\
-        replace(u'î', u'ī').\
-        replace(u'ô', u'ō')
+        def generate():
+            for e in elements:
+                # TODO: add lemma_ir attribute and exchange with orthography.
+                pass
+        return list(generate())
 
 
 class Lexicon(object):
@@ -893,5 +865,3 @@ class Lexicon(object):
         success = any([res for l, res in results])
 
         return results, success
-
-
