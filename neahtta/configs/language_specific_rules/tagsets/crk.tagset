@@ -17,6 +17,8 @@ indicative:
  - "Ind"
 conjunct:
  - "Cnj"
+dependency:
+ - "D"
 tense:
  - "Fut"
  - "Prs"
