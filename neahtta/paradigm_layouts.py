@@ -228,15 +228,32 @@ class Value(object):
         return search_predicate in current_form_tag
 
     def fill_value(self):
-        # NB: see #multi_value
+        """
+        Sets the value from the list of generated forms.
 
-        values_list = []
+        :return: a collection of wordforms for display.
+        """
+
+        # Collect **unique** word forms.
+        values = set()
+        # TODO: Because #fill_value() is called for every cell in the paradigm
+        # table, and this for-loop iterates through every entry in the paradigm
+        # table, this algorithm # is a O(n**2) monstrosity. This can alleviated
+        # by creating a suffix/prefix trie to replace the "#compare_value()
+        # within the for-loop" construct.
         for generated_form in self.paradigm:
             tag = generated_form.tag.parts
             if self.compare_value(tag, generated_form.lemma):
-                self.value_type = list
-                values_list.append(generated_form.form)
+                values.add(generated_form.form)
 
+        # None of the generated forms matched this cell.
+        if len(values) == 0:
+            return []
+
+        # At least one match: sort in increasing order of length.
+        self.value_type = list
+        values_list = list(values)
+        values_list.sort(key=len)
         return values_list
 
     def get_value(self):
