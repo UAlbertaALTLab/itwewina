@@ -1,5 +1,5 @@
 name: "Animate intransitive verb full paradigm"
-'paradigm: ''verb-ai.paradigm'''
+paradigm: "verb-ai.paradigm"
 layout:
   type: "full"
 tooltips:

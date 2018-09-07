@@ -1,5 +1,5 @@
 name: "Transitive inanimate verb full paradigm"
-'paradigm: ''verb-ti.paradigm'''
+paradigm: "verb-ti.paradigm"
 layout:
   type: "full"
 tooltips:
