@@ -9,16 +9,16 @@ animacy:
  - "AI"
  - "II"
 noun_animacy:
- - "IN"
- - "AN"
+ - "A"
+ - "I"
+dependency:
+ - "D"
 type: 
  - "Interr"
 indicative:
  - "Ind"
 conjunct:
  - "Cnj"
-dependency:
- - "D"
 tense:
  - "Fut"
  - "Prs"
