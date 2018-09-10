@@ -269,18 +269,13 @@ class Value(object):
         # Compute the value ... 
         values_list = self.fill_value()
 
-        if len(values_list) > 0:
+        if self.null_value:
+            return self.null_value
+        elif len(values_list) > 0:
             return self.VALUE_SEPARATOR.join(values_list)
         else:
-            # TODO: null cell value vs. blank value in parsing
-            # definition
-            if self.null_value:
-                return self.null_value
-            else:
-                return self.cell.v
-
-        self.value_type = self.cell
-        return self.cell
+            # Indicates that the paradigm did not match the value.
+            return u'&mdash;'
 
     # TODO: implies a problem here, return type of get_value should be
     # useful
