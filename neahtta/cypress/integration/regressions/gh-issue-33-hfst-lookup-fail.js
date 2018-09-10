@@ -1,7 +1,7 @@
-describe('When hfst does not match a form', function () {
+describe('When HFST does not match a form', function () {
   it('should display as hyphens in the paradigm', function () {
     // TODO: This might need a better example of a word with out an analysis.
-    cy.visit('/crk/eng?lookup=' + encodeURIComponent('wâpamêw'));
+    cy. instantNeahttaSearch('crk', 'eng', 'wâpamêw');
     cy.contains('a', 'wâpamêw')
       .click();
 

@@ -42,6 +42,13 @@ Cypress.Commands.add('neahttaSearch', (term) => {
 });
 
 /**
+ * Executes a search via a URL. Should land on the search page.
+ */
+Cypress.Commands.add('instantNeahttaSearch', (source, target, term) => {
+  cy.visit(`/${source}/${target}/?lookup=${encodeURIComponent(term)}`);
+});
+
+/**
  * Check the logo if it contains certain text.
  */
 Cypress.Commands.add('logoContains', (content) => {
