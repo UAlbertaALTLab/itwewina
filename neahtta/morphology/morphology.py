@@ -628,9 +628,17 @@ class XFST(object):
             analyses = []
 
             for part in chunk.split('\n'):
+                # Ignore FST failures, which are marked by '+?' and a weight of inf.
+                if self.tagUnknown(part):
+                    continue
                 (lemma, analysis) = self.tag_processor(part)
                 lemmas.append(lemma)
                 analyses.append(analysis)
+
+            # The previous part may not have matched ANYTHING,
+            # so just skip this chunk
+            if not lemmas:
+                continue
 
             lemma = list(set(lemmas))[0]
 
@@ -792,11 +800,13 @@ class XFST(object):
         else:
             return self.clean(output)
 
-    def tagUnknown(self, analysis):
-        if '+?' in analysis:
-            return True
-        else:
-            return False
+    @staticmethod
+    def tagUnknown(analysis):
+        """
+        Returns true when the analysis (or the generation) failed to match.
+        :return:
+        """
+        return u'+?' in analysis
 
     def tagStringToTag(self, parts, tagsets={}, inverse=False):
         if inverse:
