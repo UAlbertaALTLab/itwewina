@@ -1,7 +1,7 @@
-name: "Inanimate intransitive verb full paradigm"
+name: "Inanimate intransitive verb extended paradigm"
 paradigm: "verb-ii.paradigm"
 layout:
-  type: "full"
+  type: "extended"
 tooltips:
   eng:
     "3s": "inanimate singular actor"
@@ -29,23 +29,10 @@ tooltips:
 | "3p"                       | Ind+Fut+Int+3Pl            | PV/e+*+Cnj+Fut+Int+3Pl     |
 | "4s"                       | Ind+Fut+Int+4Sg            | PV/e+*+Cnj+Fut+Int+4Sg     |
 | "4p"                       | Ind+Fut+Int+4Pl            | PV/e+*+Cnj+Fut+Int+4Pl     |
-|                            |                            |                            |
+|
 |                            | "FUTURE DEFINITE TENSE"    |                            |
-|                            | : "Independent"            | : "Conjunct"               |
+|                            | : "Independent"            |
 | "3s"                       | Ind+Fut+Def+3Sg            |
 | "3p"                       | Ind+Fut+Def+3Pl            |
 | "4s"                       | Ind+Fut+Def+4Sg            |
 | "4p"                       | Ind+Fut+Def+4Pl            |
-|                            |                            |                            |
-|                            | "FUTURE/INFINITIVE"        |                            |
-|                            | : "ka-Conjunct"            | : "ta-Conjunct"            |
-| "3s"                       | PV/ka+*+Cnj+Prs+3Sg        | PV/ta+*+Cnj+Prs+3Sg        |
-| "3p"                       | PV/ka+*+Cnj+Prs+3Pl        | PV/ta+*+Cnj+Prs+3Pl        |
-| "4s"                       | PV/ka+*+Cnj+Prs+4Sg        | PV/ta+*+Cnj+Prs+4Sg        |
-| "4p"                       | PV/ka+*+Cnj+Prs+4Pl        | PV/ta+*+Cnj+Prs+4Pl        |
-|
-|                            | "FUTURE CONDITIONAL"       |                            |
-| "3s"                       | Fut+Cond+3Sg               |                            |
-| "3p"                       | Fut+Cond+3Pl               |                            |
-| "4s"                       | Fut+Cond+4Sg               |                            |
-| "4p"                       | Fut+Cond+4Pl               |                            |
