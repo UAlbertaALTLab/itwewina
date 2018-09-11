@@ -29,11 +29,11 @@ describe("The basic noun paradigms", function () {
     findRowInBasicParadigm('3s poss (sg)', 'oniskima');
   });
 
-  it('should display all NI-D forms', function () {
+  it('should display all NA-D forms', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'mitâs');
     // There are both animate and inanimate pants.
-    // Choose the inanimate pants.
-    cy.contains('a', /mitâs\b.+NDI-1/)
+    // Choose the animate pants (these pants are alive!)
+    cy.contains('a', /mitâs\b.+NDA-1/)
       .click();
 
     findRowInBasicParadigm('1s poss (sg)', 'nitâs');
@@ -44,7 +44,7 @@ describe("The basic noun paradigms", function () {
     findRowInBasicParadigm('X poss (obv)', 'mitâsa');
   });
 
-  it('should display all NA-D forms', function () {
+  it('should display all NI-D forms', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'mitêh');
     cy.contains('a', 'mitêh')
       .click();
@@ -54,7 +54,6 @@ describe("The basic noun paradigms", function () {
     findRowInBasicParadigm('3s poss (obv)', 'otêh');
     findRowInBasicParadigm('X poss (sg)', 'mitêh');
     findRowInBasicParadigm('X poss (pl)', 'mitêha');
-    // TODO: should this be obviative ("someone's heart")
     findRowInBasicParadigm('X poss (loc)', 'mitêhihk');
   });
 
