@@ -36,7 +36,7 @@ Morphology:
   # normative
   crk:
     tool: *HLOOKUP
-    file: [*OPT, '/crk/bin/analyser-gt-desc.hfstol']
+    file: [*OPT, '/crk/bin/analyser-gt-desc.omnivorous.hfstol']
     inverse_file: [*OPT, '/crk/bin/generator-gt-norm.hfstol']
     format: 'hfst'
     options: &MORPHOLOGY_OPTS
@@ -47,8 +47,8 @@ Morphology:
       inverse_tagsep: '+'
   crkMacr:
     tool: *HLOOKUP
-    file: [*OPT, '/crk/bin/analyser-gt-desc.macron.hfstol']
-    inverse_file: [*OPT, '/crk/bin/generator-gt-norm.macron.hfstol']
+    file: [*OPT, '/crk/bin/analyser-gt-desc.Macr-to-Macr.hfstol']
+    inverse_file: [*OPT, '/crk/bin/generator-gt-norm.Macr-to-Macr.hfstol']
     format: 'hfst'
     options: *MORPHOLOGY_OPTS
   # syllabics

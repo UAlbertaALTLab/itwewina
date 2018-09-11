@@ -27,6 +27,27 @@ describe('Ominvorous lookups', function () {
     cy.contains('a', 'nîpiy');
   });
 
+  it('should search in macrons in macron mode', function () {
+    cy.visit('/crkMacr/eng');
+    cy.neahttaSearch(macronSearch);
+    cy.contains('a', 'nipiy');
+    cy.contains('a', 'nīpiy');
+  });
+
+  it('should search in circumflexes in macron mode', function () {
+    cy.visit('/crkMacr/eng');
+    cy.neahttaSearch(circumflexSearch);
+    cy.contains('a', 'nipiy');
+    cy.contains('a', 'nīpiy');
+  });
+
+  it('should search in syllabics in macron mode', function () {
+    cy.visit('/crkMacr/eng');
+    cy.neahttaSearch(syllabicsSearch);
+    cy.contains('a', 'nipiy');
+    cy.contains('a', 'nīpiy');
+  });
+
   it('should search in syllabics in syllabics mode', function () {
     cy.visit('/crkS/eng');
     cy.neahttaSearch(syllabicsSearch);
@@ -46,26 +67,5 @@ describe('Ominvorous lookups', function () {
     cy.neahttaSearch(macronSearch);
     cy.contains('a', 'ᓂᐱᕀ');
     cy.contains('a', 'ᓃᐱᕀ');
-  });
-
-  it('should search in macrons in macron mode', function () {
-    cy.visit('/crkMacr/eng');
-    cy.neahttaSearch(macronSearch);
-    cy.contains('a', 'nipiy');
-    cy.contains('a', 'nīpiy');
-  });
-
-  it('should search in circumflexes in macron mode', function () {
-    cy.visit('/crkMacr/eng');
-    cy.neahttaSearch(circumflexSearch);
-    cy.contains('a', 'nipiy');
-    cy.contains('a', 'nīpiy');
-  });
-
-  it('should search in syllabics in macron mode', function () {
-    cy.visit('/crkMacr/eng');
-    cy.neahttaSearch(circumflexSearch);
-    cy.contains('a', 'nipiy');
-    cy.contains('a', 'nīpiy');
   });
 });

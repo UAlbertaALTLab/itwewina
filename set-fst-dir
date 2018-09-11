@@ -26,10 +26,12 @@ ensure_exists() {
     exit 1
 }
 
-ensure_exists analyser-gt-desc.hfstol
+ensure_exists analyser-gt-desc.omnivorous.hfstol
 ensure_exists generator-gt-norm.hfstol
 ensure_exists generator-gt-norm.Cans-to-Cans.hfstol
 ensure_exists analyser-gt-desc.Cans-to-Cans.hfstol
+ensure_exists generator-gt-norm.Macr-to-Macr.hfstol
+ensure_exists analyser-gt-desc.Macr-to-Macr.hfstol
 
 # Make the symlink!
 ln -shf "$TARGET" /opt/smi/crk/bin
