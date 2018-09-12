@@ -30,18 +30,16 @@ describe("The basic noun paradigms", function () {
   });
 
   it('should display all NA-D forms', function () {
-    cy.instantNeahttaSearch('crk', 'eng', 'mitâs');
-    // There are both animate and inanimate pants.
-    // Choose the animate pants (these pants are alive!)
-    cy.contains('a', /mitâs\b.+NDA-1/)
+    cy.instantNeahttaSearch('crk', 'eng', 'masakay');
+    cy.contains('a', 'masakay')
       .click();
 
-    findRowInBasicParadigm('1s poss (sg)', 'nitâs');
-    findRowInBasicParadigm('2s poss (sg)', 'kitâs');
-    findRowInBasicParadigm('3s poss (obv)', 'otâsa');
-    findRowInBasicParadigm('X poss (sg)', 'mitâs');
-    findRowInBasicParadigm('X poss (pl)', 'mitâsak');
-    findRowInBasicParadigm('X poss (obv)', 'mitâsa');
+    findRowInBasicParadigm('1s poss (sg)', 'nasakay');
+    findRowInBasicParadigm('2s poss (sg)', 'kasakay');
+    findRowInBasicParadigm('3s poss (obv)', 'wasakaya');
+    findRowInBasicParadigm('X poss (sg)', 'masakay');
+    findRowInBasicParadigm('X poss (pl)', 'masakayak');
+    findRowInBasicParadigm('X poss (obv)', 'masakaya');
   });
 
   it('should display all NI-D forms', function () {
