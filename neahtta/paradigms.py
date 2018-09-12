@@ -178,24 +178,58 @@ class NullRule(object):
 
 
 class TagSetRule(object):
-    """ This rule compares a tagset, and looks to see if there are any
+    """
+    This rule compares a tagset, and looks to see if there are any
     matching results in the possible analyses.
+
+    Instantiate one of the subclasses using TagSetRule.create(tagset, value, origin).
+    DO NOT INSTANTIATE THIS CLASS DIRECTLY!
     """
 
-    def __init__(self, tagset, value):
+    def __init__(self, tagset, value, origin=None):
         self.tagset = tagset
-        if isinstance(value, unicode):
-            value = unicode(value)
+        self.origin = origin
         self.tagset_value = value
 
-        # in cmp functions
-        # x = whatever value the tagset turns up (ex. 'Inf'), y = the
-        # expected set of values that are defined in YAML
-        if isinstance(value, str) or isinstance(value, unicode):
-            self.cmp = lambda x, y: (x == y, x)
+    def compare(self, _node, analyses):
+        evals = [self.cmp_with_match(lemma.tag[self.tagset]) for lemma in analyses]
+        truth = any(t for t, c in evals)
+        context = [(self.tagset, c) for t, c in evals if t]
+
+        return truth, context
+
+    def cmp(self, actual_tagset_value):
+        """
+        To be implemented by subclasses
+        :return:
+        """
+        raise NotImplementedError
+
+    def cmp_with_match(self, actual_tagset_value):
+        return self.cmp(actual_tagset_value), actual_tagset_value
+
+    @staticmethod
+    def create(tagset, value, origin=None):
+        """
+        Creates an appropriate tag-set rule.
+
+        :param tagset: The tagset to match.
+        :param value: The expected value or values.
+        :param origin: Where this rule was defined.
+        :return: A TagSetRule.
+        """
+        if isinstance(value, str):
+            value = value.decode('UTF-8')
+            cls = TagSetExactMatchStringRule
+        elif isinstance(value, unicode):
+            cls = TagSetExactMatchStringRule
+        elif value is None:
+            cls = TagSetMatchAbsence
         elif isinstance(value, list):
-            self.cmp = lambda x, y: (x in y, x)
+            cls = TagSetMatchAlternativesRule
+            value = [alt.decode('UTF-8') for alt in value]
         elif isinstance(value, bool):
+            raise NotImplementedError
             def _cmp(x, y):
                 # when tag contains a value from this tagset, x is true,
                 # otherwise x is None
@@ -205,28 +239,53 @@ class TagSetRule(object):
                     return (True, x)
                 return (False, x)
             self.cmp = _cmp
+        return cls(tagset, value, origin)
 
-    def compare(self, node, analyses):
+    def __repr__(self):
+        clsname = type(self).__name__
+        return "<%s for %r matching %r defined in %s>" % (
+            clsname, self.tagset, self.tagset_value, self.origin or '<unknown>'
+        )
 
-        evals = [ self.cmp(lemma.tag[self.tagset], self.tagset_value)
-                     for lemma in analyses
-                ]
 
-        truth = any([t for t, c in evals])
-        context = [(self.tagset, c) for t, c in evals if t]
+class TagSetExactMatchStringRule(TagSetRule):
+    """
+    Must match an expected tagset value EXACTLY.
+    """
+    def cmp(self, actual_tag_value):
+        if actual_tag_value is None:
+            return False
+        assert isinstance(actual_tag_value, unicode)
+        return actual_tag_value == self.tagset_value
 
-        return truth, context
+
+class TagSetMatchAlternativesRule(TagSetRule):
+    """
+    Must match one of a set of expected tagset values.
+    """
+    def cmp(self, actual_tag_value):
+        if actual_tag_value is None:
+            return False
+        assert isinstance(actual_tag_value, unicode)
+        return actual_tag_value in self.tagset_value
+
+
+class TagSetMatchAbsence(TagSetRule):
+    """
+    Must match that the given tagset value is ABSENT!
+    """
+    def cmp(self, actual_tag_value):
+        return actual_tag_value is None
+
 
 class ParadigmRuleSet(object):
-    """ This is a rule set, which is defined by the first half of a
+    """
+    This is a rule set, which is defined by the first half of a
     paradigm file. It provides a way of turning the rule definition into
-    an instance that can evaluate lexicon nodes and analyses. """
+    an instance that can evaluate lexicon nodes and analyses.
+    """
 
-    # def __repr__(self):
-    #     print self.rule_def
-    #     return super(ParadigmRuleSet, self).__repr__()
-
-    def __init__(self, rule_def, debug=False):
+    def __init__(self, rule_def, origin=None, debug=False):
         """ .. py:function:: __init__(self, rule_def)
 
         Parses a python dict of the rule definition, and returns
@@ -237,7 +296,7 @@ class ParadigmRuleSet(object):
         """
 
         self.debug = debug
-
+        self.origin = origin
         self.rule_def = rule_def
 
         lex = rule_def.get('lexicon', False)
@@ -261,7 +320,7 @@ class ParadigmRuleSet(object):
 
         if morph:
             for k, v in morph.iteritems():
-                self.comps.append(TagSetRule(k, v))
+                self.comps.append(TagSetRule.create(k, v, origin))
 
         if lex:
             lex_rule = LexiconRuleSet(lex)
@@ -289,6 +348,10 @@ class ParadigmRuleSet(object):
             print >> sys.stderr, "Found matching paradigm in %s." % self.name
 
         return truth, context
+
+    def __repr__(self):
+        clsname = type(self).__name__
+        return '<%s defined in %r>' % (clsname, self.origin)
 
 class ParadigmConfig(object):
     """ A class for providing directory-based paradigm definitions.
@@ -667,16 +730,36 @@ class ParadigmConfig(object):
             name = condition_yaml.get('name')
             desc = condition_yaml.get('desc', '')
             parsed_template = jinja_env.from_string(paradigm_string_txt.strip())
-            parsed_condition = { 'condition': ParadigmRuleSet(condition_yaml, debug=self.debug)
-                               , 'template': parsed_template
-                               , 'name': name
-                               , 'description': desc
-                               , 'path': path
-                               , 'basename': os.path.basename(path)
-                               , 'updated': os.path.getmtime(path)
-                               }
+            parsed_condition = {
+                'condition': ParadigmRuleSet(condition_yaml, origin=RuleOrigin(path, condition_yaml), debug=self.debug),
+                'template': parsed_template,
+                'name': name,
+                'description': desc,
+                'path': path,
+                'basename': os.path.basename(path),
+                'updated': os.path.getmtime(path)
+            }
 
         return parsed_condition
+
+
+class RuleOrigin:
+    """
+    Data class to keep track of where a Tagset rule came from.
+    """
+    def __init__(self, filename, yaml):
+        self.filename = filename
+        self.yaml = yaml
+
+    @property
+    def name(self):
+        return self.yaml.get('name')
+
+    def __repr__(self):
+        return "<RuleOrigin defined in %r (%r)>" % (self.filename, self.name)
+
+
+
 
 if __name__ == "__main__":
     from neahtta import app
