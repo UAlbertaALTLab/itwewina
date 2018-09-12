@@ -26,7 +26,7 @@ describe("The basic noun paradigms", function () {
 
     findRowInBasicParadigm('1s poss (sg)', 'niniskim');
     findRowInBasicParadigm('2s poss (sg)', 'kiniskim');
-    findRowInBasicParadigm('3s poss (sg)', 'oniskima');
+    findRowInBasicParadigm('3s poss (obv)', 'oniskima');
   });
 
   it('should display all NA-D forms', function () {
@@ -51,7 +51,7 @@ describe("The basic noun paradigms", function () {
 
     findRowInBasicParadigm('1s poss (sg)', 'nitêh');
     findRowInBasicParadigm('2s poss (sg)', 'kitêh');
-    findRowInBasicParadigm('3s poss (obv)', 'otêh');
+    findRowInBasicParadigm('3s poss (sg)', 'otêh');
     findRowInBasicParadigm('X poss (sg)', 'mitêh');
     findRowInBasicParadigm('X poss (pl)', 'mitêha');
     findRowInBasicParadigm('X poss (loc)', 'mitêhihk');
