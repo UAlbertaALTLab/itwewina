@@ -990,3 +990,11 @@ table.miniparadigm .double-width {
 
 /* @group */
 
+/* For the logos in the bottom. */
+.partners .logo img {
+    max-height: 128px;
+}
+
+.partners .logo img.no-resize {
+    max-height: initial;
+}

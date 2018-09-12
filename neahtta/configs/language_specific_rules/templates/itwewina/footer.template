@@ -20,7 +20,7 @@ Custom template to include UofA and FNUC logos.
                     <li class="logo logo-left">
                         <img src="{{url_for('static', filename='img/itwewina/fnuclogo-color-transp.png')}}" 
                              id="fnuclogo"
-                             class="pull-left" 
+                             class="pull-left no-resize" 
                              alt="First Nations University Logo">
                     </li>
                 </ul>
