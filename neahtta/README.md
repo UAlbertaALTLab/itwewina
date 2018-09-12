@@ -7,6 +7,34 @@ linguist-oriented and maintainer documentation, see
 
   [nds_doc]: http://giellatekno.uit.no/doc/dicts/neahttadigisanit.html
 
+Neahttadigisánit maintainer tasks
+---------------------------------
+
+Updating dictionaries & FSTs
+
+    $ fab PROJECT compile
+
+Updating just the lexicon
+
+    $ fab PROJECT compile_dictionary
+
+Updating translation strings
+
+    $ fab PROJECT compile_strings
+
+Testing configuration (run before restart, always)
+
+    $ fab PROJECT test_configuration
+
+Restarting services
+
+    $ fab PROJECT restart_service
+
+Find a language
+
+    $ fab where_is:ISO
+
+
 ## Overview
 
 A service using the [Flask][1] framework to serve up dictionary entries
@@ -170,50 +198,50 @@ I wrote this documentation as I was setting up the new deployment of itwêwina o
 Sapir. It is not very well edited :/
 
 > Okay so you need to have the FSTs in a readable place.
-> 
+>
 > Probably set them to 444 permissions (all read permissions).
 > The directory is 774 (list directory and write new files) -- gotta let that webserver process create temp
 > files if it wants to.
-> 
+>
 > Then you need to have the dictionaries in the right place. I am doing
 > this.
-> 
+>
 > OH, and you need to generate the translations :/
-> 
+>
 >     fab itwewina compile_strings
-> 
+>
 > You need node.js...
-> 
+>
 >     npm install
-> 
+>
 > GENERATE A SECRET KEY:
-> 
+>
 >     python ./generate_key.py > secret_key.do.not.check.in
-> 
+>
 > Setup the WSGI config:
-> 
+>
 > In general, follow:
-> 
+>
 > http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
-> 
+>
 > But here's the config we have:
-> 
+>
 > Part of /etc/apache2/sites-available/000-default.conf:
-> 
+>
 >     WSGIDaemonProcess itwewina user=neahtta group=www-data threads=3
 >     WSGIScriptAlias /itwewina /data/exps/itwewina/neahtta/itwewina.wsgi/itwewina
 >     WSGIScriptReloading On
-> 
+>
 >     <Directory /data/exps/itwewina/neahtta>
 >         WSGIProcessGroup itwewina
 >         WSGIApplicationGroup %{GLOBAL}
 >         Require all granted
 >     </Directory>
-> 
+>
 > ---
-> 
+>
 > Finally, you're able to
-> 
+>
 >    fab itwewina runserver
 
 
