@@ -55,12 +55,17 @@ You need:
 ### Python
 
 Use [virtualenv][venv] to create an environment with requirements.txt.
-The virtualenv could really go anywhere, but I find it useful to keep it in
-a local directory so that I always know where it is.
+The virtualenv could really go anywhere, but a common convention is to save it
+in the local directory so that you always know where it is.
 
     virtualenv .venv
     source .venv/bin/activate
     pip install -r requirements.txt
+
+Additional dependencies that you may need while developing NDS/itwêwina are in
+`requirements_dev.txt`:
+
+    pip install -r requirements_dev.txt
 
 If more requirements become necessary, be sure to update the file and check it
 in.
@@ -68,7 +73,7 @@ in.
     pip freeze > requirements.txt
 
 Update [Babel][]'s locale data. Babel probably will not have locales
-created for 'crk' and its written variants. On Sapir, existing locales are
+created for 'crk' or its written variants. On Sapir, existing locales are
 located here:
 
     /srv/apps/nds/babel_locales/crk.dat
