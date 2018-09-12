@@ -12,10 +12,10 @@ Custom template to include UofA and FNUC logos.
                              id="ualogo"
                              alt="University of Alberta">
                     </li>
-                    <li class="center_text">
-                        <p class="lead">
-                            <span lang="{{ current_locale }}">{% trans %}Created with free and open-source language tools from <em><a href="http://giellatekno.uit.no">Giellatekno</a></em>, a Sámi Language Technology group at the <a href="http://uit.no">University of Tromsø</a>.{% endtrans %}</span>
-                        </p>
+                    <li class="logo logo-right">
+                        <img src="{{url_for('static', filename='img/itwewina/mesc-color.png')}}" 
+                             id="mesclogo"
+                             alt="Maskwacîs Education Schools Commision">
                     </li>
                     <li class="logo logo-left">
                         <img src="{{url_for('static', filename='img/itwewina/fnuclogo-color-transp.png')}}" 
@@ -35,6 +35,11 @@ Custom template to include UofA and FNUC logos.
                      alt="University of Alberta">
             </div>
             <div class="span3">
+                <img src="{{url_for('static', filename='img/itwewina/mesc-color.png')}}" 
+                     id="mesclogo"
+                     alt="Maskwacîs Education Schools Commision">
+            </div>
+            <div class="span3">
                 <p class="lead">
                     <span lang="{{ current_locale }}">{% trans %}Created with free and open-source language tools from <em><a href="http://giellatekno.uit.no">Giellatekno</a></em>, a Sámi Language Technology group at the <a href="http://uit.no">University of Tromsø</a>.{% endtrans %}</span>
                 </p>
@@ -48,4 +53,4 @@ Custom template to include UofA and FNUC logos.
     </div>
 </footer>
 
-{# vim: set ts=4 sw=4 tw=72 syntax=htmljinja : #}
+{# vim: set ts=4 sw=4 tw=72 syntax=jinja : #}
