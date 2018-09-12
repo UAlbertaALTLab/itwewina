@@ -1,4 +1,5 @@
-﻿### Morpho-Lexical interface
+# -*- coding: UTF-8 -*-
+### Morpho-Lexical interface
 ###
 
 # TODO: do not display analyzed lexical entries for words with mini-paradigms,
@@ -215,6 +216,8 @@ class MorphoLexicon(object):
                                                 )
                 if xml_result:
                     for e in xml_result:
+                        if not crk_analysis_matches_dict_entry(analysis, e):
+                            continue
                         entries_and_tags.append((e, analysis))
                 else:
                     entries_and_tags.append((None, analysis))
@@ -466,3 +469,45 @@ class MorphoLexicon(object):
             return _ret
 
 
+
+def crk_analysis_matches_dict_entry(analysis, entry):
+    """
+    Determines whether the analysis matches the dictionary entry.
+
+    Note: this was written to get around ambiguous noun animate/inanimate
+    analyses in Plains Cree (crk).
+
+    :param analysis: a Lemma() instance, representing the analysis.
+    :param entry: an XML dictionary entry.
+    :return: True when the entry and the analysis match. False when the
+             analysis does not coorrespond to the dictionary entry.
+    """
+
+    # TODO: make sure this doesn't break for other languages!
+
+    # The only entries/analyses we need to check are the one for crk nouns,
+    # so approve literally anything other than nouns. They are not a problem.
+    if analysis.pos != u'N':
+        return True
+
+    # Now we're dealing with nouns...
+    analyzed_animacy = analysis.tag['noun_animacy']
+    assert analyzed_animacy in (u'A', u'I'),\
+        "unexpected value for noun animacy: %r" % (analyzed_animacy,)
+    # Cheat sheet on entry XML:
+    # entry =
+    #   <e src="the title of the source dictionary">
+    #       <lg>
+    #           <l pos="N">mitâs</l> <!-- Lemma with its part-of-speech as an attribute -->
+    #           <lc>NDI-1</l>   <!-- the "lemma comment" --
+    #                                crk uses this to disambiguate forms within parts-of-speech -->
+    #       </lg>
+    #       <mg><!-- the definitions, but I don't care about this here --></mg>
+    #   </e>
+    lexeme_class = entry.findtext('.//lc')
+    entry_pos, _, _variant = lexeme_class.partition(u'-')
+    assert entry_pos in (u'NI', u'NA', u'NDI', u'NDA')
+    entry_animacy = entry_pos[-1]
+    assert entry_animacy in u'AI'
+
+    return analyzed_animacy == entry_animacy
