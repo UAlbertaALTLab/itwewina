@@ -19,7 +19,7 @@ tooltips:
 | "1s" | Ind+Prs+1Sg                | PV/e+*+Cnj+Prs+1Sg        |
 | "2s" | Ind+Prs+2Sg                | PV/e+*+Cnj+Prs+2Sg        |
 | "3s" | Ind+Prs+3Sg                | PV/e+*+Cnj+Prs+3Sg        |
-| "1p" Ind+Prs+1Pl PV/e+*+Cnj+Prs+1Pl |                            |                           |
+| "1p" | Ind+Prs+1Pl                | PV/e+*+Cnj+Prs+1Pl        |
 | "21" | Ind+Prs+12Pl               | PV/e+*+Cnj+Prs+12Pl       |
 | "2p" | Ind+Prs+2Pl                | PV/e+*+Cnj+Prs+2Pl        |
 | "3p" | Ind+Prs+3Pl                | PV/e+*+Cnj+Prs+3Pl        |
@@ -31,7 +31,7 @@ tooltips:
 | "1s" | Ind+Prt+1Sg                | PV/e+*+Cnj+Prt+1Sg        |
 | "2s" | Ind+Prt+2Sg                | PV/e+*+Cnj+Prt+2Sg        |
 | "3s" | Ind+Prt+3Sg                | PV/e+*+Cnj+Prt+3Sg        |
-| "1p" Ind+Prt+1Pl PV/e+*+Cnj+Prt+1Pl |                            |                           |
+| "1p" | Ind+Prt+1Pl                | PV/e+*+Cnj+Prt+1Pl        |
 | "21" | Ind+Prt+12Pl               | PV/e+*+Cnj+Prt+12Pl       |
 | "2p" | Ind+Prt+2Pl                | PV/e+*+Cnj+Prt+2Pl        |
 | "3p" | Ind+Prt+3Pl                | PV/e+*+Cnj+Prt+3Pl        |
@@ -42,7 +42,7 @@ tooltips:
 | "1s" | Ind+Fut+Int+1Sg            | PV/e+*+Cnj+Fut+Int+1Sg    |
 | "2s" | Ind+Fut+Int+2Sg            | PV/e+*+Cnj+Fut+Int+2Sg    |
 | "3s" | Ind+Fut+Int+3Sg            | PV/e+*+Cnj+Fut+Int+3Sg    |
-| "1p" Ind+Fut+Int+1Pl PV/e+*+Cnj+Fut+Int+1Pl |                            |                           |
+| "1p" | Ind+Fut+Int+1Pl            | PV/e+*+Cnj+Fut+Int+1Pl    |
 | "21" | Ind+Fut+Int+12Pl           | PV/e+*+Cnj+Fut+Int+12Pl   |
 | "2p" | Ind+Fut+Int+2Pl            | PV/e+*+Cnj+Fut+Int+2Pl    |
 | "3p" | Ind+Fut+Int+3Pl            | PV/e+*+Cnj+Fut+Int+3Pl    |
