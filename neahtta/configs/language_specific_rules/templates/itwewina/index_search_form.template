@@ -31,10 +31,10 @@ Customizations here:
                 {%- if search_form_action %}
                 action="{{ search_form_action }}"
                 {%- else -%}
-                action="{{ url_for('.canonical_root_search_pair', _from=_from, _to=_to) }}" 
+                action="{{ url_for('.canonical_root_search_pair', _from=_from, _to=_to) }}"
                 {%- endif -%}
              >
-                
+
                 {%- if keyboard %}
                     <div class="input-append input-prepend">
                         <button class="btn" type="button" id="display_keyboard">
@@ -43,60 +43,63 @@ Customizations here:
                 {% else -%}
                     <div class="input-append">
                 {% endif -%}
-                    <input type="text" 
-                           name="lookup" 
+                    <input type="search"
+                           name="lookup"
                            lang="{{ _from }}"
+                           autocapitalize="off"
                            autocorrect="off"
                            autofocus
-                           autocapitalize="off"
                            {% if current_pair_settings.autocomplete and not search_variant_type == 'keyword' %}
-                           autocomplete="off"
-                           data-autocomplete-text="{% trans %}Select a word, and press Tab{% endtrans %}"
-                           data-autocomplete-path="{{ url_for('.autocomplete', from_language=_from, to_language=_to) }}"
-                           data-language-from="{{ _from }}"
-                           data-language-to="{{ _to }}"
-                           data-items=10
+                               autocomplete="off"
+                               data-autocomplete-text="{% trans %}Select a word, and press Tab{% endtrans %}"
+                               data-autocomplete-path="{{ url_for('.autocomplete', from_language=_from, to_language=_to) }}"
+                               data-language-from="{{ _from }}"
+                               data-language-to="{{ _to }}"
+                               data-items=10
                            {% endif %}
+                           inputmode="search"
+                           spellcheck="false"
+                           placeholder="{% trans %}ohcansátni{% endtrans %}"
                            {% if user_input -%}value="{{ user_input }}"{% endif %}
-                           placeholder="{% trans %}ohcansátni{% endtrans %}">
-                           {# TODO: show text search only if the dictionary supports this #}
-                           {% if current_pair_settings.show_korp_search %}
-                               <div class="btn-group display-phone hidden-desktop hidden-tablet">
-                                   <button type="submit" class="btn" name="search">
-                                       <span lang="{{ current_locale }}">{% trans %}Search{% endtrans %}</span>
-                                   </button>
-                                   <button class="btn dropdown-toggle" data-toggle="dropdown">
-                                      <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><button 
-                                               type="submit"
-                                               class="btn"
-                                               formaction="{{ url_for('.external_form_search', _from=_from, _to=_to, _search_type="korp_wordform") }}"
-                                               formmethod=""
-                                               lang="{{ current_locale }}"
-                                               formtarget="_blank">{% trans %}Search texts{% endtrans %} (Korp)</button></li>
-                                    </ul>
-                               </div>
-                               <button type="submit" class="btn hidden-phone" 
-                                       formtarget="_self"
-                                       formaction="{{ url_for('.canonical_root_search_pair', _from=_from, _to=_to) }}"
-                                       formmethod="GET"
-                                       name="search">
-                                   <span lang="{{ current_locale }}">{% trans %}Search{% endtrans %}</span>
-                               </button>
-                           {% else %}
+                       >
+                       {# TODO: show text search only if the dictionary supports this #}
+                       {% if current_pair_settings.show_korp_search %}
+                           <div class="btn-group display-phone hidden-desktop hidden-tablet">
                                <button type="submit" class="btn" name="search">
                                    <span lang="{{ current_locale }}">{% trans %}Search{% endtrans %}</span>
                                </button>
-                          {% endif %}
+                               <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                  <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button
+                                           type="submit"
+                                           class="btn"
+                                           formaction="{{ url_for('.external_form_search', _from=_from, _to=_to, _search_type="korp_wordform") }}"
+                                           formmethod=""
+                                           lang="{{ current_locale }}"
+                                           formtarget="_blank">{% trans %}Search texts{% endtrans %} (Korp)</button></li>
+                                </ul>
+                           </div>
+                           <button type="submit" class="btn hidden-phone"
+                                   formtarget="_self"
+                                   formaction="{{ url_for('.canonical_root_search_pair', _from=_from, _to=_to) }}"
+                                   formmethod="GET"
+                                   name="search">
+                               <span lang="{{ current_locale }}">{% trans %}Search{% endtrans %}</span>
+                           </button>
+                       {% else %}
+                           <button type="submit" class="btn" name="search">
+                               <span lang="{{ current_locale }}">{% trans %}Search{% endtrans %}</span>
+                           </button>
+                      {% endif %}
                    {% if current_pair_settings.show_korp_search %}
                        <button type="submit"
                                formaction="{{ url_for('.external_form_search', _from=_from, _to=_to, _search_type="korp_wordform") }}"
                                formmethod="GET"
                                formtarget="_blank"
                                lang="{{ current_locale }}"
-                               class="btn hidden-phone display-tablet korp_search" 
+                               class="btn hidden-phone display-tablet korp_search"
                                name="korp_search">
                            {% trans %}Search texts{% endtrans %}
                        </button>
@@ -116,4 +119,4 @@ Customizations here:
     </div>
 </div>
 
-{# vim: set ts=4 sw=4 tw=0 syntax=htmljinja : #}
+{# vim: set ts=4 sw=4 tw=0 syntax=jinja : #}

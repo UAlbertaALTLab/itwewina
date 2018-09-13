@@ -70,10 +70,12 @@ This template has the following customizations:
     {% endfor %}
    </ul>
  </div>
- <input type="text" name="lookup"
+ <input type="search" name="lookup"
         autocorrect="off"
         autocapitalize="off"
-        placeholder="{{ user_input }}"></input>
+        inputmode="search"
+        spellcheck="false"
+        value="{{ user_input }}"></input>
  <div class="btn-group">
    <button type="submit" type="button" class="btn" name="search">
        <span lang="{{ current_locale }}">{% trans %}Search{% endtrans %}</span>
@@ -83,3 +85,4 @@ This template has the following customizations:
 <div id="results"></div>
 </form><!-- ./form -->
 
+{# vim: set ts=4 sw=4 tw=0 syntax=jinja : #}
