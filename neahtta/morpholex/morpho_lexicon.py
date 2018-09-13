@@ -490,10 +490,16 @@ def crk_analysis_matches_dict_entry(analysis, entry):
     if analysis.pos != u'N':
         return True
 
+    # Quickly dismiss this match if the entry differs in POS from
+    # the analysis. WE ONLY WANT TO DEAL WITH NOUNS!
+    if get_entry_pos(entry) != 'N':
+        return False
+
     # Now we're dealing with nouns...
     analyzed_animacy = analysis.tag['noun_animacy']
     assert analyzed_animacy in (u'A', u'I'),\
         "unexpected value for noun animacy: %r" % (analyzed_animacy,)
+
     # Cheat sheet on entry XML:
     # entry =
     #   <e src="the title of the source dictionary">
@@ -505,9 +511,27 @@ def crk_analysis_matches_dict_entry(analysis, entry):
     #       <mg><!-- the definitions, but I don't care about this here --></mg>
     #   </e>
     lexeme_class = entry.findtext('.//lc')
+
+    # Some entries don't actually list a lexeme class. We'll assume these are Non-PxX nouns.
+    if lexeme_class is None:
+        # A non-PxX noun
+        assert entry.findtext('.//l', '').startswith('-'),\
+            "Entry for %r does not look like a non-PxX noun!" % (entry.findtext('.//l'),)
+        return True
+
     entry_pos, _, _variant = lexeme_class.partition(u'-')
     assert entry_pos in (u'NI', u'NA', u'NDI', u'NDA')
     entry_animacy = entry_pos[-1]
     assert entry_animacy in u'AI'
 
     return analyzed_animacy == entry_animacy
+
+
+def get_entry_pos(entry):
+    """
+    Returns an entry's (primary) POS as a string.
+
+    :param entry:
+    :return:
+    """
+    return entry.find('.//l').get('pos')
