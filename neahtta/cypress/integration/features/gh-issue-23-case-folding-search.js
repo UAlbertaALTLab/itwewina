@@ -5,10 +5,17 @@
  */
 
 describe('Case folding when searching', function () {
-  it('should find the same results as with all lowercase', function () {
+  it('should find results that are lowercased internally', function () {
     cy.visit('/eng/crk');
     cy.neahttaSearch(funkUpTheCase('Car'));
     cy.contains('a', 'sêhkê-pimipayîs');
+  });
+
+  it('should find results that are titlecased internally', function () {
+    cy.visit('/eng/crk');
+    cy.neahttaSearch('Algonquian');
+    cy.contains('a', 'kâ-nêhiyawêsicik');
+
   });
 
   function funkUpTheCase(string) {
