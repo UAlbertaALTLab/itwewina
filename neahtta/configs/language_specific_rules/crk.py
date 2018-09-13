@@ -1,4 +1,5 @@
-﻿import re
+# -*- coding: UTF-8 -*-
+import re
 
 from morphology import generation_overrides as morphology
 from morpholex import morpholex_overrides as morpholex
@@ -21,8 +22,30 @@ def casefold_english_search(source, target, search_term, **kwargs):
     This assumes all the lemmas in engcrk.xml are lower case (which may be
     false).
     """
-    args = (source, target, search_term.lower())
-    return args, kwargs
+
+    # XXX: This function knows WAAAAAAAY too much about how
+    # lexicon.Lexicon.lookup() is implemented.
+    # After all, this function's purpose is to modify the arguments
+    # to .lookup() before it's called  ¯\_(ツ)_/¯
+
+    if kwargs.get('tried_case_folding', False):
+        # We've already tried case-folding the arguments,
+        # and that didn't work so search with the user input verbatim.
+        new_kwargs = kwargs.copy()
+        new_kwargs.update(redo_search_with_user_input=False)
+        del new_kwargs['tried_case_folding']
+        args = (source, target, search_term or kwargs.get('user_input'))
+    else:
+        # Let's try case-folding!
+        args = (source, target, search_term.lower())
+        new_kwargs = kwargs.copy()
+        # If case-folding didn't work, we'll ask Lexicon.lookup() to
+        # redo the search using the original term. This will search for an
+        # EXACT match in the XML dictionary, including letter case
+        # (and hit the True case of this if/else in the process).
+        new_kwargs.update(redo_search_with_user_input=True)
+
+    return args, new_kwargs
 
 
 @template_rendering_overrides.register_custom_sort(('crk', 'eng'), ('crkMacr', 'eng'), ('crkS', 'eng'))

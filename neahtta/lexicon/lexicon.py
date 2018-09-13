@@ -1,4 +1,4 @@
-﻿from lxml import etree
+from lxml import etree
 from lookups import SearchTypes
 from utils.encoding import ensure_unicode
 
@@ -642,7 +642,8 @@ class Lexicon(object):
 
     def lookup(self, _from, _to, lemma,
                pos=False, pos_type=False,
-               _format=False, lemma_attrs=False, user_input=False):
+               _format=False, lemma_attrs=False, user_input=False,
+               redo_search_with_user_input=False):
         """ Perform a lexicon lookup. Depending on the keyword
         arguments, several types of lookups may be performed.
 
@@ -690,7 +691,16 @@ class Lexicon(object):
             result = _lookup_func(*largs)
 
         if len(result) == 0:
-            return False
+            # Try again, but this time using user_input verbatim.
+            if redo_search_with_user_input:
+                assert user_input is not False
+                return self.lookup(
+                    _from, _to, user_input,
+                    pos=pos, pos_type=pos_type, _format=_format, lemma_attrs=lemma_attrs,
+                    user_input=user_input, tried_case_folding=True
+                )
+            else:
+                return False
 
         if _format:
             result = list(_format(result))
