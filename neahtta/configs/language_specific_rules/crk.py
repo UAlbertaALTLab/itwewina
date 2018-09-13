@@ -12,6 +12,19 @@ from views.custom_rendering import template_rendering_overrides
 
 from flask import current_app, g
 
+
+@lexicon_overrides.pre_lookup_tag_rewrite_for_iso('eng')
+def casefold_english_search(source, target, search_term, **kwargs):
+    """
+    Support for casefolding (case-insensitive) search from eng -> crk.
+
+    This assumes all the lemmas in engcrk.xml are lower case (which may be
+    false).
+    """
+    args = (source, target, search_term.lower())
+    return args, kwargs
+
+
 @template_rendering_overrides.register_custom_sort(('crk', 'eng'), ('crkMacr', 'eng'), ('crkS', 'eng'))
 def sort_by_analyses(search_result_obj, unsorted_entries_and_tags_and_paradigms):
     """ This is where we sort analyses first, and then everything else.
