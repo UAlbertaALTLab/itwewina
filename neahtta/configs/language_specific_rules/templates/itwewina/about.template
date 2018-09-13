@@ -43,8 +43,6 @@
                 <p>«kinêhiyawânâwâw» <br />
                     → «nêhiyawêw» <span class="label label-success">Verb</span> <span class="label label-success">Animate Intransitive</span> <span class="label label-success">Independent</span> <span class="label label-success">Present</span> <span class="label label-success">1st Person Plural Inclusive</span>
                     <br />
-<!--                    → «lǟʼdõ» 
-                    <br /> -->
                     → {% trans %}s/he speaks Cree{% endtrans %}</p>
             </span>
         </div>
@@ -62,7 +60,7 @@
                 <h3 class="red smaller">{% trans %}crk ↔ eng{% endtrans %}</h3>
 
                 <p>{% trans %}Dictionaries for Plains Cree and English are based
-                on the lexical materials and scientific research in <a href="http://uofrpress.ca/publications/cree-words"><em>nêhiyawêwin : itwêwina / Cree: Words</em></a>.
+                on the lexical materials and scientific research in <a href="https://uofrpress.ca/Books/C/Cree-Words"><em>nêhiyawêwin : itwêwina / Cree: Words</em></a>.
                  Compiled by Arok Wolvengrey.  Regina: Canadian Plains Research Center, 2001.{% endtrans
                 %}</p>
 
@@ -81,7 +79,7 @@
 
                 <div class="hidden-phone">
                     <br />
-                    <a class="btn-contact-thing btn btn-large btn-primary" type="button" href="http://www.google.com/recaptcha/mailhide/d?k=01WgZ6byrHkizCLCVzFfG77w==&c=gp0ilXcodB6PLr9Drcf3qHzH8vYJJJS9u_LHyFuFym4=">{% trans %}Contact us{% endtrans %}</a>
+                    <a class="btn-contact-thing btn btn-large btn-primary" type="button" href="mailto:arppe+itwewina@ualberta.ca">{% trans %}Contact us{% endtrans %}</a>
                     <br />
                     <br />
                 </div>
@@ -98,9 +96,10 @@
         </div>
         <div class="row-fluid">
             <span class="span4">
-                <h3 style="font-weight:300;">{% trans %}Maskwacîs Education Schools Commission (MESC){% endtrans %}</h3>
+                <h3 style="font-weight:300;"><a href="http://www.maskwacised.ca/">
+                {%- trans %}Maskwacîs Education Schools Commission (MESC){% endtrans -%}
+                </a></h3>
             </span>
-            {# TODO: logo #}
         </div>
         <div class="row-fluid">
             <blockquote></blockquote>
@@ -111,4 +110,3 @@
     </div>
 </div>
 {% endblock %}
-
