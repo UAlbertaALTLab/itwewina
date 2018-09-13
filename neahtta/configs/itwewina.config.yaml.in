@@ -124,7 +124,7 @@ Dictionaries:
           crk_Macr: "crk_Macr"
 
     show_korp_search: True
-    korp_search_host: "altlab.ualberta.ca/korp"
+    korp_search_host: "http://altlab.ualberta.ca/korp"
     is_korp_default_lang: True
 
   - source: eng
