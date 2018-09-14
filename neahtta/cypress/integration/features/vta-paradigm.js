@@ -9,8 +9,7 @@
 describe("The full VTA paradigm table", function () {
   beforeEach(function () {
     // Search for the word.
-    cy.visit('/crk/eng/');
-    cy.neahttaSearch('kiskiswew');
+    cy.instantNeahttaSearch('crk', 'eng', 'kiskiswew');
     cy.contains('kîskiswêw')
       .click();
 
@@ -19,7 +18,7 @@ describe("The full VTA paradigm table", function () {
       .contains('full').click();
   });
 
-  it('should display all Prs, independent forms', function () {
+  it.only('should display all Prs, independent forms', function () {
     findAllWordforms([
       'kikîskison', 'kikîskisonân', 'kikîskisonân', 'kikîskisonâwâw', 'kikîskisotin', 'kikîskisotinân', 'kikîskisotinân', 'kikîskisotinâwâw', 'nikîskiswâw', 'kikîskiswâw', 'nikîskiswânân', 'kikîskiswânaw', 'kikîskiswâwâw', 'nikîskiswâwak', 'kikîskiswâwak', 'nikîskiswânânak', 'kikîskiswânawak', 'kikîskiswâwâwak', 'nikîskisomâwa', 'kikîskisomâwa', 'nikîskisomânâna', 'kikîskisomânawa', 'kikîskisomâwâwa', 'nikîskisok', 'kikîskisok', 'nikîskisokonân', 'kikîskisokonaw', 'kikîskisokowâw', 'nikîskisokowak', 'kîskisokwak', 'kikîskisokowak', 'kikîskisokwak', 'nikîskisokonânak', 'kikîskisokonawak', 'kikîskisokowâwak', 'nikîskisomâwa', 'kikîskisomâwa', 'nikîskisomânâna', 'kikîskisomânawa', 'kikîskisomâwâwa', 'kîskiswêw', 'kîskiswêwak', 'kîskiswêyiwa', 'kîskisomêw', 'kîskisomêwak', 'kîskisok', 'kîskisokow', 'kîskisokowak', 'kîskisokwak', 'kîskisokoyiwa',
     ]);
@@ -74,9 +73,10 @@ describe("The full VTA paradigm table", function () {
   });
 
   function findAllWordforms(forms) {
+    cy.get('table[data-type="full"]').as('paradigmTable');
     for (let wordform of forms) {
-      const paradigmTable = cy.get('table[data-type="full"]');
-      paradigmTable.contains(wordform)
+      cy.get('@paradigmTable')
+        .contains('td', wordform, { log: false, timeout: 0 })
         .should('be.visible');
     }
   };
