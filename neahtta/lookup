@@ -10,7 +10,7 @@ case "$1" in
         MODEL=/opt/smi/crk/bin/generator-gt-norm.hfstol
         ;;
     analyze)
-        MODEL=/opt/smi/crk/bin/analyser-gt-desc.hfstol
+        MODEL=/opt/smi/crk/bin/analyser-gt-desc.omnivorous.hfstol
         ;;
     *)
         usage 1>&2
