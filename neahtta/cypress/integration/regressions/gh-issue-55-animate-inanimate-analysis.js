@@ -26,7 +26,6 @@ describe('Nouns of ambiguous animacy', function () {
 
     cy.get('@analyses')
       .contains('Inanimate');
-    // TODO: check that there is only ONE analysis
   });
 
   it('should provide the "animate" tag for the animate form', function () {
@@ -43,6 +42,14 @@ describe('Nouns of ambiguous animacy', function () {
 
     cy.get('@analyses')
       .contains('Animate');
-    // TODO: check that there is only ONE analysis
+  });
+
+  it.only('should match PxX nouns in syllabics', function () {
+    // Searching for syllabics should work.
+    cy.instantNeahttaSearch('crkS', 'eng', 'nohkom');
+
+    // It should contain the stem in SRO.
+    cy.contains(/[ᑯᑰ]ᐦᑯᒼ/);
+    // cy.contains('-ohkom');
   });
 });
