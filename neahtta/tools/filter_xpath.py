@@ -23,24 +23,31 @@ Options:
 # TODO: only download updated files, storing in manifest in path/to/stored/audio/
 from docopt import docopt
 
-import os, sys
+import os
+import sys
 import requests
 
 from lxml import etree
-
-command = None
 from sh import hfst_lookup
+
 
 def run_cmd(_in, args):
     tool = hfst_lookup(*args, _in=_in.encode('utf-8'), _bg=True)
     stsrs = []
     for l in tool.split('\n\n'):
+        # Skip empty lines.
+        if not l.strip():
+            continue
+
         ll = l.split('\t')
         if len(ll) == 3:
+            print >>sys.stderr, '<%s> <%s>' % (ll[0], ll[1])
             stsrs.append(ll[1])
         else:
+            print >>sys.stderr, '<%s>' % (ll[0],)
             stsrs.append('--')
     return stsrs
+
 
 # lxml_root, [(source, target), ... ]
 def replace_xpath(xml_root, nodes, elems, tool_name=False, tool_args=False):
@@ -52,7 +59,7 @@ def replace_xpath(xml_root, nodes, elems, tool_name=False, tool_args=False):
     )(root_duplicate)
 
     # nodes with audios get replaced with the new URL.
-    print >> sys.stderr,  len(all_nodes)
+    print >> sys.stderr, " ... Building list of conversions for %d nodes" % (len(all_nodes),)
     n = 0
     convert = []
     for node in all_nodes:
@@ -62,9 +69,11 @@ def replace_xpath(xml_root, nodes, elems, tool_name=False, tool_args=False):
                 if s.text is not None:
                     convert.append(s.text)
 
-    print >> sys.stderr, len(convert)
+    print >> sys.stderr, " ... Found %s strings to convert" % (len(convert),)
     converted = run_cmd('\n'.join(convert), tool_args)
-    print >> sys.stderr, len(converted)
+    print >> sys.stderr, " ... Returned %s items" % (len(converted),)
+
+    assert len(converted) == len(convert)
     for node in all_nodes:
         strs = node.xpath(elems)
         # print c, strs[0].text
@@ -75,6 +84,7 @@ def replace_xpath(xml_root, nodes, elems, tool_name=False, tool_args=False):
                     converted.pop(0)
     # new xml root
     return root_duplicate
+
 
 def write_xml(root, output_file=False):
     # TODO: strips some headers
