@@ -495,7 +495,10 @@ def crk_analysis_matches_dict_entry(analysis, entry):
     if get_entry_pos(entry) != 'N':
         return False
 
-    # Now we're dealing with nouns...
+    # The code from here ensures the animacy of the analysis matches the
+    # animacy in the dictionary entry.
+
+    # Now we're dealing with nouns that MUST have an animacy.
     analyzed_animacy = analysis.tag['noun_animacy']
     assert analyzed_animacy in (u'A', u'I'),\
         "unexpected value for noun animacy: %r" % (analyzed_animacy,)
@@ -506,16 +509,19 @@ def crk_analysis_matches_dict_entry(analysis, entry):
     #       <lg>
     #           <l pos="N">mitâs</l> <!-- Lemma with its part-of-speech as an attribute -->
     #           <lc>NDI-1</l>   <!-- the "lemma comment" --
-    #                                crk uses this to disambiguate forms within parts-of-speech -->
+    #                                crk uses this to disambiguate forms within parts-of-speech.
+    #                                Note that nouns with obligatory possession do NOT have an
+    #                                <lc> element; Instead, they have a <lemma_ref>. -->
     #       </lg>
     #       <mg><!-- the definitions, but I don't care about this here --></mg>
     #   </e>
     lexeme_class = entry.findtext('.//lc')
 
-    # Some entries don't actually list a lexeme class. We'll assume these are Non-PxX nouns.
+    # Some entries don't actually list a lexeme class. We'll assume these are PxX nouns.
+    # TODO: match on <lemma_ref> instead.
     if lexeme_class is None:
-        # A non-PxX noun
-        assert entry.findtext('.//l', '').startswith('-'),\
+        # A PxX (obligatory possession) noun because it has a <lemma_ref> element.
+        assert entry.findtext('.//lemma_ref') is not None,\
             "Entry for %r does not look like a non-PxX noun!" % (entry.findtext('.//l'),)
         return True
 
