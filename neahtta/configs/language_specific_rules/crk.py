@@ -48,6 +48,22 @@ def casefold_english_search(source, target, search_term, **kwargs):
     return args, new_kwargs
 
 
+@lexicon_overrides.pre_lookup_tag_rewrite_for_iso('crkS')
+def remove_spaces_before_lemma(source, target, lemma, **kwargs):
+    """
+    Syllabics lemmas may have spaces before them. These will not match in
+    the XML dictionary, so get rid of the leading spaces.
+
+    :param source: 'crkS'
+    :param target: probably 'eng'
+    :param lemma: (unicode) a lemma in syllabics, maybe with a leading space.
+    :return: altered arguments with "fixed" lemma
+    """
+    assert source in ('crkS', u'crkS')
+    args = (source, target, lemma.lstrip())
+    return args, kwargs
+
+
 @template_rendering_overrides.register_custom_sort(('crk', 'eng'), ('crkMacr', 'eng'), ('crkS', 'eng'))
 def sort_by_analyses(search_result_obj, unsorted_entries_and_tags_and_paradigms):
     """ This is where we sort analyses first, and then everything else.

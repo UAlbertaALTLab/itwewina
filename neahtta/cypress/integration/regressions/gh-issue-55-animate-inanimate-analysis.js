@@ -48,8 +48,7 @@ describe('Nouns of ambiguous animacy', function () {
     // Searching for syllabics should work.
     cy.instantNeahttaSearch('crkS', 'eng', 'nohkom');
 
-    // It should contain the stem in SRO.
-    cy.contains(/[ᑯᑰ]ᐦᑯᒼ/);
-    // cy.contains('-ohkom');
+    // It should contain a syllabics rendition of the word.
+    cy.contains(/[ᑯᓄᐅᑰᓅ]ᐦᑯᒼ/);
   });
 });
