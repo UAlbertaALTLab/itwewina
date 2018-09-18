@@ -44,7 +44,7 @@ describe('Nouns of ambiguous animacy', function () {
       .contains('Animate');
   });
 
-  it.only('should match PxX nouns in syllabics', function () {
+  it('should match PxX nouns in syllabics', function () {
     // Searching for syllabics should work.
     cy.instantNeahttaSearch('crkS', 'eng', 'nohkom');
 
