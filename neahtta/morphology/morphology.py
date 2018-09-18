@@ -1110,9 +1110,6 @@ class Morphology(object):
                               )
 
             for analysis in analyses:
-                # TODO: here's where to begin solving finding a lemma
-                # from:
-                # PV/maci+PV/pwana+nipâw+V+AI+Ind+Prs+1Sg
                 _an_parts = self.tool.splitAnalysis(analysis)
                 # If a word doesn't have a PoS in an analysis, we try to
                 # handle it as best as possible.
