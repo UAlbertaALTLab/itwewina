@@ -46,7 +46,19 @@ The following customizations have been made:
             PV/nitawi + √ kiskinwahamâkosi- + Intransitive Animate Verb + Independent + Past + 1s
 
          #}
-        <dt><span lang="{{ _from }}">{{ form.lemma }}</span></dt>
+         {% set generated, log_data = form.lemma|generate_or_not(_from, form.tag, lexicon_entry) %}
+
+        {% if generated %}
+            {% set lemma_or_generated = generated|first %}
+            {% if stem %}
+                {% set repl = ' √' + stem %}
+            {% else %}
+                {% set lemma_or_generated = user_input %}
+                {% set repl = '' %}
+            {% endif %}
+        {% endif %}
+
+        <dt><span lang="{{ _from }}">{{ lemma_or_generated }}</span></dt>
         <dd>
             <ul class="possible_forms">
                 {% set existing_tags = [] %}
