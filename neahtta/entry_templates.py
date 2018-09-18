@@ -482,17 +482,7 @@ class TemplateConfig(object):
         else:
             return parsed_template_cache.get(path)
 
-    def _template_parse_error_msg(self, exception, path):
-        print
-        print '--'
-        print >> sys.stderr, "Error parsing template at <%s>" % path
-        print >> sys.stderr, exception
-        print '--'
-        print
-
     def parse_template_string(self, template_string, path):
-        parsed_condition = False
-
         parsed_template = self.jinja_env.from_string(template_string)
         parsed_template.path = path
 
