@@ -39,87 +39,55 @@ The following customizations have been made:
         {% set stem = False %}
     {% endif %}
 
-    {% for grouper, forms in analyses|groupby('lemma') %}
-
-        {#
+    {% for form in analyses %}
+        {#-
             nikî-nitawi-kiskinwahamâkosin
             ⟵
             PV/nitawi + √ kiskinwahamâkosi- + Intransitive Animate Verb + Independent + Past + 1s
-            #}
 
-        {% for lemmagroup, lemmafs in forms|groupby('pos') %}
+         #}
+        <dt><span lang="{{ _from }}">{{ form.lemma }}</span></dt>
+        <dd>
+            <ul class="possible_forms">
+                {% set existing_tags = [] %}
 
-            {# TODO: generate grouper with tag #}
-
-            {% set grouper_or_generated = grouper %}
-
-            {% if lemmafs|length > 0 %}
-                {% set first_f = lemmafs|first %}
-
-                {# TODO: why is this not in the order we need it? maybe use tagsets to slide thes to the front? #}
-                {% set first_tag = first_f.tag %}
-
-                {# TODO: Problem here is that forms can't be generated since
-                tag is formatted wrong, but wrong error is returned. #}
-
-                {% set generated, log_data = grouper|generate_or_not(_from, first_tag, lexicon_entry) %}
-
-                {% if generated %}
-                    {% set grouper_or_generated = generated|first %}
+                {% if stem %}
+                    {% set repl = ' √' + stem %}
                 {% else %}
-                    {% set grouper_or_generated = user_input %}
+                    {% set repl = '' %}
                 {% endif %}
-            {% endif %}
 
-            <dt><span lang="{{ _from }}">{{ grouper_or_generated }}</span></dt>
-
-            <dd>
-                <ul class="possible_forms">
-                    {% set existing_tags = [] %}
-
-                    {% for lem in lemmafs %}
-                        {% if stem %}
-                            {% set repl = ' √' + stem %}
-                        {% else %}
-                            {% set repl = '' %}
-                        {% endif %}
-
-                        {# iterate through tag pieces and make some replacements #}
-                        {% set _formatted_tags = [] %}
-                        {% for lt in lem.tag %}
-                            {% set lt_r = lt %}
-                            {# Replace the Lemma tag with the actual lemma, then
-                               reformat with spaces around the plus #}
-                            {% if lt == first_f.lemma %}
-                                {% set lt_r = repl|tagfilter(_from, _to, tagsep='+') %}
-                                {% set tooltip = false %}
-                            {% elif 'PV/' in lt %}
-                                {% set lt_r = lt|tagfilter(_from, _to, tagsep='+') %}
-                                {% set tooltip = lt|tagfilter_by(_from, _to, tagsep='+', tagset='preverb_definitions') %}
-                            {% else %}
-                                {% set lt_r = lt|tagfilter(_from, _to, tagsep='+') %}
-                                {% set tooltip = false %}
-                            {% endif %}
-                            {% do _formatted_tags.append((lt_r, tooltip)) %}
-                        {% endfor %}
-
-                        {% set check_key = '+'.join(_formatted_tag) %}
-                        {% if check_key not in existing_tags %}
-                            <li>&larr; {{ render_tag(_formatted_tags) }}
-                            {% do existing_tags.append(check_key) %}
-                        {% endif %}
-
-                    {% endfor %}
-
-                    {% if current_pair_settings.show_korp_search %}
-                        <li> {{ korp.link_lemma(grouper) }} </li>
+                {# iterate through tag pieces and make some replacements #}
+                {% set _formatted_tags = [] %}
+                {% for lt in form.tag %}
+                    {% set lt_r = lt %}
+                    {# Replace the Lemma tag with the actual lemma, then
+                       reformat with spaces around the plus #}
+                    {% if lt == form.lemma %}
+                        {% set lt_r = repl|tagfilter(_from, _to, tagsep='+') %}
+                        {% set tooltip = false %}
+                    {% elif 'PV/' in lt %}
+                        {% set lt_r = lt|tagfilter(_from, _to, tagsep='+') %}
+                        {% set tooltip = lt|tagfilter_by(_from, _to, tagsep='+', tagset='preverb_definitions') %}
+                    {% else %}
+                        {% set lt_r = lt|tagfilter(_from, _to, tagsep='+') %}
+                        {% set tooltip = false %}
                     {% endif %}
-                </ul>
-            </dd>
+                    {% do _formatted_tags.append((lt_r, tooltip)) %}
+                {% endfor %}
 
+                {% set check_key = '+'.join(_formatted_tag) %}
+                {% if check_key not in existing_tags %}
+                    <li>&larr; {{ render_tag(_formatted_tags) }}
+                    {% do existing_tags.append(check_key) %}
+                {% endif %}
+
+                {% if current_pair_settings.show_korp_search %}
+                    <li> {{ korp.link_lemma(grouper) }} </li>
+                {% endif %}
+            </ul>
+        </dd>
         {% if log_data -%}{{ log_data|console_log }}{%- endif %}
-
-        {% endfor %}
     {% endfor %}
 </dl>
 
