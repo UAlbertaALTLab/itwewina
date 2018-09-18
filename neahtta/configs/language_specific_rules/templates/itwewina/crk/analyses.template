@@ -95,7 +95,7 @@ The following customizations have been made:
                 {% endif %}
 
                 {% if current_pair_settings.show_korp_search %}
-                    <li> {{ korp.link_lemma(grouper) }} </li>
+                    <li> {{ korp.link_lemma(form.lemma) }} </li>
                 {% endif %}
             </ul>
         </dd>
