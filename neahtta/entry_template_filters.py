@@ -178,6 +178,7 @@ def register_template_filters(app):
 
         if generated:
             forms = list()
+            # Get all of the forms output by the normative generator FST.
             for a in generated:
                 if len(a) == 2:
                     gener_fs = a[1]
@@ -186,6 +187,8 @@ def register_template_filters(app):
                             forms.append(f)
 
             forms = list(forms)
+            # In the case that there are multiple forms, sort from shortest to longest.
+            forms.sort(key=len)
             raw = raw_out + raw_errors
         else:
             forms = [lemma]
