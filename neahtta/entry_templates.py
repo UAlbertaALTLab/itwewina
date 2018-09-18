@@ -493,11 +493,7 @@ class TemplateConfig(object):
     def parse_template_string(self, template_string, path):
         parsed_condition = False
 
-        try:
-            parsed_template = self.jinja_env.from_string(template_string)
-            parsed_template.path = path
-        except Exception, e:
-            self._template_parse_error_msg(e, path)
-            sys.exit()
+        parsed_template = self.jinja_env.from_string(template_string)
+        parsed_template.path = path
 
         return parsed_template
