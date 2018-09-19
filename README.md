@@ -1,9 +1,9 @@
 itwêwina
 ========
 
-**For documentation, see [the wiki](https://github.com/UAlbertaALTLab/itwewina/wiki)!**
+**For documentation, see [the docs](./docs)!**
 Unsure about terms like "FST", "analyzer", "wordform", or "lemma", etc.?
-[See the glossary](https://github.com/UAlbertaALTLab/itwewina/wiki/Glossary)!
+[See the glossary](./docs/glossary.md)!
 
 Contents
 --------
