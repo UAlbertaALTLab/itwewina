@@ -2,9 +2,14 @@ Giellatekno
 ===========
 
 > [Eddie] from the future here! These are my personal instructions on how
-> to get things setup on a Mac. If you're not on a Mac or these
+> to get Giellatekno ("Giella" for short) setup on a Mac. If you're not on a Mac or these
 > instructions don't work for you, don't hesitate to contact me! We'll
 > figure it out together, and I'll publish the process on this wiki!
+>
+> Also, if you just want the compiled FSTs without setting up Giellatekno, they are available here:
+>
+> [Download Cree FSTs](https://drive.google.com/file/d/1io5Dr8v8fA9ZVcbJxkv8ig8fzYMhFtvw/view?usp=sharing)
+
 
 The "official" instructions are on the [Giella(tekno)
 site](http://giellatekno.uit.no/doc/infra/GettingStartedOnTheMac.html),
