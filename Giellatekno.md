@@ -6,18 +6,20 @@ Giellatekno
 > instructions don't work for you, don't hesitate to contact me! We'll
 > figure it out together, and I'll publish the process on this wiki!
 
-The "official" instructions are on the [Giella(teckno) site](http://giellatekno.uit.no/doc/infra/GettingStartedOnTheMac.html), but they're old and out of date. Also, I don't use Macports, so I'll
+The "official" instructions are on the [Giella(tekno)
+site](http://giellatekno.uit.no/doc/infra/GettingStartedOnTheMac.html),
+but they're old and out of date. Also, I don't use Macports, so I'll
 tell you how to do things with [Homebrew].
 
 Dependencies
 ------------
 
-You'll need GNU autotools, as Giellateckno loves autotools:
+You'll need GNU autotools, as Giellatekno loves autotools:
 
     brew install autoconf automake libtool
 
 There are many [FST] compilers out there: [xfst], [hfst], and [foma]. The
-Cree [FSTs] use features that can only be compiled in hfst, so get that too:
+Cree [FSTs] use features that can only be compiled in [hfst], so get that too:
 
     brew install hfst
 
@@ -122,7 +124,7 @@ The ones you'll care about are `analyzer-gt-desc.ominvorous.hfst` and
     "ptk", and other common misspellings.
   - **omnivorous**: it can eat up input in SRO/circumflex, SRO/macron, and syllabics! The lemmas it produces will always be in SRO/circumflex, however.
 
-You can use it with `hfst-lookup`:
+You can use it with [hfst-lookup]:
 
 ```sh
 echo "nipihk" | hfst-lookup -q analyzer-gt-desc.omnivorous.hfstol
@@ -146,7 +148,7 @@ What this is telling you is that "nipihk" can be interpreted in five different w
  - nîpin + Verb + Inanimate/Intransitive + Conjunct + Present + third person singular actor/subject ("it is summer")
  - nipiw + Verb + Animate/Intransitive + Imperative + Immediate + second person plural actor ("ya'll go ahead and die" -- ask a Cree speaker for a better translation)
  
-The 0.000000 are the [negative log probabilities][neglogprob]. This would matter if we had a weighted FST that would count how probable each interpretation is, but we don't have a weighted FST (requires a training corpus, and the one we have mentions dying a whole lot more than water or leaves!). For now, you can ignore the probabilities, for the exception of a probability of "inf", which means the FST couldn't make heads or tails of the query.
+The `0.000000` are the [negative log probabilities][neglogprob]. This would matter if we had a weighted FST that would count how probable each interpretation is, but we don't have a weighted FST (requires a training corpus, and the one we have mentions dying a whole lot more than water or leaves!). For now, you can ignore the probabilities, for the exception of a probability of "inf", which means the FST couldn't make heads or tails of the query.
 
 `generator-gt-norm.hfst` is:
 
@@ -154,7 +156,7 @@ The 0.000000 are the [negative log probabilities][neglogprob]. This would matter
    `nipiy+N+I+Loc`) and convert it into a wordform
  - **norm**ative: its output is in normative orthography -- that is, perfect spelling, with all the accents in the right places.
 
-Using it with `hfst-lookup`:
+Using it with [hfst-lookup]:
 
 ```sh
 echo "nipiy+N+I+Loc" | hfst-lookup -q generator-gt-norm.hfstol
@@ -182,6 +184,7 @@ atim+N+A+Der/Dim+N+A+Sg	acimos	0.000000
 [xfst]: ./Glossary#xfst
 [hfst]: ./Glossary#hfst
 [foma]: ./Glossary#foma
+[hfst-lookup]: https://github.com/hfst/hfst/wiki/HfstLookUp
 [YAML tests]: ./YAML_tests
 [awk]: https://en.wikipedia.org/wiki/AWK
 [Homebrew]: https://brew.sh/
