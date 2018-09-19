@@ -1,2 +1,2 @@
-; FST
+; <a href="#FST" id="FST">FST</a>
 : A '''finite-state transducer''' is a computational formalism that is useful for defining functions that convert an input string into an output string. In practice, linguists can use this to convert a [[wordform]] into its [[lexeme]]+[[tags]] and vice-versa. See main article: [[Finite-state transducer]].
