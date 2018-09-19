@@ -6,3 +6,6 @@
 
 ; <a href="#generator" id="generator">generator</a>
 : A '''generator''' is an [[Glossary#FST|FST]] that converts a [[Glossary#analysis|morphological analysis]] into a [[Glossary#wordform|wordforms]]. For example, if you apply the Cree generator to the analysis <code>miskinâhk+N+A+Distr</code>, it will output the wordform <code>miskinâhkonâhk</code>.
+
+; <a href="#normative" id="normative">normative</a>
+: A '''normative''' [[Glossary#FST|FST]] operates on orthographically-correct text. This means, no spelling errors, accents in all the right places, and in the exactly correct letter case. In practice, we use '''normative [[Glossary#generator|generators]]''' that, given an [[Glossary#analysis|analysis]], output a [[Glossary#wordform|wordforms]] that is perfectly written and spelled-out.
