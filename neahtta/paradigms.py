@@ -230,15 +230,6 @@ class TagSetRule(object):
             value = [alt.decode('UTF-8') for alt in value]
         elif isinstance(value, bool):
             raise NotImplementedError
-            def _cmp(x, y):
-                # when tag contains a value from this tagset, x is true,
-                # otherwise x is None
-                if x is None:
-                    return (False, x)
-                else:
-                    return (True, x)
-                return (False, x)
-            self.cmp = _cmp
         return cls(tagset, value, origin)
 
     def __repr__(self):
