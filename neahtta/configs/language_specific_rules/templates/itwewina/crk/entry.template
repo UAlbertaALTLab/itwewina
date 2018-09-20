@@ -15,7 +15,6 @@
 Customizations made here:
  - include audio_links template after definition
  - include entry source
- - include reference links to related lexemes via `lg/lemma_ref`
 {% endif %}{% endblock %}
 
 {%- import "lexicon.macros" as macros with context -%}

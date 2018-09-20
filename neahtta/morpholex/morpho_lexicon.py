@@ -2,9 +2,6 @@
 ### Morpho-Lexical interface
 ###
 
-# TODO: do not display analyzed lexical entries for words with mini-paradigms,
-# e.g., lemma_ref contents should be stripped.
-
 # Will need to operate on the output of lookup(), and this is language
 # specific, so decorator registry thing is probably good here.
 
@@ -509,21 +506,13 @@ def crk_analysis_matches_dict_entry(analysis, entry):
     #       <lg>
     #           <l pos="N">mitâs</l> <!-- Lemma with its part-of-speech as an attribute -->
     #           <lc>NDI-1</l>   <!-- the "lemma comment" --
-    #                                crk uses this to disambiguate forms within parts-of-speech.
-    #                                Note that nouns with obligatory possession do NOT have an
-    #                                <lc> element; Instead, they have a <lemma_ref>. -->
+    #                                crk uses this to disambiguate forms within parts-of-speech. -->
     #       </lg>
     #       <mg><!-- the definitions, but I don't care about this here --></mg>
     #   </e>
     lexeme_class = entry.findtext('.//lc')
-
-    # Some entries don't actually list a lexeme class. We'll assume these are PxX nouns.
-    # TODO: match on <lemma_ref> instead.
-    if lexeme_class is None:
-        # A PxX (obligatory possession) noun because it has a <lemma_ref> element.
-        assert entry.findtext('.//lemma_ref') is not None,\
-            "Entry for %r does not look like a non-PxX noun!" % (entry.findtext('.//l'),)
-        return True
+    assert lexeme_class is not None, \
+        "Could not find a lexeme class for %r" % (entry.findtext('.//l'),)
 
     entry_pos, _, _variant = lexeme_class.partition(u'-')
     assert entry_pos in (u'NI', u'NA', u'NDI', u'NDA')

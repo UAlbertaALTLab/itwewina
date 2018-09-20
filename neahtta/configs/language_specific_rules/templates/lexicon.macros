@@ -2,7 +2,6 @@
     {{- entry|xpath('lg/l')|first|text }}
 {%- endmacro -%}
 
-{# TODO: lemma_ref and stuff #}
 {# TODO:  include params as a variable available to entry template #}
 
 {%- macro lemma_detail_link(entry, _from, _to) -%}
