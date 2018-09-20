@@ -63,4 +63,4 @@ is perfectly written and spelled-out.
 
 <!-- -->
 
-[Finite-state transducer]: ./Finite-state_Transducer.md
+[Finite-state transducer]: ./finite-state-transducer.md
