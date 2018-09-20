@@ -324,9 +324,6 @@ class ParadigmRuleSet(object):
             Returns a tuple (Truth, Context); Context is a dict
         """
 
-        if self.debug:
-            print >> sys.stderr, analysis
-
         self._evals = [ comp.compare(node, analyses)
                         for comp in self.comps
                       ]
