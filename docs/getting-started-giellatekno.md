@@ -147,12 +147,12 @@ nipihk	nipiw+V+AI+Imp+Imm+2Pl	0.000000
 
 What this is telling you is that "nipihk" can be interpreted in five different ways:
 
- - nipiy + Noun + Inanimate + Locative ("at the water"); 
+ - nipiy + Noun + Inanimate + Locative ("at the water");
  - nîpiy + Noun + Inanimate + Locative ("at the leaf");
  - nipiw + Verb + Animate/Intransitive + Conjunct + Present + Unspecified actor/subject ("SOMEBODY IS DEAD")
  - nîpin + Verb + Inanimate/Intransitive + Conjunct + Present + third person singular actor/subject ("it is summer")
  - nipiw + Verb + Animate/Intransitive + Imperative + Immediate + second person plural actor ("ya'll go ahead and die" -- ask a Cree speaker for a better translation)
- 
+
 The `0.000000` are the [negative log probabilities][neglogprob]. This would matter if we had a weighted FST that would count how probable each interpretation is, but we don't have a weighted FST (requires a training corpus, and the one we have mentions dying a whole lot more than water or leaves!). For now, you can ignore the probabilities, for the exception of a probability of "inf", which means the FST couldn't make heads or tails of the query.
 
 `generator-gt-norm.hfst` is:
