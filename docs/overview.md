@@ -1,14 +1,15 @@
 Overview
 ========
 
-Welcome to the [itwêwina]---a smart [Plains Cree] dictionary.
+Welcome to [itwêwina]---a smart [Plains Cree] dictionary.
 
-itwêwina uses [finite-state transducers][FST] to analyze the structure
-of Cree words, as well as to conjugate Cree words.
+itwêwina uses [finite-state transducers][FST] (FSTs) to analyze
+the structure of Cree words, as well as to conjugate Cree words.
 
 There are many projects that tie into this effort: notably,
-**[Giellatekno](#giellatekno)**---an infrastructure for creating language technology,
-like the FSTs, and **[neahttadigisanít](#neahttadigisanít)**
+
+ - **[Giellatekno](#giellatekno)**---an infrastructure for the FSTs; and
+ - **[neahttadigisanít](#neahttadigisanít)**—the web application that powers itwêwina.
 
 
 Giellatekno
@@ -18,6 +19,17 @@ Giellatekno
 Neahttadigisanít
 ----------------
 
+itwêwina
+--------
+
+**itwêwina** is a fork of [Neahttadigisanít]. It combines the FSTs created in Giellatekno with the XML dictionaries to provide an FST-powered, smart, online dictionary. As of this writing, only one dictionary source is integrated—Dr. Arok Wolvengrey's [Cree: Words]—however, more are to come.
+
+### Cloning the repository
+
+itwêwina can be cloned from here: <https://github.com/UAlbertaALTLab/itwewina>.
+
+Included in this repository is the source code for neahttadigisanít (in a directory called `neahtta/`), along with the documentation you are reading right now. **Not included** in this repository are the FSTs or the XML dictionaries. Since the licenses and copying rights of the dictionaries are a bit iffy, you'll need to ask somebody for access to the dictionaries. The FSTs can be compiled using [Giellatekno]. See [Getting Started with Giellatekno][getting-started].
+
 
 Minor projects
 --------------
@@ -26,6 +38,11 @@ Minor projects
 
 A bidirectional [SRO]/[syllabics] transliterator for Plains Cree.
 [Try it here](https://crk-orthography-demo.herokuapp.com/)!
+
+You can also `pip install` it:
+
+    pip install crk-orthography
+
 As of this writing, [crk_orthography] does NOT use FSTs to convert
 between SRO and syllabics, however this may be possible in the future.
 For more information on SRO/syllabics transliteration, see [its
@@ -45,27 +62,30 @@ Cree Y-dialect, a.k.a., Plains Cree. Useful for listing the subset of
 characters from the [Unified Canadian Aboriginal Syllabics][ucas]
 Unicode block, as well as listing the properties of each character.
 
+This TSV file was used to create [crk_orthography].
+
 [ucas]: https://en.wikipedia.org/wiki/Unified_Canadian_Aboriginal_Syllabics_(Unicode_block)
 
 
 ### [clean-wolvengrey]
 
 The [ALTLab] team has a license to use the sources for [Dr. Arok
-Wolvengrey][arok]'s [Cree: Words](https://uofrpress.ca/Books/C/Cree-Words)
-Cree-English dictionary. [ALTLab] has the source to the dictionary in
-a CSV file, but it has a few systematic issues. [clean-wolvengrey]
-attempts to fix all of the issues.
+Wolvengrey][arok]'s [Cree: Words] Cree-English dictionary. The CSV sources do contain a few systematic
+issues. [clean-wolvengrey] attempts to fix all of the issues. If you
+wish to obtain the CSV sources, you must contact Dr. Wolvengrey.
 
 ---
 
-Continue on to [Getting Started with Giellatekno!](./getting-started-giellatekno.md).
+Continue on to [Getting Started with Giellatekno!][getting-started].
 
 
 [ALTLab]: http://altlab.artsrn.ualberta.ca/
 [arok]: http://fnuniv.ca/images/faculty/Wolvengrey_Aro.pdf
+[Cree: Words]: https://uofrpress.ca/Books/C/Cree-Words
 [clean-wolvengrey]: https://github.com/UAlbertaALTLab/clean-wolvengrey
 [crk_orthography]: https://github.com/eddieantonio/crk_orthography
 [FST]: ./finite-state-transducer.md
-[itwewina]: http://altlab.ualberta.ca/itwewina/
+[itwêwina]: http://altlab.ualberta.ca/itwewina/
 [nehiyawewin-syllabics]: https://github.com/UAlbertaALTLab/nehiyawewin-syllabics
 [Plains Cree]: https://en.wikipedia.org/wiki/Plains_Cree
+[getting-started]: ./getting-started-giellatekno.md
