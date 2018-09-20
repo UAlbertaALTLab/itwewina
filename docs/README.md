@@ -9,12 +9,14 @@ For more information over terminology and jargon, see the
 Topics
 ------
 
+ - [Overview of the projects][overview]
  - [Getting started with Giellatekno][getting-started-gt]
  - [Using the FSTs](./using-the-fsts.md)
  - [Glossary](./glossary.md)
 
 [itwêwina]: https://github.com/UAlbertaALTLab/itwewina
 [glossary]: ./glossary.md
+[overview]: ./overview.md
 [getting-started-gt]: ./getting-started-giellatekno.md
 [Neahttadigisánit]: #
 [Giellatekno]: #
