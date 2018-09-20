@@ -617,23 +617,15 @@ engcrk.xml: $(GTHOME)/art/dicts/crk/Wolvengrey/engcrk.xml
 #
 # This seems to be the easiest way to manage the subdirectory path
 # 'itwewina/' in the URL, or any potential path
-crkeng.xml: $(GTHOME)/art/dicts/crk/Wolvengrey/crkeng.xml \
-			$(GTHOME)/art/dicts/crk/Wolvengrey/bridge2FST.xml
+crkeng.xml: $(GTHOME)/art/dicts/crk/Wolvengrey/crkeng.xml
 	@echo "******************************"
 	@echo "** Building crk-eng lexicon **"
 	@echo "******************************"
-	@echo "** Backup made (.bak)       **"
-	@echo "******************************"
 	@echo ""
-	mkdir -p crkeng_tmp/
-	cp $^ crkeng_tmp/
-	cp -R $(GTHOME)/words/dicts/scripts ../scripts
-	$(SAXON) inDir=$(shell pwd)/crkeng_tmp > $@.tmp
 	mkdir -p ../static/aud/crk
-	python ../tools/extract_audio.py --local-audio-source --encoding-format=mp3 --output-file=$@.tmp.2 $@.tmp ../static/aud/crk
-	cat $@.tmp.2 | sed 's#/../static/##g' > $@ 
-	rm $@.tmp $@.tmp.2
-	rm -rf crkeng_tmp/
+	python ../tools/extract_audio.py --local-audio-source --encoding-format=mp3 --output-file=$@.tmp $< ../static/aud/crk
+	sed 's#/../static/##g' $@.tmp > $@
+	rm -f $@.tmp
 
 crkeng-cans.xml: crkeng.xml
 	@echo "****************************************"
