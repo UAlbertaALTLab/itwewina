@@ -22,4 +22,16 @@ describe('Non-PxX NDA nouns', function () {
     cy.get('.lexeme')
       .contains('a', /nôhkom\s+[(]Noun/);
   });
+
+  it('should have a NDA paradigm, with missing unspecified actor entries', function () {
+    cy.instantNeahttaSearch('crk', 'eng', 'kokom');
+
+    // The lexical entry should be nôhkom! The Px1Sg form of the word.
+    cy.contains('.lexeme a', /nôhkom\s+[(]Noun/)
+      .click();
+
+    cy.contains('td', 'nôhkom');
+    cy.contains('td', 'kôhkom');
+    cy.contains('td', 'ôhkom');
+  });
 });
