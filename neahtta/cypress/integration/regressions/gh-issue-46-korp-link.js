@@ -13,7 +13,7 @@ describe('The "Search in texts" link', function () {
       .then($a => {
         expect($a.attr('href'))
           .to.match(/^https?:[/][/]altlab.ualberta.ca[/]korp[/]/)
-          .and.to.match(/lemma.+-ohkom/);
+          .and.to.match(/lemma.+n(o|%C3%B4)hkom/);
       });
   });
 });
