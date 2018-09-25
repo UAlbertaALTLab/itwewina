@@ -50,6 +50,24 @@ A **generator** is an [FST] that converts a
 example, if you apply the Cree generator to the analysis
 `miskinâhk+N+A+Distr`, it will output the wordform `miskinâhkonâhk`.
 
+lemma
+--------
+
+[lemma]: #lemma
+
+A **lemma** is the "dictionary form" of a word. The lemma is usually
+a possible wordform of the word. In the case of Cree non-dependent
+nouns, the lemma is the singular form of the noun. In the case of
+dependent nouns, the lemma is the singular first-person possessor form.
+In the case of VII/VAI/VTI verbs, it's the independent, present tense,
+third person form of the verb. In the case of VTA verbs, it's the
+independent, present tense, third person actor/obviative goal form of
+the verb.
+
+A lemma can be considered the "canonical" form of the word. This is the
+form of the word produced by the FST, and written as the key in the
+dictionary XML file.
+
 normative
 ---------
 
@@ -60,6 +78,17 @@ This means, no spelling errors, accents in all the right places, and
 in the exactly correct letter case. In practice, we use **normative
 [generators]** that, given an [analysis], output a [wordforms] that
 is perfectly written and spelled-out.
+
+wordform
+--------
+
+[wordform]: #wordform
+
+A **wordform** is a specific grammatical realization of a word. For
+example, the [lemma] *eat* has several different wordforms including
+*eat*, *ate*, *eaten*, and *eats*. Likewise, the Cree word *wâpamêw* has
+many possible wordforms, including *kiwâpamin*, *kiwâpamatin*, and
+*wâpmaêw*, among many others.
 
 <!-- -->
 
