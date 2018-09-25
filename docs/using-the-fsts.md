@@ -17,7 +17,8 @@ analyzer-gt-desc.ominvorous.hfst
     perfectly-spelled SRO, the descriptive analyzer tries to account for
     missing accents, missing h's, missing i's, using "bdg" instead of
     "ptk", and other common misspellings.
-  - **omnivorous**: it can eat up input in SRO/circumflex, SRO/macron, and syllabics! The lemmas it produces will always be in SRO/circumflex, however.
+  - **omnivorous**: it can eat up input in SRO/circumflex, SRO/macron,
+    and syllabics! The [lemmas] it produces will always be in SRO/circumflex, however.
 
 You can use it with [hfst-lookup]:
 
@@ -51,7 +52,7 @@ generator-gt-norm.hfst
 `generator-gt-norm.hfst` is:
 
  - a **generator**: its intended purpose is to take an analysis (e.g.,
-   `nipiy+N+I+Loc`) and convert it into a wordform
+   `nipiy+N+I+Loc`) and convert it into a [wordform]
  - **norm**ative: its output is in normative orthography -- that is, perfect spelling, with all the accents in the right places.
 
 Using it with [hfst-lookup]:
@@ -78,3 +79,5 @@ atim+N+A+Der/Dim+N+A+Sg	acimos	0.000000
 
 [hfst-lookup]: https://github.com/hfst/hfst/wiki/HfstLookUp
 [neglogprob]: https://en.wikipedia.org/wiki/Log_probability
+[lemmas]: ./glossary.md#lemma
+[wordform]: ./glossary.md#wordform
