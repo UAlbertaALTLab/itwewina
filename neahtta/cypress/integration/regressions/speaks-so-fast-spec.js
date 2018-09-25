@@ -96,7 +96,7 @@ describe('Masckwacîs Dictionary validation', function () {
     // We should be on the results page now.
 
     // There should be at least this entry:
-    cy.get('a').contains('iyikohk (particle');
+    cy.contains('a', /\biyikohk\b/);
   });
 
   it('should find "wanihtawêw"', function () {
