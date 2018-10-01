@@ -1,0 +1,16 @@
+digraph {
+    rankdir = "LR";
+
+    node [shape = ellipse, style = filled, fillcolor = white, fontcolor = black];
+    giella [label="Giella infrastructure"];
+    itwewina [label=<itwêwina<BR/>(Neahttadigisánit)>];
+
+    node [shape = box, style = filled, fillcolor = black, fontcolor = white];
+    XMLDictionary [label="XML dictionaries"];
+    wolvengrey [label="Wolvengrey.csv"];
+
+    giella -> FSTs [label = "creates"];
+    FSTs -> itwewina [label = "used in"];
+    wolvengrey -> XMLDictionary [label = "source of"];
+    XMLDictionary -> itwewina [label = "used in"];
+}

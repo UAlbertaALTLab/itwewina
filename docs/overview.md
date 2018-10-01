@@ -8,12 +8,23 @@ the structure of Cree words, as well as to conjugate Cree words.
 
 There are many projects that tie into this effort: notably,
 
- - **[Giellatekno](#giellatekno)**---an infrastructure for the FSTs; and
- - **[neahttadigisanít](#neahttadigisanít)**—the web application that powers itwêwina.
+ - **[Giella](#giella)**---an infrastructure for the FSTs; and
+ - **[Neahttadigisanít](#neahttadigisanít)**—the web application that powers itwêwina.
+
+![Overview of the different components](./overview.png)
+
+We use the Giella infrastructure to compile the FSTs (to a data
+structure), which we then link to from the Neahttadigisanít web
+application.
 
 
-Giellatekno
------------
+Giella
+------
+
+**Giella** is an infrastructure for creating language technology,
+including _morphological analyzers_ like the Plains Cree FSTs. Giella
+was created by the [Giellatekno research group][giellatekno] at the
+University of Tromsø.
 
 
 Neahttadigisanít
@@ -22,13 +33,23 @@ Neahttadigisanít
 itwêwina
 --------
 
-**itwêwina** is a fork of [Neahttadigisanít]. It combines the FSTs created in Giellatekno with the XML dictionaries to provide an FST-powered, smart, online dictionary. As of this writing, only one dictionary source is integrated—Dr. Arok Wolvengrey's [Cree: Words]—however, more are to come.
+**itwêwina** is a fork of [Neahttadigisanít]. It combines the FSTs
+created in Giella with the XML dictionaries to provide an FST-powered,
+smart, online dictionary. As of this writing, only one dictionary source
+is integrated—Dr. Arok Wolvengrey's [Cree: Words]—however, more are to
+come.
 
 ### Cloning the repository
 
 itwêwina can be cloned from here: <https://github.com/UAlbertaALTLab/itwewina>.
 
-Included in this repository is the source code for neahttadigisanít (in a directory called `neahtta/`), along with the documentation you are reading right now. **Not included** in this repository are the FSTs or the XML dictionaries. Since the licenses and copying rights of the dictionaries are a bit iffy, you'll need to ask somebody for access to the dictionaries. The FSTs can be compiled using [Giellatekno]. See [Getting Started with Giellatekno][getting-started].
+Included in this repository is the source code for Neahttadigisanít (in
+a directory called `neahtta/`), along with the documentation you are
+reading right now. **Not included** in this repository are the FSTs or
+the XML dictionaries. Since the licenses and copying rights of the
+dictionaries are a bit iffy, you'll need to ask somebody for access to
+the dictionaries. The FSTs are be compiled using [Giella]. See [Getting
+Started with Giella][getting-started].
 
 
 Minor projects
@@ -76,7 +97,7 @@ wish to obtain the CSV sources, you must contact Dr. Wolvengrey.
 
 ---
 
-Continue on to [Getting Started with Giellatekno!][getting-started].
+Continue on to [Getting Started with Giella!][getting-started].
 
 
 [ALTLab]: http://altlab.artsrn.ualberta.ca/
@@ -89,3 +110,4 @@ Continue on to [Getting Started with Giellatekno!][getting-started].
 [nehiyawewin-syllabics]: https://github.com/UAlbertaALTLab/nehiyawewin-syllabics
 [Plains Cree]: https://en.wikipedia.org/wiki/Plains_Cree
 [getting-started]: ./getting-started-giellatekno.md
+[Giellatekno]: http://giellatekno.uit.no/
