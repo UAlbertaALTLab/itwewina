@@ -1,15 +1,15 @@
 Overview
 ========
 
-Welcome to [itwêwina]---a smart [Plains Cree] dictionary.
+Welcome to [itwêwina]—a smart [Plains Cree] dictionary.
 
 itwêwina uses [finite-state transducers][FST] (FSTs) to analyze
 the structure of Cree words, as well as to conjugate Cree words.
 
 There are many projects that tie into this effort: notably,
 
- - **[Giella](#giella)**---an infrastructure for the FSTs; and
- - **[Neahttadigisanít](#neahttadigisanít)**—the web application that powers itwêwina.
+ - **[Giella]**—an infrastructure for creating FSTs; and
+ - **[Neahttadigisánit](#neahttadigisánit)**—the web application that powers itwêwina.
 
 <!-- This image is created using Graphviz <https://www.graphviz.org/>.
     Install graphviz, then update overview.gv and type `make` to create
@@ -17,7 +17,7 @@ There are many projects that tie into this effort: notably,
 ![Overview of the different components](./overview.png)
 
 We use the Giella infrastructure to compile the FSTs (to a data
-structure), which we then link to from the Neahttadigisanít web
+structure), which we then link to from the Neahttadigisánit web
 application.
 
 
@@ -26,27 +26,24 @@ Giella
 
 **Giella** is an infrastructure for creating language technology,
 including _morphological analyzers_ like the Plains Cree FSTs. Giella
-was created by the [Giellatekno research group][giellatekno] at the
+was created by the [Giellatekno research group][Giellatekno] at the
 University of Tromsø.
 
 
-Neahttadigisanít
+Neahttadigisánit
 ----------------
 
-itwêwina
---------
-
-**itwêwina** is a fork of [Neahttadigisanít]. It combines the FSTs
-created in Giella with the XML dictionaries to provide an FST-powered,
-smart, online dictionary. As of this writing, only one dictionary source
-is integrated—Dr. Arok Wolvengrey's [Cree: Words]—however, more are to
-come.
+**itwêwina** is a fork of [Neahttadigisánit]. **Neahttadigisánit**
+combines FSTs created in Giella with XML dictionaries to provide an
+FST-powered, smart, online dictionary. As of this writing, only one
+dictionary source is integrated into itwêwina—Dr. Arok Wolvengrey's
+[Cree: Words]—however, more are to come.
 
 ### Cloning the repository
 
 itwêwina can be cloned from here: <https://github.com/UAlbertaALTLab/itwewina>.
 
-Included in this repository is the source code for Neahttadigisanít (in
+Included in this repository is the source code for Neahttadigisánit (in
 a directory called `neahtta/`), along with the documentation you are
 reading right now. **Not included** in this repository are the FSTs or
 the XML dictionaries. Since the licenses and copying rights of the
@@ -100,7 +97,7 @@ wish to obtain the CSV sources, you must contact Dr. Wolvengrey.
 
 ---
 
-Continue on to [Getting Started with Giella!][getting-started].
+Continue on to [Getting Started with Giella][getting-started]!
 
 
 [ALTLab]: http://altlab.artsrn.ualberta.ca/
@@ -114,3 +111,5 @@ Continue on to [Getting Started with Giella!][getting-started].
 [Plains Cree]: https://en.wikipedia.org/wiki/Plains_Cree
 [getting-started]: ./getting-started-giellatekno.md
 [Giellatekno]: http://giellatekno.uit.no/
+[Giella]: #giella
+[Neahttadigisánit]: http://saan.oahpa.no/
