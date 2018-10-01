@@ -29,6 +29,18 @@ including _morphological analyzers_ like the Plains Cree FSTs. Giella
 was created by the [Giellatekno research group][Giellatekno] at the
 University of Tromsø.
 
+### Cloning Giella
+
+I only recommend cloning Giella if you need to change the FSTs or how
+they are created. Giella is a huge project, and is distributed among
+many SVN repositories. The official instructions can be found
+[here](http://giellatekno.uit.no/doc/infra/GettingStarted.html),
+however, if you are only working with Cree on a Mac, I recommend my own
+[unofficial instructions][getting-started].
+
+If you _just_ want the compiled FSTs, see
+[generate-crk-fsts](https://github.com/nehiyawetan/generate-crk-fsts).
+
 
 Neahttadigisánit
 ----------------
