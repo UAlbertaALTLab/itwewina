@@ -11,6 +11,9 @@ There are many projects that tie into this effort: notably,
  - **[Giella](#giella)**---an infrastructure for the FSTs; and
  - **[Neahttadigisanít](#neahttadigisanít)**—the web application that powers itwêwina.
 
+<!-- This image is created using Graphviz <https://www.graphviz.org/>.
+    Install graphviz, then update overview.gv and type `make` to create
+    overview.png. -->
 ![Overview of the different components](./overview.png)
 
 We use the Giella infrastructure to compile the FSTs (to a data
