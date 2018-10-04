@@ -46,12 +46,13 @@ $(document).ready( function() {
         $('button').attr('disabled', false);
     });
 
-    // Discourage submission if there is nothing to submit
     $('form').submit(function(evt) {
-        var inputs = $(evt.target).find('input[type="text"]')
+        var inputs = $(evt.target).find('input[type="text"], input[name="lookup"]')
           , target = $(evt.target).find('button[type=submit][clicked=true]')
           , submit = $(evt.target).find('button[type="submit"]')
           ;
+
+        // Discourage submission if there is nothing to submit
         for (_i = 0, _len = inputs.length; _i < _len; _i++) {
             i = inputs[_i];
             if ($(i).val().length === 0) {
@@ -61,6 +62,8 @@ $(document).ready( function() {
             }
         }
 
+        // Okay! Looking up something!
+        // While we wait, disable the current search box.
         inputs.prop("readonly", true);
         submit.prop("disabled", true);
 
