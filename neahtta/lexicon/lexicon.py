@@ -308,6 +308,17 @@ class XMLDict(object):
     def XPath(self, xpathobj, *args, **kwargs):
         return xpathobj(self.tree, *args, **kwargs)
 
+    def lookupNothing(self, lemma):
+        """
+        When asked to search for nothing.
+
+        :param lemma:
+        :return:
+        """
+        assert not lemma
+        return []
+
+
     def lookupLemmaStartsWith(self, lemma):
         return self.XPath( self.lemmaStartsWith
                          , lemma=lemma
@@ -592,10 +603,15 @@ class Lexicon(object):
                , bool(lem_args)
                )
 
+        # This is like a pattern match for different types of searches.
+        # There are 16 different searches possible, but only a few of them are defined.
         funcs = { (True, False, False, False): lexicon.lookupLemma
                 , (True, True, False, False):  lexicon.lookupLemmaPOS
                 , (True, True, True, False):   lexicon.lookupLemmaPOSAndType
                 , (False, False, False, True): lexicon.lookupOtherLemmaAttr
+                # This usually happens because a lemma search was requested,
+                # but there's no input.
+                , (False, False, False, False): lexicon.lookupNothing
                 }
 
         largs = [lemma]
@@ -709,7 +725,8 @@ class Lexicon(object):
         else:
             result = _lookup_func(*largs)
 
-        if len(result) == 0:
+        # Occurs when we cannot find an exact match in the dictionary.
+        if len(result) == 0 and user_input:
             # Try again, but this time using user_input verbatim.
             if redo_search_with_user_input:
                 assert user_input is not False
