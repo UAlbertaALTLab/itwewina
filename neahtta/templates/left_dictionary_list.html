@@ -8,8 +8,6 @@
 
 {% if project_notice %}
     {{ project_notice|safe }}
-{% else %}
-    <p><a href="{{ url_for('.more_dictionaries') }}" class="other_link" lang="{{ current_locale }}">{% trans %}Other dictionaries{% endtrans %}</a></p>
 {% endif %}
 
 {% if text_tv %}
