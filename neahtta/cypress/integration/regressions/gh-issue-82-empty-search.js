@@ -13,4 +13,14 @@ describe('Search an with an empty query', function () {
     cy.get('body')
       .should('not.contain', 'Unknown lookup type');
   });
+
+  it('should not be possible to submit a search', function () {
+    cy.visit('/crk/eng');
+
+    cy.get('form#neahttasaanit')
+      .submit();
+
+    cy.url()
+      .should('not.contain', '?lookup');
+  });
 });
