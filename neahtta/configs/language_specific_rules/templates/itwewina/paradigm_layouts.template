@@ -12,7 +12,7 @@ Customizations:
      #}
 
     {% set multiple_types = layout|length > 1 %}
-    {% set use_dropdown = layout|length > 3 %}
+    {% set use_dropdown = layout|length > 4 %}
 
     {# Construct the navigation menu when there are multiple paradigm
        types generated for this entry. #}
