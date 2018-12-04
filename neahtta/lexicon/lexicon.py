@@ -242,7 +242,45 @@ PARSED_TREES = {}
 
 regexpNS = "http://exslt.org/regular-expressions"
 
-# @search_types.add_custom_lookup_type('regular')
+
+class DictionarySource(object):
+    """
+    The source of dictionary definitions.
+    """
+    def __init__(self, dict_id, full_name):
+        """
+        :param dict_id: str the ID used in the XML
+        :param full_name: unicode The full name of the source
+        """
+        assert isinstance(full_name, unicode)
+        self.id = dict_id
+        self.full_name = full_name
+
+    def __eq__(self, other):
+        return (isinstance(other, DictionarySource) and
+                self.id == other.id)
+
+    def __repr__(self):
+        return "%s(%r, %r)" % (type(self).__name__, self.id, self.full_name)
+
+    @classmethod
+    def from_xml(cls, el):
+        """
+        Take an <source> element and return a DictionarySource instance.
+
+        :param el: etree.Element the <source> element
+        :return: DictionarySource
+        """
+        assert el.tag == 'source', "must get a <source> element; got a <%s> instead" % (el.tag,)
+        # TODO: if it fails?
+        dict_id = el.attrib['id']
+        # TODO: if this fails?
+        title_el = el.find('title')
+        assert title_el is not None
+        name = title_el.text.strip()
+        return DictionarySource(dict_id, name)
+
+
 class XMLDict(object):
     """ XML dictionary class. Initiate with a file path or an already parsed
     tree, exposes methods for searching in XML.
@@ -287,6 +325,7 @@ class XMLDict(object):
 
         _re_pos_match = """re:match(%(pos)s, $pos, "i")""" % xpaths
 
+
         self.lemmaStartsWith = etree.XPath(
             ".//e[starts-with(%(pos)s, $lemma)]" % xpaths
         )
@@ -304,6 +343,13 @@ class XMLDict(object):
                          ])
             , namespaces={'re': regexpNS}
         )
+
+        # Collect all dictionary sources
+        self.dict_sources = {}
+        for source_xml in etree.XPath('.//source')(self.tree):
+            source = DictionarySource.from_xml(source_xml)
+            self.dict_sources[source.id] = source
+        # TODO: assert all .//e/t have a source
 
     def XPath(self, xpathobj, *args, **kwargs):
         return xpathobj(self.tree, *args, **kwargs)
