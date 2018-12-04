@@ -247,21 +247,21 @@ class DictionarySource(object):
     """
     The source of dictionary definitions.
     """
-    def __init__(self, dict_id, full_name):
+    def __init__(self, dict_id, title):
         """
         :param dict_id: str the ID used in the XML
-        :param full_name: unicode The full name of the source
+        :param title: unicode The full title of the source
         """
-        assert isinstance(full_name, unicode)
+        assert isinstance(title, unicode)
         self.id = dict_id
-        self.full_name = full_name
+        self.title = title
 
     def __eq__(self, other):
         return (isinstance(other, DictionarySource) and
                 self.id == other.id)
 
     def __repr__(self):
-        return "%s(%r, %r)" % (type(self).__name__, self.id, self.full_name)
+        return "%s(%r, %r)" % (type(self).__name__, self.id, self.title)
 
     @classmethod
     def from_xml(cls, el):
@@ -275,10 +275,9 @@ class DictionarySource(object):
         # TODO: if it fails?
         dict_id = el.attrib['id']
         # TODO: if this fails?
-        title_el = el.find('title')
-        assert title_el is not None
-        name = title_el.text.strip()
-        return DictionarySource(dict_id, name)
+        title = el.findtext('title', '').strip()
+        assert title != u''
+        return DictionarySource(dict_id, title)
 
 
 class XMLDict(object):
@@ -346,12 +345,13 @@ class XMLDict(object):
 
         # Collect all dictionary sources
         self.dict_sources = {}
-        for source_xml in etree.XPath('.//source')(self.tree):
+        for source_xml in self.tree.findall('.//source'):
             source = DictionarySource.from_xml(source_xml)
             self.dict_sources[source.id] = source
-        # TODO: assert all .//e/t have a source
+        # TODO: assert all .//e/t mention a source
 
     def XPath(self, xpathobj, *args, **kwargs):
+        # TODO: wrap with a thing that lists dictionary source?
         return xpathobj(self.tree, *args, **kwargs)
 
     def lookupNothing(self, lemma):
@@ -363,7 +363,6 @@ class XMLDict(object):
         """
         assert not lemma
         return []
-
 
     def lookupLemmaStartsWith(self, lemma):
         return self.XPath( self.lemmaStartsWith
