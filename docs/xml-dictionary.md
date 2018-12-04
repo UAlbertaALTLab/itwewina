@@ -228,7 +228,7 @@ a particular meaning of a lemma.
    language code. Neahttadigisánit supports multiple translation
    languages, and thus these codes serve to differentiate what language
    the translation is written in. Currently itwêwina only supports `crk`
-   and `eng`. Thus, every `<t>` in the `crkeng.xml` dictionary will have
+   and `eng`. Thus, every `<tg>` in the `crkeng.xml` dictionary will have
    its `xml:lang="eng"`, as that is the only language it translates
    into.
 
@@ -340,6 +340,15 @@ Here is a full lexicon with two sources, and three dictionary entries.
    </e>
 </r>
 ```
+
+
+## Other elements and attributes
+
+These elements exist as an extension of the base dictionary format,
+however, are not officially supported:
+
+ - `<xg>` — example group (within `<tg>` or `<mg>`)
+ - **DEPRECATED** `<audio>` for use with SoundManager 2 (within `<xg>`)
 
 [lemma]: ./glossary.md#lemma
 [word form]: ./glossary.md#word-form
