@@ -222,10 +222,15 @@ a particular meaning of a lemma.
 
  - one or more `<t>` translations
 
-### Optional attributes
+### Required attributes
 
- - `xml:lang=""` attribute. As of 2018-02-04, this attribute is ignored,
-   but it signifies what language the translation is written in.
+ - `xml:lang=""` attribute. This must be a three-letter ISO 639-3
+   language code. Neahttadigisánit supports multiple translation
+   languages, and thus these codes serve to differentiate what language
+   the translation is written in. Currently itwêwina only supports `crk`
+   and `eng`. Thus, every `<t>` in the `crkeng.xml` dictionary will have
+   its `xml:lang="eng"`, as that is the only language it translates
+   into.
 
 ### Example
 
