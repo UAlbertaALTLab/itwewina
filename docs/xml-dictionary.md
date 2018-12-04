@@ -91,8 +91,11 @@ required child: `<title>`.
 ## `<e>`: dictionary entry
 
 Represents a single "word" in the dictionary. In _itwêwina_, each
-[lemma][] is assumed to have exactly one `<e>` entry and each `<e>`
-describes exactly one [lemma][].
+[lemma][] is assumed to be assigned to exactly one `<e>` entry and each
+`<e>` is assigned to exactly one [lemma][]. Since the `<t>` element
+indicates which dictionary source a particular translation/definition
+comes from, a single `<e>` element may contain content from multiple
+dictionary sources.
 
 An element may have more than one `<mg>` meaning, each with one or more
 `<t>` translations.
@@ -346,5 +349,6 @@ Here is a full lexicon with two sources, and three dictionary entries.
 ```
 
 [lemma]: ./glossary.md#lemma
+[word form]: ./glossary.md#word-form
 [original-docs]: http://giellatekno.uit.no/doc/dicts/dictionarywork.html
 [gt_dictionary.dtd]: https://victorio.uit.no/langtech/trunk/words/dicts/scripts/gt_dictionary.dtd
