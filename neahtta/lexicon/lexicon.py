@@ -350,6 +350,33 @@ class XMLDict(object):
             self.dict_sources[source.id] = source
         # TODO: assert all .//e/t mention a source
 
+    def get_sources(self, el):
+        """
+        Return a list of DictionarySource instances associated with this element.
+
+        :param el: a <t> element, I guess?
+        :return: [DictionarySource] a list of dictionary sources
+        """
+
+        assert el.tag == 't', "Did not get a <t> tag; got a <%s> instead" %(el.tag,)
+
+        try:
+            source_text = el.attrib['source']
+        except KeyError:
+            # No source="" attribute defined.
+            return []
+
+        # Return all the source ID
+        return [self.dict_sources[source_id] for source_id in source_text.split()]
+
+    def get_source_titles(self, el):
+        """
+        Get the titles of the dictionary sources for this <t> element,.
+        :param el: etree.Element a <t> element
+        :return: [unicode] a list of dictionary titles
+        """
+        return [source.title for source in self.get_source_titles(el)]
+
     def XPath(self, xpathobj, *args, **kwargs):
         # TODO: wrap with a thing that lists dictionary source?
         return xpathobj(self.tree, *args, **kwargs)
@@ -452,8 +479,8 @@ class XMLDict(object):
         _xp = etree.XPath(_xpath_expr , namespaces={'re': regexpNS})
         return _xp(self.tree)
 
-class AutocompleteFilters(object):
 
+class AutocompleteFilters(object):
     def autocomplete_filter_for_lang(self, language_iso):
         def wrapper(filter_function):
             self._filters[language_iso].append(filter_function)
