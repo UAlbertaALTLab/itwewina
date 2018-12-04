@@ -11,7 +11,7 @@ it's in Norwegian. There's also a tiny bit of documentation inline in
 
 > This document is not quite finished yet...
 
-This is a description of the XML format, as it is used in itwêwina.
+This is a description of the XML format as it is used in itwêwina.
 A single dictionary XML file is a collection of **dictionary entries**
 (the _lexicon_) that have translations that are cited from one or more
 **dictionary sources**.
@@ -71,21 +71,22 @@ required child: `<title>`.
 
 ### Example
 
+`<t>` elements will cite this source using the id `CW`:
+
 ```xml
 <source id="CW">
   <title>Cree : Words / nehiýawewin : itwēwina</title>
 </source>
 ```
 
-`<t>` elements will cite this source using the id: `CW`.
+`<t>` elements will cite this source using the id `MD`:
+
 
 ```xml
 <source id="MD">
   <title>Maskwacîs Dictionary</title>
 </source>
 ```
-
-`<t>` elements will cite this source using the id: `MD`.
 
 
 ## `<e>`: dictionary entry
@@ -114,7 +115,7 @@ children, and one optional child.
 ### Required children
 
  - exactly one `<l>` lemma element with a required `pos=""` attribute
- - exactly one `<lc>` lemma comment element
+ - exactly one `<lc>` lemma content element
 
 ### Optional children
 
@@ -122,7 +123,7 @@ children, and one optional child.
 
 ### Example
 
-This describes "acâhkos", which is a noun.
+This describes "acâhkos", which is an animate noun:
 
 ```xml
 <lg>
@@ -140,7 +141,7 @@ entry. Look-ups in the dictionary will match for this [word form][]
 exactly. In addition to the text of the entry, the `<l>` lemma element
 has one required attribute: `pos=""`, or the **part-of-speech**. The
 part-of-speech is typically "V" or "N", and certain searches will match
-on this value.
+on this value exactly.
 
 
 ## `<lc>`: lemma category
@@ -163,7 +164,7 @@ by its noun class.
 
 **V**erb, followed by its transitivity, and the animacy of its
 dependents. Note, that abbreviations are historical Algonquian
-linguistics terminology, and Plains Cree verbs can be viewed as
+linguistics terminology; Plains Cree verbs can be viewed as
 categorized by the quantity (0, 1, or 2) of its animate dependents (its
 *valency*). After the hyphen, the verb class follows.
 
@@ -333,19 +334,6 @@ Here is a full lexicon with two sources, and three dictionary entries.
       </mg>
    </e>
 </r>
-```
-
-
-## Other examples
-
-```xml
-<e src="the title of the source dictionary">
-    <lg>
-        <l pos="N">mitâs</l> <!-- Lemma with its part-of-speech as an attribute -->
-        <lc>NDI-1</lc>   <!-- the "lemma comment" --
-                              crk uses this to disambiguate forms within parts-of-speech. -->
-    </lg>
-</e>
 ```
 
 [lemma]: ./glossary.md#lemma
