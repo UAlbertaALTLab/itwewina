@@ -249,13 +249,12 @@ def register_template_filters(app):
         """
         assert t_element.tag == 't'
         lexicon = current_app.config.lexicon
-        sources = lexicon.get_source(g._from, g._to, t_element)
-        return sources
+        sources = lexicon.get_source_titles(g._from, g._to, t_element)
         # TODO: add a stupidly specific CSS rule like:
         # .meanings ul.sources li.entry_source {
         #     font-size: 80%;
         # }
-        # return [u'Cree : Words (not implemented)']
+        return sources
 
     return app
 

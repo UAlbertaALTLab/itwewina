@@ -375,7 +375,7 @@ class XMLDict(object):
         :param el: etree.Element a <t> element
         :return: [unicode] a list of dictionary titles
         """
-        return [source.title for source in self.get_source_titles(el)]
+        return [source.title for source in self.get_sources(el)]
 
     def XPath(self, xpathobj, *args, **kwargs):
         # TODO: wrap with a thing that lists dictionary source?
@@ -746,7 +746,7 @@ class Lexicon(object):
 
         return result
 
-    def get_sources(self, from_, to, t_elem):
+    def get_source_titles(self, from_, to, t_elem):
         """
         Return the titles of the sources for this <t> element.
 
@@ -761,7 +761,7 @@ class Lexicon(object):
             # Guess this dictionary doesn't have any sources ¯\_(ツ)_/¯
             raise Exception('No dictionary pair for %s -> %s' % (from_, to))
 
-        return dict_.get_sources(t_elem)
+        return dict_.get_source_titles(t_elem)
 
     def lookup(self, _from, _to, lemma,
                pos=False, pos_type=False,
