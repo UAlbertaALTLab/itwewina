@@ -354,7 +354,7 @@ class XMLDict(object):
     def ensure_dictionary_correctness(self):
         """
         Ensures the dictionary is correct.
-        :return:
+        Prints warnings it it's not.
         """
 
         # Fully-qualified attribute named used by ElementTree,
@@ -373,8 +373,8 @@ class XMLDict(object):
                 print >> sys.stderr, "<tg>%s</tg> is missing xml:lang attribute" % (inner_text(translation_group),)
                 print >> sys.stderr, "and it will **NEVER** be displayed in the app"
 
-        # TODO: assert all .//e/t mention a source when one <source> is found.
-
+        # TODO: assert all .//e//t mention a source when one <source> is found.
+        # TODO: ensure all sources are valid
 
     def get_sources(self, el):
         """
@@ -404,7 +404,6 @@ class XMLDict(object):
         return [source.title for source in self.get_sources(el)]
 
     def XPath(self, xpathobj, *args, **kwargs):
-        # TODO: wrap with a thing that lists dictionary source?
         return xpathobj(self.tree, *args, **kwargs)
 
     def lookupNothing(self, lemma):
