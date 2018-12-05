@@ -19,7 +19,6 @@
 
 from lxml import etree
 from lookups import SearchTypes
-from utils.encoding import ensure_unicode
 
 """ Our project-wide search_types repository. """
 search_types = SearchTypes({})
@@ -348,7 +347,34 @@ class XMLDict(object):
         for source_xml in self.tree.findall('.//source'):
             source = DictionarySource.from_xml(source_xml)
             self.dict_sources[source.id] = source
-        # TODO: assert all .//e/t mention a source
+
+        # A few checks before getting started.
+        self.ensure_dictionary_correctness()
+
+    def ensure_dictionary_correctness(self):
+        """
+        Ensures the dictionary is correct.
+        :return:
+        """
+
+        # Fully-qualified attribute named used by ElementTree,
+        # because just saying xml:lang apparently makes too much sense.
+        XML_LANG = '{http://www.w3.org/XML/1998/namespace}lang'
+
+        def inner_text(el):
+            return ''.join(el.itertext()).strip()
+
+        # assert all <tg> have an xml:lang attribute
+        for translation_group in self.tree.findall('.//e/mg/tg'):
+            try:
+                translation_group.attrib[XML_LANG]
+            except KeyError:
+                print >> sys.stderr, "!!! WARNING !!!"
+                print >> sys.stderr, "<tg>%s</tg> is missing xml:lang attribute" % (inner_text(translation_group),)
+                print >> sys.stderr, "and it will **NEVER** be displayed in the app"
+
+        # TODO: assert all .//e/t mention a source when one <source> is found.
+
 
     def get_sources(self, el):
         """
