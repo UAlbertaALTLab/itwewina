@@ -222,5 +222,37 @@ def register_template_filters(app):
             console.log("%s")
         </script>""" % string.strip().encode('unicode-escape')
 
+    @app.template_filter('source_titles')
+    def source_titles(t_element):
+        """
+        Given a <t> translation element from the dictionary, returns a list of all of the titles of its dictionary.
+
+        e.g.,
+
+            <source id="CW">
+                <title> Cree : Words </title>
+            </source>
+            <source id="MD">
+                <title> Maskwacîs Dictionary </title>
+            </source>
+            <e>
+                <t sources="MD CW">acâhkos</t>
+            </e>
+
+        This will return:
+
+        [u'Cree : Words', u'Maskwacîs Dictionary']
+
+        :param t_element:
+        :return:
+        """
+        assert t_element.tag == 't'
+        # TODO: Call dictionary.get_source()
+        # TODO: add a stupidly specific CSS rule like:
+        # .meanings ul.sources li.entry_source {
+        #     font-size: 80%;
+        # }
+        return [u'Cree : Words (not implemented)']
+
     return app
 

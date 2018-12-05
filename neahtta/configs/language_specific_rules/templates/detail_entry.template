@@ -30,6 +30,7 @@
             <p class="lead">
                 {{- rendered_templates.entry_text -}}
             </p>
+            {# TODO: figure out how this works for dictionaries without <source> elements #}
             <ul class="meanings">
                 {{- rendered_templates.definition -}}
             </ul>
