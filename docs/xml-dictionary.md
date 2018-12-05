@@ -268,8 +268,7 @@ dictionary source(s) the plain-text translation is quoted from.
 
 ### Example
 
-The translation is "star" and it cited in two different dictionary
-sources:
+The translation is "star" and it cites two different dictionary sources:
 
 ```xml
 <t pos="N" sources="MD CW">star</t>
@@ -315,7 +314,7 @@ Here is a full lexicon with two sources, and three dictionary entries.
           <tg xml:lang="eng">
               <t pos="N" sources="MD">an arrow</t>
           </tg>
-          <tg>
+          <tg xml:lang="eng">
               <t pos="N" sources="CW">arrow, little arrow</t>
           </tg>
       </mg>
