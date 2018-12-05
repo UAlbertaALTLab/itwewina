@@ -155,8 +155,9 @@ In Plains Cree, the format of the **lemma category** is as follows:
 
 `ND?(A|I)-(1|2|3|4|4w|5|[?]|x)`
 
-**N**oun, **A**nimate or **I**nanimate, optionally dependent, followed
-by its noun class.
+**N**oun, optionally **D**ependent, **A**nimate or **I**nanimate.
+After the hyphen, the noun class follows.
+
 
 ### Verbs
 
