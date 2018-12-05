@@ -361,7 +361,7 @@ class XMLDict(object):
         assert el.tag == 't', "Did not get a <t> tag; got a <%s> instead" %(el.tag,)
 
         try:
-            source_text = el.attrib['source']
+            source_text = el.attrib['sources']
         except KeyError:
             # No source="" attribute defined.
             return []
@@ -746,6 +746,22 @@ class Lexicon(object):
 
         return result
 
+    def get_sources(self, from_, to, t_elem):
+        """
+        Return the titles of the sources for this <t> element.
+
+        :param from_: str from language code
+        :param to:   str to language code
+        :param t_elem: etree.Element a <t> element with a sources="" attribute.
+        :return: list of source titles
+        """
+        try:
+            dict_ = self.language_pairs[(from_, to)]
+        except KeyError:
+            # Guess this dictionary doesn't have any sources ¯\_(ツ)_/¯
+            raise Exception('No dictionary pair for %s -> %s' % (from_, to))
+
+        return dict_.get_sources(t_elem)
 
     def lookup(self, _from, _to, lemma,
                pos=False, pos_type=False,

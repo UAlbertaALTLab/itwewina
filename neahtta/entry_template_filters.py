@@ -19,6 +19,7 @@
 
 from flask import current_app, g
 
+
 def register_template_filters(app):
 
     # An idea, if specific forms need to be generated
@@ -247,12 +248,14 @@ def register_template_filters(app):
         :return:
         """
         assert t_element.tag == 't'
-        # TODO: Call dictionary.get_source()
+        lexicon = current_app.config.lexicon
+        sources = lexicon.get_source(g._from, g._to, t_element)
+        return sources
         # TODO: add a stupidly specific CSS rule like:
         # .meanings ul.sources li.entry_source {
         #     font-size: 80%;
         # }
-        return [u'Cree : Words (not implemented)']
+        # return [u'Cree : Words (not implemented)']
 
     return app
 
