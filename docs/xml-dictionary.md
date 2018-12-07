@@ -131,13 +131,13 @@ This noun can have multiple **meanings**:
 ```xml
   <mg>
     <tg xml:lang="eng">
-      <l sources="OED>the land alongside or sloping down to a river or lake</l>
+      <l sources="OED">the land alongside or sloping down to a river or lake</l>
     </tg>
   </mg>
 
   <mg>
     <tg xml:lang="eng">
-      <l sources="OED>A financial establishment that uses money deposited customers for investment [...] </l>
+      <l sources="OED">A financial establishment that uses money deposited customers for investment [...] </l>
     </tg>
   </mg>
 </e>
@@ -175,9 +175,9 @@ This verb can have multiple different meanings as well.
 
 > *Source*: [Oxford Living English Dictionary](https://en.oxforddictionaries.com/definition/bank#h47327854587960)
 
-The reason that there would be *two* different versions of "bank" is
-because, being from different parts-of-speech, they *inflect*
-differently.
+The reason that there would be *two* different lemmas (`<e>` elements)
+of "bank" is because, being from different parts-of-speech, they
+*inflect* differently.
 
 For example, the first `<e>`, with `<l pos="N">bank</l>` would inflect
 as:
@@ -196,10 +196,10 @@ Where as the second lemma `<l pos="V">bank</l>` inflect as:
 | 3Sg | banks   | banked | is banking          | will bank |
 | 1Pl | bank    | banked | are banking         | will bank |
 | 2Pl | bank    | banked | are banking         | will bank |
-| 3PL | bank    | banked | are banking         | will bank |
+| 3Pl | bank    | banked | are banking         | will bank |
 
-If it has a different inflectional paradigms, that means it's
-a different lemma!
+If it has a different inflectional paradigm, that means it's a different
+lemma!
 
 
 ## `<lg>`: lemma group
