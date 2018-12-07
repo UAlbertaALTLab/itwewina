@@ -405,7 +405,7 @@ Here is a full lexicon with two sources, and three dictionary entries.
       <lg>
          <l pos="N">acosis</l>
          <lc>NA-1</lc>
-         <stem>acâhkos-</stem>
+         <stem>acosis-</stem>
       </lg>
       <mg>
           <tg xml:lang="eng">

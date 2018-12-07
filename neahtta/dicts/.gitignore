@@ -1,1 +1,4 @@
 /*.xml
+# I have revisions of these documents that are NOT checked into source control:
+/*.xml.old
+/*.xml.new
