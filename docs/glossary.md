@@ -21,12 +21,12 @@ descriptive
 A **descriptive** [FST] operates on orthographically dubious text.
 This means that the text may be written in a non-standard
 orthography, make some common spelling mistakes, and may be lacking
-accents or aspiration marks where they would be required in
+diacritics or aspiration ('h') where they would be required in
 "correct" text. Think [descriptive linguistics](https://en.wikipedia.org/wiki/Linguistic_description).
-In practice, we use **descriptive [analyzers]** to accept input and
-[word forms][] however people may type it---we allow for some wiggle-room
-and forgive orthographic mistakes, in the hope that the FST will
-find the most appropriate analysis.
+In practice, we use **descriptive [analyzers][]** to accept input and
+[word forms][] in whatever way people may type it---we allow for some
+wiggle-room and forgive spelling mistakes, in the hope that the FST
+will find the most appropriate analysis.
 
 FST
 ---
@@ -36,8 +36,14 @@ FST
 A **finite-state transducer** is a computational formalism that is
 useful for defining functions that convert an input string into an
 output string. In practice, linguists can use this to convert
-a [word form] into its [lexeme]+[tags] and back again. See main
+a [word form][] into its [lexeme]+[tags] and back again. See main
 article: [Finite-state transducer].
+
+When referring to "the FST", we (ALTLabbers) tend to mean the source
+code (`*.lexc`, `*.xfscript`, `*.regex`, `*.twolc` files) and resulting
+"compiled" data structures (`*.hfst`, `*.hfstol` files) we used to
+break-down and describe Plains Cree words.
+
 
 generator
 ---------
@@ -89,7 +95,7 @@ A **word form** (also spelled **wordform**) is a specific grammatical
 realization of a word. For example, the [lemma][] *eat* has several
 different word forms including *eat*, *ate*, *eaten*, and *eats*.
 Likewise, the Cree word *wâpamêw* has many possible word forms, including
-*kiwâpamin*, *kiwâpamatin*, and *wâpmaêw*, among many others.
+*kiwâpamin*, *kiwâpamatin*, and *wâpamêw*, among many others.
 
 <!-- -->
 
