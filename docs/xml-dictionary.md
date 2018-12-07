@@ -84,14 +84,16 @@ required child: `<title>`.
 
 ```xml
 <source id="MD">
-  <title>Maskwacîs Dictionary</title>
+  <title>Maskwacîs Cree Dictionary</title>
 </source>
 ```
 
 
 ## `<e>`: dictionary entry
 
-Represents a single "word" in the dictionary. In _itwêwina_, each
+Represents a single lemma in the dictionary. In laymen's terms,
+this is like a word in one particular part of speech e.g., "bank"
+(Noun). In _itwêwina_, each
 [lemma][] is assumed to be assigned to exactly one `<e>` entry and each
 `<e>` is assigned to exactly one [lemma][]. Since the `<t>` element
 indicates which dictionary source a particular translation/definition
@@ -106,6 +108,99 @@ An element may have more than one `<mg>` meaning, each with one or more
  - exactly one `<lg>` (lemma group) containing exactly one `<l>` lemma
    and `<lc>` lemma category.
  - one or more `<mg>` meaning groups.
+
+### Example
+
+Consider the following English utterance: "bank".
+
+
+It can be interpreted as a **noun**:
+
+```
+<e>
+  <lg>
+    <l pos="N">bank</l>
+    <lc>Noun/regular-unvoiced</lc>
+    <stem>bank</stem>
+  </lg>
+  <!-- continued in next example -->
+```
+
+This noun can have multiple **meanings**:
+
+```xml
+  <mg>
+    <tg xml:lang="eng">
+      <l sources="OED>the land alongside or sloping down to a river or lake</l>
+    </tg>
+  </mg>
+
+  <mg>
+    <tg xml:lang="eng">
+      <l sources="OED>A financial establishment that uses money deposited customers for investment [...] </l>
+    </tg>
+  </mg>
+</e>
+```
+
+> *Source*: [Oxford Living English Dictionary](https://en.oxforddictionaries.com/definition/bank#h47327854587960)
+
+A different `<e>` interprets "bank" as a **verb**:
+
+```xml
+<e>
+  <lg>
+    <l pos="N">bank</l>
+    <lc>Verb/regular</lc>
+    <stem>bank</stem>
+  </lg>
+  <!-- continued in next example -->
+```
+
+This verb can have multiple different meanings as well.
+
+```xml
+  <mg>
+    <tg xml:lang="eng">
+      <l sources="OED">Heap a substance into a mass or mound</l>
+    </tg>
+  </mg>
+  <mg>
+    <tg xml:lang="eng">
+      <l sources="OED">(with reference to an aircraft or vehicle) tilt or cause to tilt sideways in making a turn</l>
+    </tg>
+  </mg>
+</e>
+```
+
+> *Source*: [Oxford Living English Dictionary](https://en.oxforddictionaries.com/definition/bank#h47327854587960)
+
+The reason that there would be *two* different versions of "bank" is
+because, being from different parts-of-speech, they *inflect*
+differently.
+
+For example, the first `<e>`, with `<l pos="N">bank</l>` would inflect
+as:
+
+|           | Singular | Plural |
+|-----------|----------|--------|
+| Plain     | bank     | banks  |
+| Posessive | bank's   | banks' |
+
+Where as the second lemma `<l pos="V">bank</l>` inflect as:
+
+|     | Present | Past   | Present progressive | Future    |
+|-----|---------|--------|---------------------|-----------|
+| 1Sg | bank    | banked | am banking          | will bank |
+| 2Sg | bank    | banked | are banking         | will bank |
+| 3Sg | banks   | banked | is banking          | will bank |
+| 1Pl | bank    | banked | are banking         | will bank |
+| 2Pl | bank    | banked | are banking         | will bank |
+| 3PL | bank    | banked | are banking         | will bank |
+
+If it has a different inflectional paradigms, that means it's
+a different lemma!
+
 
 ## `<lg>`: lemma group
 
@@ -164,15 +259,15 @@ After the hyphen, the noun class follows.
 `V{class}-(n|v|1|2|3|4|5)`
 
 **V**erb, followed by its transitivity, and the animacy of its
-dependents. Note, that abbreviations are historical Algonquian
+arguments. Note, that abbreviations are historical Algonquian
 linguistics terminology; Plains Cree verbs can be viewed as
-categorized by the quantity (0, 1, or 2) of its animate dependents (its
+categorized by the quantity (0, 1, or 2) of its animate arguments (its
 *valency*). After the hyphen, the verb class follows.
 
- - VII — verb inanimate    intransitive (0 animate dependents)
- - VAI – verb intransitive animate      (1 animate dependent)
- - VTI - verb transitive   inanimate    (1 animate dependent)
- - VTA — verb transitive   animate      (2 animate dependents)
+ - VII — verb inanimate    intransitive (0 animate arguments)
+ - VAI – verb intransitive animate      (1 animate argument)
+ - VTI - verb transitive   inanimate    (1 animate argument)
+ - VTA — verb transitive   animate      (2 animate arguments)
 
 
 ### Other
@@ -188,7 +283,8 @@ Note that the stem **MAY NOT** be a valid [word form][] by itself.
 ## `<mg>`: meaning group
 
 A **meaning group** contains one or more different possible meanings of
-the lemma.
+the lemma. An entry would use more than one meaning groups when the
+meanings are not obviously related.
 
 ## Required children
 
@@ -288,7 +384,7 @@ Here is a full lexicon with two sources, and three dictionary entries.
       <title>Cree : Words / nehiýawewin : itwēwina</title>
    </source>
    <source id="MD">
-      <title>Maskwacîs Dictionary</title>
+      <title>Maskwacîs Cree Dictionary</title>
    </source>
 
    <!-- The dictionary entries -->
