@@ -19,7 +19,6 @@
 
 from lxml import etree
 from lookups import SearchTypes
-from utils.encoding import ensure_unicode
 
 """ Our project-wide search_types repository. """
 search_types = SearchTypes({})
@@ -242,7 +241,44 @@ PARSED_TREES = {}
 
 regexpNS = "http://exslt.org/regular-expressions"
 
-# @search_types.add_custom_lookup_type('regular')
+
+class DictionarySource(object):
+    """
+    The source of dictionary definitions.
+    """
+    def __init__(self, dict_id, title):
+        """
+        :param dict_id: str the ID used in the XML
+        :param title: unicode The full title of the source
+        """
+        assert isinstance(title, unicode)
+        self.id = dict_id
+        self.title = title
+
+    def __eq__(self, other):
+        return (isinstance(other, DictionarySource) and
+                self.id == other.id)
+
+    def __repr__(self):
+        return "%s(%r, %r)" % (type(self).__name__, self.id, self.title)
+
+    @classmethod
+    def from_xml(cls, el):
+        """
+        Take an <source> element and return a DictionarySource instance.
+
+        :param el: etree.Element the <source> element
+        :return: DictionarySource
+        """
+        assert el.tag == 'source', "must get a <source> element; got a <%s> instead" % (el.tag,)
+        # TODO: if it fails?
+        dict_id = el.attrib['id']
+        # TODO: if this fails?
+        title = el.findtext('title', '').strip()
+        assert title != u''
+        return DictionarySource(dict_id, title)
+
+
 class XMLDict(object):
     """ XML dictionary class. Initiate with a file path or an already parsed
     tree, exposes methods for searching in XML.
@@ -287,6 +323,7 @@ class XMLDict(object):
 
         _re_pos_match = """re:match(%(pos)s, $pos, "i")""" % xpaths
 
+
         self.lemmaStartsWith = etree.XPath(
             ".//e[starts-with(%(pos)s, $lemma)]" % xpaths
         )
@@ -305,6 +342,67 @@ class XMLDict(object):
             , namespaces={'re': regexpNS}
         )
 
+        # Collect all dictionary sources
+        self.dict_sources = {}
+        for source_xml in self.tree.findall('.//source'):
+            source = DictionarySource.from_xml(source_xml)
+            self.dict_sources[source.id] = source
+
+        # A few checks before getting started.
+        self.ensure_dictionary_correctness()
+
+    def ensure_dictionary_correctness(self):
+        """
+        Ensures the dictionary is correct.
+        Prints warnings it it's not.
+        """
+
+        # Fully-qualified attribute named used by ElementTree,
+        # because just saying xml:lang apparently makes too much sense.
+        XML_LANG = '{http://www.w3.org/XML/1998/namespace}lang'
+
+        def inner_text(el):
+            return ''.join(el.itertext()).strip()
+
+        # assert all <tg> have an xml:lang attribute
+        for translation_group in self.tree.findall('.//e/mg/tg'):
+            try:
+                translation_group.attrib[XML_LANG]
+            except KeyError:
+                print >> sys.stderr, "!!! WARNING !!!"
+                print >> sys.stderr, "<tg>%s</tg> is missing xml:lang attribute" % (inner_text(translation_group),)
+                print >> sys.stderr, "and it will **NEVER** be displayed in the app"
+
+        # TODO: assert all .//e//t mention a source when one <source> is found.
+        # TODO: ensure all sources are valid
+
+    def get_sources(self, el):
+        """
+        Return a list of DictionarySource instances associated with this element.
+
+        :param el: a <t> element, I guess?
+        :return: [DictionarySource] a list of dictionary sources
+        """
+
+        assert el.tag == 't', "Did not get a <t> tag; got a <%s> instead" %(el.tag,)
+
+        try:
+            source_text = el.attrib['sources']
+        except KeyError:
+            # No source="" attribute defined.
+            return []
+
+        # Return all the source ID
+        return [self.dict_sources[source_id] for source_id in source_text.split()]
+
+    def get_source_titles(self, el):
+        """
+        Get the titles of the dictionary sources for this <t> element,.
+        :param el: etree.Element a <t> element
+        :return: [unicode] a list of dictionary titles
+        """
+        return [source.title for source in self.get_sources(el)]
+
     def XPath(self, xpathobj, *args, **kwargs):
         return xpathobj(self.tree, *args, **kwargs)
 
@@ -317,7 +415,6 @@ class XMLDict(object):
         """
         assert not lemma
         return []
-
 
     def lookupLemmaStartsWith(self, lemma):
         return self.XPath( self.lemmaStartsWith
@@ -407,8 +504,8 @@ class XMLDict(object):
         _xp = etree.XPath(_xpath_expr , namespaces={'re': regexpNS})
         return _xp(self.tree)
 
-class AutocompleteFilters(object):
 
+class AutocompleteFilters(object):
     def autocomplete_filter_for_lang(self, language_iso):
         def wrapper(filter_function):
             self._filters[language_iso].append(filter_function)
@@ -674,6 +771,22 @@ class Lexicon(object):
 
         return result
 
+    def get_source_titles(self, from_, to, t_elem):
+        """
+        Return the titles of the sources for this <t> element.
+
+        :param from_: str from language code
+        :param to:   str to language code
+        :param t_elem: etree.Element a <t> element with a sources="" attribute.
+        :return: list of source titles
+        """
+        try:
+            dict_ = self.language_pairs[(from_, to)]
+        except KeyError:
+            # Guess this dictionary doesn't have any sources ¯\_(ツ)_/¯
+            raise Exception('No dictionary pair for %s -> %s' % (from_, to))
+
+        return dict_.get_source_titles(t_elem)
 
     def lookup(self, _from, _to, lemma,
                pos=False, pos_type=False,

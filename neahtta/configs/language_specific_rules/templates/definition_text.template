@@ -63,6 +63,18 @@
     {%- endif %}
 {%- endmacro -%}
 
+{%- macro render_sources(t) -%}
+    {# Render the title(s) of the source(s) of this <t> translation.  #}
+    {% set entry_sources = t|source_titles %}
+    {% if entry_sources|length > 0 %}
+    <ul class="sources">
+       {% for source in entry_sources %}
+       <li class="entry_source">{{ source }}</li>
+       {% endfor %}
+    </ul>
+    {% endif %}
+{%- endmacro -%}
+
 {%- macro render_tg(tg) -%}
     {# Render all the texts as individual links, followed by a potential
     annotation. #}
@@ -76,6 +88,11 @@
 
 {%- if translation_group -%}
     <span lang="{{ _to }}">{{ render_tg(translation_group) }}</span>
+    {%- if translation_group.xpath('./t/@sources')|length > 0 -%}
+        {%- for t in translation_group -%}
+            {{ render_sources(t) }}
+        {%- endfor -%}
+    {%- endif -%}
 {%- endif -%}
 
 {#  vim: set ts=4 sw=4 tw=72 syntax=htmljinja : #}

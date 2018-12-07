@@ -19,6 +19,7 @@
 
 from flask import current_app, g
 
+
 def register_template_filters(app):
 
     # An idea, if specific forms need to be generated
@@ -221,6 +222,35 @@ def register_template_filters(app):
         return """<script type="text/javascript">
             console.log("%s")
         </script>""" % string.strip().encode('unicode-escape')
+
+    @app.template_filter('source_titles')
+    def source_titles(t_element):
+        """
+        Given a <t> translation element from the dictionary, returns a list of all of the titles of its dictionary.
+
+        e.g.,
+
+            <source id="CW">
+                <title> Cree : Words </title>
+            </source>
+            <source id="MD">
+                <title> Maskwacîs Dictionary </title>
+            </source>
+            <e>
+                <t sources="MD CW">acâhkos</t>
+            </e>
+
+        This will return:
+
+        [u'Cree : Words', u'Maskwacîs Dictionary']
+
+        :param t_element:
+        :return:
+        """
+        assert t_element.tag == 't'
+        lexicon = current_app.config.lexicon
+        sources = lexicon.get_source_titles(g._from, g._to, t_element)
+        return sources
 
     return app
 
