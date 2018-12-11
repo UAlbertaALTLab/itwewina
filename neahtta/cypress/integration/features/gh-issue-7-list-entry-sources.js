@@ -28,7 +28,7 @@ describe("List of an entry's sources", function () {
       .should('contain', 'detail');
 
     // We should see the source on the page.
-    cy.get('.lexeme')
-      .should('contain', 'nêhiyawêwin : itwêwina / Cree : Word');
+    cy.get('.lexeme .entry_source')
+      .should('contain', 'Cree : Words');
   });
 });
