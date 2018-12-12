@@ -99,7 +99,6 @@ The following customizations have been made:
                 {% endif %}
             </ul>
         </dd>
-        {% if log_data -%}{{ log_data|console_log }}{%- endif %}
     {% endfor %}
 </dl>
 
