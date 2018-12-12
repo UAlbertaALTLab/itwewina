@@ -4,7 +4,7 @@
 // http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#basic-inclusion
 
 
-// TODO: add loading and playing icons 
+// TODO: add loading and playing icons
 $(document).ready(function(){
     soundManager.setup({
       url: '../vendor/SoundManager2/swf/',
@@ -21,7 +21,7 @@ $(document).ready(function(){
 
        btn.preventDefault();
 
-       audio = $(btn.target).attr('data-audio-target') 
+       audio = $(btn.target).attr('data-audio-target')
              || $(btn.target).parents('a.audio-link').attr('data-audio-target');
 
        function finished_event() {
@@ -47,10 +47,14 @@ $(document).ready(function(){
        sound_obj.url = audio;
 
        sound_obj.play({position:0});
-        
+
     });
 });
 
-// <script src="soundmanager2-nodebug-jsmin.js"></script>
-
-
+/** == <audio> tag stuff == **/
+$(function () {
+    // TODO: where will we get the word forms from?
+    // TODO: where will we get the base URI from?
+    var wordform = 'nikiskisin';
+    $.get('http://localhost:8000/recording/_search/' + wordform);
+});
