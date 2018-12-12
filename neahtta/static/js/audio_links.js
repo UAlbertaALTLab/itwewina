@@ -53,8 +53,37 @@ $(document).ready(function(){
 
 /** == <audio> tag stuff == **/
 $(function () {
+    // TODO: derive this from settings
+    var baseURI = 'http://localhost:8000/recording/_search/';
+
     // TODO: where will we get the word forms from?
+    // TODO: generate these in itwewina and place in a data-wordforms="" in
+    // the definition, I guess?
     // TODO: where will we get the base URI from?
     var wordform = 'nikiskisin';
-    $.get('http://localhost:8000/recording/_search/' + wordform);
+    $.getJSON( + wordform, function (data) {
+        console.log(data);
+    });
+
+    function createAudioLink() {
+        // TODO there must be audio we can click.
+        return $('<div>')
+            .addClass('audio-container')
+    }
+
+    // Produce HTML like this...:
+    // within lexeme, produce links
+    // TODO: not dialect, but **variety**
+    // TODO: Male/Female signs (like gen 2 pokêmon)
+    /*
+    <div class="audio-container">
+        <a class="audio-link" data-audio-player="" data-audio-target="/itwewina/static/aud/crk/asiniy.mp3" target="blank" href="#">
+            <i class="icon-volume-up"></i>
+            <span class="audio-meta">
+                <span data-type="dialect">Maskwacîs</span>,
+                <span data-type="speaker">?</span>
+            </span>
+        </a>
+    </div>
+    */
 });
