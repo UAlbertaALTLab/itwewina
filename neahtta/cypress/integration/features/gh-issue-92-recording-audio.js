@@ -6,34 +6,32 @@
 describe('Maskwacîs recordings integration', function () {
   const recordingSearchPattern =
     /^https?:[/][/]localhost:8000[/]recording[/]_search[/][^/]+$/;
+  const recordingAudioPattern =
+    /^https?:[/][/]localhost:8000[/]recording[/][^.]+[.]mp4$/;
 
   beforeEach(function () {
     cy.server();
   });
 
   it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
-    // Mock the endpoint
+    // Mock the API endpoint; we want to provide it our own data.
     cy.route(recordingSearchPattern, 'fixture:recording/_search/nikiskisin.json')
-      .as('getRecordings');
+      .as('searchRecordings');
+    // Mock the audio as well.
+    cy.route(recordingAudioPattern, 'fixture:recording/tone220.mp4')
+      .as('audioRecording');
 
     // Find 'kiskisiw'
     cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
     cy.contains('a', 'kiskisiw').click();
 
     // The website SHOULD make a request to get a list of recordings.
-    cy.wait('@getRecordings');
+    cy.wait('@searchRecordings');
 
-    return;
+    // Click an audio link.
+    cy.contains('a.play-audio', 'Maskwacîs').click();
 
-    // TODO: mock the audio
-    // TODO: fixture for the file
-
-    // There should be 6 audio clips
-    cy.get('audio')
-      .should('have.lengthOf', 6)
-      .invoke('play');
-
-    // TODO: ensure the audio got requested/played
+    cy.wait('@audioRecording');
   });
 
   it.skip('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
