@@ -53,8 +53,8 @@ $(document).ready(function(){
 
 /** == <audio> tag stuff == **/
 $(function () {
-    // TODO: derive this from configuration.
-    var baseURI = 'http://localhost:8000/recording/_search/';
+    // Get the base URI from the link header.
+    var baseURI = $('link[rel="x-recording-search-endpoint"]').attr('href');
 
     /* Fetch recordings for each valid searchable word form on the page. */
     $('.lexeme[data-recording-word-forms]').each(function () {
