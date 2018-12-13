@@ -33,7 +33,7 @@ describe('Maskwacîs recordings integration', function () {
     cy.wait('@searchRecordings');
 
     // Eventually, it should place 6 (from fixture) audio recordings.
-    cy.get('.lemma .recordings a.play-audio')
+    cy.get('.lexeme .recordings a.play-audio')
       .should('have.lengthOf', 6);
 
     // Click an audio link.

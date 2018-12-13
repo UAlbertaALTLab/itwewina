@@ -59,18 +59,19 @@ $(function () {
     // TODO: Look for the wordforms in the .lexeme[data-recording-wordforms]
     var wordform = 'nikiskisin';
 
-    // TODO: where will we get the word forms from?
-    // TODO: generate these in itwewina and place in a data-wordforms="" in
-    // the definition, I guess?
-    // TODO: where will we get the base URI from?
     $.getJSON(baseURI + wordform, function (data) {
-        console.assert(data.length >= 1);
-        var recordingData = data[0];
-        $('.lexeme').append(makeRecordingAudioLink(recordingData));
+        if (data.length === 0) {
+            return;
+        }
+
+        var $recordings = $('<div class="recordings">');
+        data.forEach(function (recording) {
+            $recordings.append(makeRecordingAudioLink(recording));
+        });
+        $('.lexeme').append($recordings);
     });
 
     function makeRecordingAudioLink(recording) {
-
         // Create the <a> link, substituting required information.
         var $link = $(
             '<a href="#" class="play-audio">' +
