@@ -68,6 +68,8 @@ $(function () {
         data.forEach(function (recording) {
             $recordings.append(makeRecordingAudioLink(recording));
         });
+        // Reveal the recordings pane once it finally loads.
+        $recordings.hide().show('slow');
         $('.lexeme').append($recordings);
     });
 
@@ -87,7 +89,10 @@ $(function () {
             .text(recording.gender === 'M' ? '♂' : '♀');
 
         var audio = new Audio(recording.recording_url);
-        audio.preload = 'none'; // do not preload the audio!
+        // Don't preload the audio! Otherwise, this will make LOTS of requests
+        // on some pages, that will ultimately go unused.
+        audio.preload = 'none';
+
         $link.click(function (event) {
             event.preventDefault(); // don't jump around on the page.
             audio.play();
