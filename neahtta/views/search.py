@@ -719,7 +719,7 @@ class SearcherMixin(object):
 
                 tplkwargs = { 'lexicon_entry': lz
                             , 'analyses': az
-
+                            , 'recording_word_forms': determine_recording_word_forms(paradigm)
                             , 'paradigm': paradigm
                             , 'layout': has_layout
                             , 'user_input': search_result_obj.search_term
@@ -1170,3 +1170,15 @@ class DetailedLanguagePairSearchView(DictionaryView, SearcherMixin):
 
         return render_template(self.template_name, **search_result_context)
 
+
+def determine_recording_word_forms(paradigm):
+    """
+    Returns a list of word forms that
+
+    See: https://github.com/UAlbertaALTLab/itwewina/issues/92
+
+    :param paradigm: list of GeneratedForms
+    :return: list of word forms.
+    """
+    # TODO:
+    return ['nikiskisin']

@@ -14,7 +14,16 @@
 
 {%- import "lexicon.macros" as macros with context -%}
 <div class="row-fluid entry_row">
-    <div class="span9 lexeme" data-recording-word-forms="nikiskisin"{# Provide word forms here so that the JS on the page can request for it in the recording app. #}>
+    <div class="span9 lexeme" data-recording-word-forms="{{
+            recording_word_forms | join(',')
+        }}"{#
+
+        Provide comma-separated word forms from the paradigm so that the JS on the page can request some
+        word forms from the Recording Validation App. The recording app uses comma-separated word forms as
+        its query: https://github.com/UAlbertaALTLab/recording-validation-interface#web-api
+
+        See audio_links.js and views/search.py.
+     #}>
         {% if lexicon_entry|count > 0 %}
             <div class="pull-right hidden-phone floatingparadigm">
                 {% if current_app_config.paradigm_layouts and layout %}
