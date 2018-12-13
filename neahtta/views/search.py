@@ -1199,12 +1199,14 @@ def determine_recording_word_forms(paradigm):
     if word_type == 'VAI':
         forms = []
         for candidate in paradigm:
-            tag = candidate.tag
-            # PV/e+...+V+AI+Cnj+Prs+3Sg
-            if tag['prelemma_tags'] == u'PV/e' and tag['person'] == u'3Sg' and tag['tense'] == u'Prs' and tag['conjunct'] == u'Cnj':
+            if candidate.tag_raw == [u'V', u'AI', u'Ind', u'Prs', u'1Sg']:
+                forms.append(candidate.form)
+            elif candidate.tag_raw == [u'V', u'AI', u'Ind', u'Prs', u'3Sg']:
+                forms.append(candidate.form)
+            elif candidate.tag_raw == [u'PV/e', u'V', u'AI', u'Cnj', u'Prs', u'3Sg']:
                 # XXX: I happen to know right now that the recordings' transcriptions
                 # don't tend to have a hyphen after the ê, so get rid of it!
-                forms.append(candidate.form.replace(u'-', u''))
+                forms.append(candidate.form)
         # TODO: go through paradigm, looking for the spicy forms.
         return forms
     else:
