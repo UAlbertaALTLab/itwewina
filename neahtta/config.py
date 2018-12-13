@@ -331,6 +331,18 @@ class Config(Config):
                                self.filename)
 
     @property
+    def recordings_endpoint(self):
+       uri = self.yaml.get('ApplicationSettings', {}) \
+                 .get('recordings_endpoint', False)
+       if uri:
+           return uri
+       else:
+           raise RuntimeError('recordings_endpoint not specified in '
+                              'config file %s, in ApplicationSettings.' %
+                              self.filename)
+
+
+    @property
     def has_project_css(self):
         if not hasattr(self, '_has_project_css'):
             project_css_path = False

@@ -12,10 +12,11 @@ describe('Maskwacîs recordings integration', function () {
   });
 
   it('should include the endpoint as a <link>', function () {
-    cy.visit('/');
-    cy.get('link[x-recording-search-endpoint')
+    cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
+    cy.contains('a', 'kiskisiw').click();
+    cy.get('link[rel="x-recording-search-endpoint"]')
       .should(($link) => {
-        expect($link.attr('href')).to.match(recordingSearchPattern);
+        expect($link.attr('href') + 'ê').to.match(recordingSearchPattern);
       });
   });
 

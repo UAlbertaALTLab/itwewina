@@ -742,6 +742,7 @@ class SearcherMixin(object):
 
         indiv_template_kwargs = {
             'analyses': all_az,
+            'recordings_endpoint': current_app.config.recordings_endpoint
         }
         indiv_template_kwargs.update(**default_context_kwargs)
 

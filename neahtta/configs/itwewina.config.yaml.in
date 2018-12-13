@@ -23,6 +23,8 @@ ApplicationSettings:
       Free online, mobile friendly dictionaries for Plains Cree
   meta_keywords: >
       plains cree, mobile, dictionary, free
+  recordings_endpoint:
+    'http://localhost:8000/recording/_search/'
 
 UnitTests:
   - 'tests.crk_lexicon'
