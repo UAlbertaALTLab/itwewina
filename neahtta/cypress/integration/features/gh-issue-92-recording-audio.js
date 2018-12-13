@@ -25,8 +25,7 @@ describe('Maskwacîs recordings integration', function () {
       .should(($lexeme) => {
         var expected = ['nikiskisin', 'kiskisiw', 'ê-kiskisit'];
         var actual = $lexeme.data('recording-word-forms').split(',');
-        debugger;
-        expect(actual.sort()).to.deepEqual(expected.sort());
+        expect(actual.sort()).to.deep.equal(expected.sort());
       });
 
     // The website SHOULD make an XHR request to get a list of recordings.

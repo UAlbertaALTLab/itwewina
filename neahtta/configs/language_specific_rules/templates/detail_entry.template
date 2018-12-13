@@ -14,7 +14,7 @@
 
 {%- import "lexicon.macros" as macros with context -%}
 <div class="row-fluid entry_row">
-    <div class="span9 lexeme">
+    <div class="span9 lexeme" data-recording-word-forms="nikiskisin"{# Provide word forms here so that the JS on the page can request for it in the recording app. #}>
         {% if lexicon_entry|count > 0 %}
             <div class="pull-right hidden-phone floatingparadigm">
                 {% if current_app_config.paradigm_layouts and layout %}
