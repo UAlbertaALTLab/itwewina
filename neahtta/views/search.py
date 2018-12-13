@@ -1190,20 +1190,21 @@ def determine_recording_word_forms(paradigm):
     pos = first_form.tag['pos']
     if pos == u'V':
         animacy = first_form.tag['animacy']
-        if animacy == u'AI':
-            word_type = 'VAI'
+        word_type = pos + animacy
     else:
         # XXX: what kind of a word is this?
         return []
 
-    if word_type == 'VAI':
+    if word_type in ('VAI', 'VTI'):
+        anim = animacy.decode('ASCII')
+        assert anim in (u'AI', u'TI', u'II', u'TA')
         forms = []
         for candidate in paradigm:
-            if candidate.tag_raw == [u'V', u'AI', u'Ind', u'Prs', u'1Sg']:
+            if candidate.tag_raw == [u'V', anim, u'Ind', u'Prs', u'1Sg']:
                 forms.append(candidate.form)
-            elif candidate.tag_raw == [u'V', u'AI', u'Ind', u'Prs', u'3Sg']:
+            elif candidate.tag_raw == [u'V', anim, u'Ind', u'Prs', u'3Sg']:
                 forms.append(candidate.form)
-            elif candidate.tag_raw == [u'PV/e', u'V', u'AI', u'Cnj', u'Prs', u'3Sg']:
+            elif candidate.tag_raw == [u'PV/e', u'V', anim, u'Cnj', u'Prs', u'3Sg']:
                 # XXX: I happen to know right now that the recordings' transcriptions
                 # don't tend to have a hyphen after the ê, so get rid of it!
                 forms.append(candidate.form)
