@@ -1180,5 +1180,34 @@ def determine_recording_word_forms(paradigm):
     :param paradigm: list of GeneratedForms
     :return: list of word forms.
     """
-    # TODO:
-    return ['nikiskisin']
+    if not paradigm:
+        return [] # TODO: just return the analyzed form?
+    # XXX: this ONLY works Plains Cree/itwêwina
+
+    # Determine the kind of Plains Cree word from the first entry.
+
+    first_form = paradigm[0]
+    pos = first_form.tag['pos']
+    if pos == u'V':
+        animacy = first_form.tag['animacy']
+        if animacy == u'AI':
+            word_type = 'VAI'
+    else:
+        # XXX: what kind of a word is this?
+        return []
+
+    if word_type == 'VAI':
+        forms = []
+        for candidate in paradigm:
+            tag = candidate.tag
+            # PV/e+...+V+AI+Cnj+Prs+3Sg
+            if tag['prelemma_tags'] == u'PV/e' and tag['person'] == u'3Sg' and tag['tense'] == u'Prs' and tag['conjunct'] == u'Cnj':
+                # XXX: I happen to know right now that the recordings' transcriptions
+                # don't tend to have a hyphen after the ê, so get rid of it!
+                forms.append(candidate.form.replace(u'-', u''))
+        # TODO: go through paradigm, looking for the spicy forms.
+        return forms
+    else:
+        # XXX: not implemented
+        return []
+
