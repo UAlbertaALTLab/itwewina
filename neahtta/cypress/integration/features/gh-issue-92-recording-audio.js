@@ -23,9 +23,9 @@ describe('Maskwacîs recordings integration', function () {
     // Make sure the different word forms are on the page.
     cy.get('.lexeme[data-recording-word-forms]')
       .should(($lexeme) => {
-        var expected = ['nikiskisin', 'kiskisiw', 'ê-kiskisit'];
-        var actual = $lexeme.data('recording-word-forms').split(',');
-        expect(actual.sort()).to.deep.equal(expected.sort());
+        var expected = ['nikiskisin', 'kiskisiw', 'ê-kiskisit'].sort();
+        var actual = $lexeme.data('recording-word-forms').split(',').sort();
+        expect(actual).to.deep.equal(expected);
       });
 
     // The website SHOULD make an XHR request to get a list of recordings.
@@ -43,8 +43,37 @@ describe('Maskwacîs recordings integration', function () {
     // So we're just hoping the audio plays here... 🤞
   });
 
-  it.skip('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
+  it('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'ê-sôhkêyimot');
+    // Mock the API endpoint; we want to provide it our own data.
+    cy.route(recordingSearchPattern, 'fixture:recording/_search/esohkeyimot.json')
+      .as('searchRecordings');
+
+    // Find 'kiskisiw' and click on its entry.
+    cy.instantNeahttaSearch('crk', 'eng', 'ê-sôhkêyimot');
+    cy.contains('a', 'sôhkêyimow').click();
+
+    // Make sure the different word forms are on the page.
+    cy.get('.lexeme[data-recording-word-forms]')
+      .should(($lexeme) => {
+        var expected = ['nisôhkêyimon', 'sôhkêyimow', 'ê-sôhkêyimot'].sort();
+        var actual = $lexeme.data('recording-word-forms').split(',').sort();
+        expect(actual).to.deep.equal(expected);
+      });
+
+    // The website SHOULD make an XHR request to get a list of recordings.
+    cy.wait('@searchRecordings');
+
+    // Eventually, it should place 6 (see the fixture) audio recordings.
+    cy.get('.lexeme .recordings a.play-audio')
+      .should('have.lengthOf', 3);
+
+    // Click an audio link.
+    cy.contains('a.play-audio', 'Maskwacîs').click();
+    // Note: Cypress cannot stub responses from an <audio> element.
+    // As well, asserting an a <audio> played is not directly supported:
+    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
+    // So we're just hoping the audio plays here... 🤞
   });
 
   it.skip('should produce recordings for PV/e+...+V+TA+Conj+Pret+X+1SgO', function () {

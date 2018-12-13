@@ -1,0 +1,20 @@
+[
+  {
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/2a266df436a27d50dd4f742bb333d7471fe14e0c310e0d2917e61526fb905f1a.m4a",
+    "speaker": "GOR",
+    "wordform": "êsohkêyimot"
+  },
+  {
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/b1e68ca942842dfd4ed4a04a7d1732264089c4ca5c40a3489e127ace083c26ab.m4a",
+    "speaker": "ROS2",
+    "wordform": "êsohkêyimot"
+  },
+  {
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/d92d12e4c5697b3fddd0c48efc493bb84c15da661454315e6cf3e03d321f4e94.m4a",
+    "speaker": "ROS",
+    "wordform": "êsohkêyimot"
+  }
+]
