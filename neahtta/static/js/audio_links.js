@@ -66,50 +66,30 @@ $(function () {
     $.getJSON(baseURI + wordform, function (data) {
         console.assert(data.length >= 1);
         var recordingData = data[0];
+        $('.lexeme').append(makeRecordingAudioLink(recordingData));
+    });
 
-        // Place links in the page:
-        //
-        // a.play-audio
-        // <a class="play-audio">
-        //  <i class="icon-volume-up></i>
-        //    🔈 Listen (Maskwacîs, ♀)
-        // </a>
-        var audio = new Audio(recordingData.recording_url);
+    function makeRecordingAudioLink(recording) {
 
+        // Create the <a> link, substituting required information.
         var $link = $(
             '<a href="#" class="play-audio">' +
-            'Listen <i class="icon-volume-up"></i>:' +
+            '<i class="icon-volume-up"></i> Listen:' +
             ' <span class="word-form"></span>' +
             // XXX: hard-coded spoken variety: Maskwacîs
             ' (Maskwacîs, <span class="speaker-gender"></span>)' +
             '</a>');
-
         $link.children('.word-form')
-            .text(recordingData.wordform);
-        console.assert(recordingData.gender === 'M' || recordingData.gender === 'F');
+            .text(recording.wordform);
+        console.assert(recording.gender === 'M' || recording.gender === 'F');
         $link.children('.speaker-gender')
-            .text(recordingData.gender === 'M' ? '♂' : '♀');
+            .text(recording.gender === 'M' ? '♂' : '♀');
+
+        var audio = new Audio(recording.recording_url);
         $link.click(function () {
             audio.play();
         });
-        $('.lexeme').append($link);
 
-
-        // Produce HTML like this...:
-        // within lexeme, produce links
-        // TODO: not dialect, but **variety**
-        // TODO: Male/Female signs (like gen 2 pokêmon)
-        /*
-        <div class="audio-container">
-            <a class="audio-link" data-audio-player="" data-audio-target="/itwewina/static/aud/crk/asiniy.mp3" target="blank" href="#">
-                <i class="icon-volume-up"></i>
-                <span class="audio-meta">
-                    <span data-type="dialect">Maskwacîs</span>,
-                    <span data-type="speaker">?</span>
-                </span>
-            </a>
-        </div>
-        */
-    });
-
+        return $link;
+    }
 });
