@@ -716,13 +716,13 @@ class SearcherMixin(object):
         # TODO: sorting_problem
         for lz, az, paradigm, has_layout in search_result_obj.entries_and_tags_and_paradigms:
             if lz is not None:
-
+                user_input = search_result_obj.search_term
                 tplkwargs = { 'lexicon_entry': lz
                             , 'analyses': az
-                            , 'recording_word_forms': determine_recording_word_forms(paradigm)
+                            , 'recording_word_forms': determine_recording_word_forms(paradigm) or [user_input]
                             , 'paradigm': paradigm
                             , 'layout': has_layout
-                            , 'user_input': search_result_obj.search_term
+                            , 'user_input': user_input
                             , 'word_searches': template_results
                             , 'errors': False
                             , 'show_info': show_info
@@ -1195,7 +1195,7 @@ def determine_recording_word_forms(paradigm):
         # XXX: what kind of a word is this?
         return []
 
-    if word_type in ('VAI', 'VTI'):
+    if word_type in ('VII', 'VAI', 'VTI'):
         anim = animacy.decode('ASCII')
         assert anim in (u'AI', u'TI', u'II', u'TA')
         forms = []
@@ -1205,10 +1205,11 @@ def determine_recording_word_forms(paradigm):
             elif candidate.tag_raw == [u'V', anim, u'Ind', u'Prs', u'3Sg']:
                 forms.append(candidate.form)
             elif candidate.tag_raw == [u'PV/e', u'V', anim, u'Cnj', u'Prs', u'3Sg']:
-                # XXX: I happen to know right now that the recordings' transcriptions
-                # don't tend to have a hyphen after the ê, so get rid of it!
                 forms.append(candidate.form)
-        # TODO: go through paradigm, looking for the spicy forms.
+            elif candidate.tag_raw == [u'V', u'II', u'Ind', u'Prs', u'3Sg']:
+                forms.append(candidate.form)
+            elif candidate.tag_raw == [u'PV/e', u'V', u'II', u'Cnj', u'Prs', u'3Sg']:
+                forms.append(candidate.form)
         return forms
     else:
         # XXX: not implemented

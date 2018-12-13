@@ -115,9 +115,9 @@ describe('Maskwacîs recordings integration', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'ê-mihtâtamân');
   });
 
-  it.only('should produce recordings for +V+II+Indep+Prs+3Sg', function () {
+  it('should produce recordings for +V+II+Indep+Prs+3Sg', function () {
     // Mock the API endpoint; we want to provide it our own data.
-    cy.route(recordingSearchPattern, 'fixture:recording/_search/nimihtaten.json')
+    cy.route(recordingSearchPattern, 'fixture:recording/_search/pitosinakwan.json')
       .as('searchRecordings');
 
     cy.instantNeahttaSearch('crk', 'eng', 'pîtosinâkwan');
