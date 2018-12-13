@@ -1,0 +1,38 @@
+[
+  {
+    "wordform": "pitosinakwan",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/d5e3ce10c9031dae7756915854a2f7ecee895e89a2b060ab738fe8bccc4fcfbc.m4a"
+  },
+  {
+    "wordform": "pitosinakwan",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/cf1bc10ef087e75f1c39b7869764e891abd45797d091b681159520fd46128d5d.m4a"
+  },
+  {
+    "wordform": "pitosinakwan",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/df824d3c641af66876d5242d7c2d5345927e3efd2154cd99ffd637dbc869e6ce.m4a"
+  },
+  {
+    "wordform": "pitosinakwan",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/2c6fc2f0f4c738847eee0453764939625040dcc3210aa2ad62829500861a5c4b.m4a"
+  },
+  {
+    "wordform": "pitosinakwan",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/c2e91aef094708d287bf87b03115a6d8a4d2f53beb551e856d4d394794ecc322.m4a"
+  },
+  {
+    "wordform": "pitosinakwan",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/5ab0286170d596d86188e9d1fc9a43a563263be5bf37bc83d2c855c2f8768a36.m4a"
+  }
+]

@@ -79,7 +79,7 @@ describe('Maskwacîs recordings integration', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'ê-kiskisototâht');
   });
 
-  it.only('should produce recordings for +V+TI+Indep+Pret+1Sg', function () {
+  it('should produce recordings for +V+TI+Indep+Pret+1Sg', function () {
     // Mock the API endpoint; we want to provide it our own data.
     cy.route(recordingSearchPattern, 'fixture:recording/_search/nimihtaten.json')
       .as('searchRecordings');
@@ -115,8 +115,35 @@ describe('Maskwacîs recordings integration', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'ê-mihtâtamân');
   });
 
-  it.skip('should produce recordings for +V+II+Indep+Pret+3Sg', function () {
+  it.only('should produce recordings for +V+II+Indep+Prs+3Sg', function () {
+    // Mock the API endpoint; we want to provide it our own data.
+    cy.route(recordingSearchPattern, 'fixture:recording/_search/nimihtaten.json')
+      .as('searchRecordings');
+
     cy.instantNeahttaSearch('crk', 'eng', 'pîtosinâkwan');
+    cy.contains('a', 'pîtosinâkwan').click();
+
+    // Make sure the different word forms are on the page.
+    cy.get('.lexeme[data-recording-word-forms]')
+      .should(($lexeme) => {
+        var expected = ['pîtosinâkwan', 'ê-pîtosinâkwak'].sort();
+        var actual = $lexeme.data('recording-word-forms').split(',').sort();
+        expect(actual).to.deep.equal(expected);
+      });
+
+    // The website SHOULD make an XHR request to get a list of recordings.
+    cy.wait('@searchRecordings');
+
+    // Eventually, it should place 6 (see the fixture) audio recordings.
+    cy.get('.lexeme .recordings a.play-audio')
+      .should('have.lengthOf', 6);
+
+    // Click an audio link.
+    cy.contains('a.play-audio', 'Maskwacîs').click();
+    // Note: Cypress cannot stub responses from an <audio> element.
+    // As well, asserting an a <audio> played is not directly supported:
+    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
+    // So we're just hoping the audio plays here... 🤞
   });
 
   it.skip('should produce recordings for +N+I+Sg', function () {
