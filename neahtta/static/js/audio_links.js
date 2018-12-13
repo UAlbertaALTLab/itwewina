@@ -53,23 +53,29 @@ $(document).ready(function(){
 
 /** == <audio> tag stuff == **/
 $(function () {
-    // TODO: derive this from settings
+    // TODO: derive this from configuration.
     var baseURI = 'http://localhost:8000/recording/_search/';
+
+    // TODO: Look for the wordforms in the .lexeme[data-recording-wordforms]
+    var wordform = 'nikiskisin';
 
     // TODO: where will we get the word forms from?
     // TODO: generate these in itwewina and place in a data-wordforms="" in
     // the definition, I guess?
     // TODO: where will we get the base URI from?
-    var wordform = 'nikiskisin';
-    $.getJSON( + wordform, function (data) {
-        console.log(data);
-    });
+    $.getJSON(baseURI + wordform, function (data) {
+        console.assert(data.length >= 1);
+        var recordingData = data[0];
 
-    function createAudioLink() {
-        // TODO there must be audio we can click.
-        return $('<div>')
-            .addClass('audio-container')
-    }
+        // Place links in the page:
+        //
+        // a.play-audio
+        // <a class="play-audio">
+        //  <i class="icon-volume-up></i>
+        //    🔈 Listen (Maskwacîs, ♀)
+        // </a>
+        new Audio(recordingData.recording_url);
+    });
 
     // Produce HTML like this...:
     // within lexeme, produce links

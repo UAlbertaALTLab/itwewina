@@ -25,6 +25,15 @@ describe('Maskwacîs recordings integration', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
     cy.contains('a', 'kiskisiw').click();
 
+    // TODO: Make sure the different word forms are on the page.
+    false && cy.get('.lexeme[data-recording-word-forms]')
+      .should(($lexeme) => {
+        var expected = ['nikiskisin', 'kiskisiw', 'ê-kiskisit'];
+        var actual = $lexeme.data('recording-word-forms').split(',');
+        debugger;
+        expect(actual.sort()).to.deepEqual(expected.sort());
+      });
+
     // The website SHOULD make a request to get a list of recordings.
     cy.wait('@searchRecordings');
 
