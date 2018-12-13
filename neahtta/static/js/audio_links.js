@@ -87,7 +87,9 @@ $(function () {
             .text(recording.gender === 'M' ? '♂' : '♀');
 
         var audio = new Audio(recording.recording_url);
-        $link.click(function () {
+        audio.preload = 'none'; // do not preload the audio!
+        $link.click(function (event) {
+            event.preventDefault(); // don't jump around on the page.
             audio.play();
         });
 

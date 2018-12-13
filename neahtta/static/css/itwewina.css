@@ -121,6 +121,7 @@ a.korp_search.lemma_action {
     font-size: 100%;
 }
 
+/* TODO: remove .audio-links CSS when soundmanager is removed. */
 .audio-links {
     display: block;
     margin-bottom: .75em;
@@ -154,6 +155,14 @@ a.korp_search.lemma_action {
     position: absolute;
     top: .5em;
     left: 0em;
+}
+
+.recordings {
+    padding-left: .5em;
+}
+
+.play-audio {
+    display: block;
 }
 
 
