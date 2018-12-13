@@ -56,22 +56,29 @@ $(function () {
     // TODO: derive this from configuration.
     var baseURI = 'http://localhost:8000/recording/_search/';
 
-    // TODO: Look for the wordforms in the .lexeme[data-recording-wordforms]
-    var wordform = 'nikiskisin';
-
-    $.getJSON(baseURI + wordform, function (data) {
-        if (data.length === 0) {
-            return;
-        }
-
-        var $recordings = $('<div class="recordings">');
-        data.forEach(function (recording) {
-            $recordings.append(makeRecordingAudioLink(recording));
-        });
-        // Reveal the recordings pane once it finally loads.
-        $recordings.hide().show('slow');
-        $('.lexeme').append($recordings);
+    /* Fetch recordings for each valid searchable word form on the page. */
+    $('.lexeme[data-recording-word-forms]').each(function () {
+        var $lexeme = $(this);
+        var wordforms = $lexeme.data('recording-word-forms');
+        fetchRecordings($lexeme, wordforms);
     });
+
+    function fetchRecordings($lexeme, wordforms) {
+        $.getJSON(baseURI + wordforms, function (data) {
+            if (data.length === 0) {
+                return;
+            }
+
+            var $recordings = $('<div class="recordings">');
+            data.forEach(function (recording) {
+                $recordings.append(makeRecordingAudioLink(recording));
+            });
+
+            // Reveal the rec;ordings pane once it finally loads.
+            $recordings.hide().show('slow');
+            $lexeme.append($recordings);
+        });
+    }
 
     function makeRecordingAudioLink(recording) {
         // Create the <a> link, substituting required information.
