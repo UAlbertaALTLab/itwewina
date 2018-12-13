@@ -16,7 +16,7 @@ describe('Maskwacîs recordings integration', function () {
     cy.route(recordingSearchPattern, 'fixture:recording/_search/nikiskisin.json')
       .as('searchRecordings');
 
-    // Find 'kiskisiw'
+    // Find 'kiskisiw' and click on its entry.
     cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
     cy.contains('a', 'kiskisiw').click();
 
@@ -29,11 +29,20 @@ describe('Maskwacîs recordings integration', function () {
         expect(actual.sort()).to.deepEqual(expected.sort());
       });
 
-    // The website SHOULD make a request to get a list of recordings.
+    // The website SHOULD make an XHR request to get a list of recordings.
     cy.wait('@searchRecordings');
+
+    // Eventually, it should place 6 (from fixture) audio recordings.
+    cy.get('.lemma .recordings a.play-audio')
+      .should('have.lengthOf', 6);
 
     // Click an audio link.
     cy.contains('a.play-audio', 'Maskwacîs').click();
+    // Note: Cypress cannot stub responses from an <audio> element.
+    // As well, asserting an a <audio> played is not directly supported:
+    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
+    // So we're just hoping the audio plays here... 🤞
+
   });
 
   it.skip('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
