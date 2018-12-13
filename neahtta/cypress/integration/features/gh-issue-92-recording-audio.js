@@ -11,6 +11,14 @@ describe('Maskwacîs recordings integration', function () {
     cy.server();
   });
 
+  it('should include the endpoint as a <link>', function () {
+    cy.visit('/');
+    cy.get('link[x-recording-search-endpoint')
+      .should(($link) => {
+        expect($link.attr('href')).to.match(recordingSearchPattern);
+      });
+  });
+
   it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
     // Mock the API endpoint; we want to provide it our own data.
     cy.route(recordingSearchPattern, 'fixture:recording/_search/nikiskisin.json')
