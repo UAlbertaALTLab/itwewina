@@ -11,7 +11,7 @@ describe('Maskwacîs recordings integration', function () {
     cy.server();
   });
 
-  it('should include the endpoint as a <link>', function () {
+  it.skip('should include the endpoint as a <link>', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
     cy.contains('a', 'kiskisiw').click();
     cy.get('link[rel="x-recording-search-endpoint"]')
@@ -20,10 +20,17 @@ describe('Maskwacîs recordings integration', function () {
       });
   });
 
-  it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
-    // Mock the API endpoint; we want to provide it our own data.
-    cy.route(recordingSearchPattern, 'fixture:recording/_search/nikiskisin.json')
+  function fetchRecordings({ fixture, query, expectedWordforms, }) {
+    // Mock the API endpoint; we want to provide it our own data from the
+    // suppied fixture filename.
+    cy.route(recordingSearchPattern, `fixture:recording/_search/${fixture}`)
       .as('searchRecordings');
+  }
+
+  it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
+    fetchRecordings({
+      fixture: 'nikiskisin.json',
+    });
 
     // Find 'kiskisiw' and click on its entry.
     cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
@@ -53,9 +60,9 @@ describe('Maskwacîs recordings integration', function () {
   });
 
   it('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
-    // Mock the API endpoint; we want to provide it our own data.
-    cy.route(recordingSearchPattern, 'fixture:recording/_search/esohkeyimot.json')
-      .as('searchRecordings');
+    fetchRecordings({
+      fixture: 'esohkeyimot.json',
+    });
 
     // Find 'kiskisiw' and click on its entry.
     cy.instantNeahttaSearch('crk', 'eng', 'ê-sôhkêyimot');
@@ -89,9 +96,9 @@ describe('Maskwacîs recordings integration', function () {
   });
 
   it('should produce recordings for +V+TI+Indep+Pret+1Sg', function () {
-    // Mock the API endpoint; we want to provide it our own data.
-    cy.route(recordingSearchPattern, 'fixture:recording/_search/nimihtaten.json')
-      .as('searchRecordings');
+    fetchRecordings({
+      fixture: 'nimihtaten.json',
+    });
 
     // Find 'kiskisiw' and click on its entry.
     cy.instantNeahttaSearch('crk', 'eng', 'nimihtâtên');
@@ -125,9 +132,9 @@ describe('Maskwacîs recordings integration', function () {
   });
 
   it('should produce recordings for +V+II+Indep+Prs+3Sg', function () {
-    // Mock the API endpoint; we want to provide it our own data.
-    cy.route(recordingSearchPattern, 'fixture:recording/_search/pitosinakwan.json')
-      .as('searchRecordings');
+    fetchRecordings({
+      fixture: 'pitosinakwan.json',
+    });
 
     cy.instantNeahttaSearch('crk', 'eng', 'pîtosinâkwan');
     cy.contains('a', 'pîtosinâkwan').click();
