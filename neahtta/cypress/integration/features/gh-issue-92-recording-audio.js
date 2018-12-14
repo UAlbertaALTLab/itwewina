@@ -9,6 +9,8 @@ describe('Maskwacîs recordings integration', function () {
 
   beforeEach(function () {
     cy.server();
+    // HACK: makes sure `this` is what we expect in fetchRecordings().
+    fetchRecordings = fetchRecordings.bind(this);
   });
 
   it.skip('should include the endpoint as a <link>', function () {
@@ -23,7 +25,8 @@ describe('Maskwacîs recordings integration', function () {
   function fetchRecordings({ fixture, lemma, searchFor, expectedWordForms }) {
     // Mock the API endpoint; we want to provide it our own data from the
     // suppied fixture filename.
-    cy.route(recordingSearchPattern, `fixture:recording/_search/${fixture}`)
+    cy.fixture(`recording/_search/${fixture}`).as('recordingsResults');
+    cy.route(recordingSearchPattern, '@recordingsResults')
       .as('searchRecordings');
 
     // Find the term and click on its entry.
@@ -39,6 +42,19 @@ describe('Maskwacîs recordings integration', function () {
 
     // The website SHOULD make an XHR request to get a list of recordings.
     cy.wait('@searchRecordings');
+
+    // Eventually, it should place as many audio links on the page as there
+    // were entries returned by the XHR.
+    cy.get('.lexeme .recordings a.play-audio').then((audioLinks) => {
+      expect(audioLinks).to.have.lengthOf(this.recordingsResults.length)
+    })
+
+    // Click an audio link.
+    // Note: Cypress CANNOT stub responses from an <audio> element.
+    // As well, asserting an a <audio> played is not directly supported:
+    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
+    // So we're just *hoping* the audio plays here... 🤞
+    cy.contains('a.play-audio', 'Maskwacîs').click();
   }
 
   it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
@@ -48,16 +64,6 @@ describe('Maskwacîs recordings integration', function () {
       lemma: 'kiskisiw',
       expectedWordForms: ['nikiskisin', 'kiskisiw', 'ê-kiskisit'],
     });
-    // Eventually, it should place 6 (see the fixture) audio recordings.
-    cy.get('.lexeme .recordings a.play-audio')
-      .should('have.lengthOf', 6);
-
-    // Click an audio link.
-    cy.contains('a.play-audio', 'Maskwacîs').click();
-    // Note: Cypress cannot stub responses from an <audio> element.
-    // As well, asserting an a <audio> played is not directly supported:
-    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
-    // So we're just hoping the audio plays here... 🤞
   });
 
   it('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
@@ -67,17 +73,6 @@ describe('Maskwacîs recordings integration', function () {
       lemma: 'sôhkêyimow',
       expectedWordForms: ['nisôhkêyimon', 'sôhkêyimow', 'ê-sôhkêyimot'],
     });
-
-    // Eventually, it should place 6 (see the fixture) audio recordings.
-    cy.get('.lexeme .recordings a.play-audio')
-      .should('have.lengthOf', 3);
-
-    // Click an audio link.
-    cy.contains('a.play-audio', 'Maskwacîs').click();
-    // Note: Cypress cannot stub responses from an <audio> element.
-    // As well, asserting an a <audio> played is not directly supported:
-    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
-    // So we're just hoping the audio plays here... 🤞
   });
 
   it.skip('should produce recordings for PV/e+...+V+TA+Conj+Pret+X+1SgO', function () {
@@ -91,17 +86,6 @@ describe('Maskwacîs recordings integration', function () {
       lemma: 'mihtâtam',
       expectedWordForms: ['nimihtâtên', 'mihtâtam', 'ê-mihtâtahk'],
     });
-
-    // Eventually, it should place 6 (see the fixture) audio recordings.
-    cy.get('.lexeme .recordings a.play-audio')
-      .should('have.lengthOf', 6);
-
-    // Click an audio link.
-    cy.contains('a.play-audio', 'Maskwacîs').click();
-    // Note: Cypress cannot stub responses from an <audio> element.
-    // As well, asserting an a <audio> played is not directly supported:
-    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
-    // So we're just hoping the audio plays here... 🤞
   });
 
   it.skip('should produce recordings for PV/e+...+V+TI+Conj+Pret+1Sg', function () {
@@ -114,17 +98,6 @@ describe('Maskwacîs recordings integration', function () {
       lemma: 'pîtosinâkwan',
       expectedWordForms: ['pîtosinâkwan', 'ê-pîtosinâkwak'],
     });
-
-    // Eventually, it should place 6 (see the fixture) audio recordings.
-    cy.get('.lexeme .recordings a.play-audio')
-      .should('have.lengthOf', 6);
-
-    // Click an audio link.
-    cy.contains('a.play-audio', 'Maskwacîs').click();
-    // Note: Cypress cannot stub responses from an <audio> element.
-    // As well, asserting an a <audio> played is not directly supported:
-    // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
-    // So we're just hoping the audio plays here... 🤞
   });
 
   it.skip('should produce recordings for +N+I+Sg', function () {
