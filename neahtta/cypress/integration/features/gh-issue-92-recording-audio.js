@@ -20,7 +20,7 @@ describe('Maskwacîs recordings integration', function () {
       });
   });
 
-  function fetchRecordings({ fixture, lemma, searchFor }) {
+  function fetchRecordings({ fixture, lemma, searchFor, expectedWordForms }) {
     // Mock the API endpoint; we want to provide it our own data from the
     // suppied fixture filename.
     cy.route(recordingSearchPattern, `fixture:recording/_search/${fixture}`)
@@ -29,6 +29,16 @@ describe('Maskwacîs recordings integration', function () {
     // Find the term and click on its entry.
     cy.instantNeahttaSearch('crk', 'eng', searchFor || lemma);
     cy.contains('a', lemma).click();
+
+    // Make sure the expected word forms are on the page.
+    cy.get('.lexeme[data-recording-word-forms]')
+      .should(($lexeme) => {
+        var actual = $lexeme.data('recording-word-forms').split(',').sort();
+        expect(actual).to.deep.equal(expectedWordForms.sort());
+      });
+
+    // The website SHOULD make an XHR request to get a list of recordings.
+    cy.wait('@searchRecordings');
   }
 
   it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
@@ -36,19 +46,8 @@ describe('Maskwacîs recordings integration', function () {
       fixture: 'nikiskisin.json',
       searchFor: 'nikiskisin',
       lemma: 'kiskisiw',
+      expectedWordForms: ['nikiskisin', 'kiskisiw', 'ê-kiskisit'],
     });
-
-    // Make sure the different word forms are on the page.
-    cy.get('.lexeme[data-recording-word-forms]')
-      .should(($lexeme) => {
-        var expected = ['nikiskisin', 'kiskisiw', 'ê-kiskisit'].sort();
-        var actual = $lexeme.data('recording-word-forms').split(',').sort();
-        expect(actual).to.deep.equal(expected);
-      });
-
-    // The website SHOULD make an XHR request to get a list of recordings.
-    cy.wait('@searchRecordings');
-
     // Eventually, it should place 6 (see the fixture) audio recordings.
     cy.get('.lexeme .recordings a.play-audio')
       .should('have.lengthOf', 6);
@@ -66,18 +65,8 @@ describe('Maskwacîs recordings integration', function () {
       fixture: 'esohkeyimot.json',
       searchFor: 'esohkeyimot',
       lemma: 'sôhkêyimow',
+      expectedWordForms: ['nisôhkêyimon', 'sôhkêyimow', 'ê-sôhkêyimot'],
     });
-
-    // Make sure the different word forms are on the page.
-    cy.get('.lexeme[data-recording-word-forms]')
-      .should(($lexeme) => {
-        var expected = ['nisôhkêyimon', 'sôhkêyimow', 'ê-sôhkêyimot'].sort();
-        var actual = $lexeme.data('recording-word-forms').split(',').sort();
-        expect(actual).to.deep.equal(expected);
-      });
-
-    // The website SHOULD make an XHR request to get a list of recordings.
-    cy.wait('@searchRecordings');
 
     // Eventually, it should place 6 (see the fixture) audio recordings.
     cy.get('.lexeme .recordings a.play-audio')
@@ -100,18 +89,8 @@ describe('Maskwacîs recordings integration', function () {
       fixture: 'nimihtaten.json',
       searchFor: 'nimihtaten',
       lemma: 'mihtâtam',
+      expectedWordForms: ['nimihtâtên', 'mihtâtam', 'ê-mihtâtahk'],
     });
-
-    // Make sure the different word forms are on the page.
-    cy.get('.lexeme[data-recording-word-forms]')
-      .should(($lexeme) => {
-        var expected = ['nimihtâtên', 'mihtâtam', 'ê-mihtâtahk'].sort();
-        var actual = $lexeme.data('recording-word-forms').split(',').sort();
-        expect(actual).to.deep.equal(expected);
-      });
-
-    // The website SHOULD make an XHR request to get a list of recordings.
-    cy.wait('@searchRecordings');
 
     // Eventually, it should place 6 (see the fixture) audio recordings.
     cy.get('.lexeme .recordings a.play-audio')
@@ -133,18 +112,8 @@ describe('Maskwacîs recordings integration', function () {
     fetchRecordings({
       fixture: 'pitosinakwan.json',
       lemma: 'pîtosinâkwan',
+      expectedWordForms: ['pîtosinâkwan', 'ê-pîtosinâkwak'],
     });
-
-    // Make sure the different word forms are on the page.
-    cy.get('.lexeme[data-recording-word-forms]')
-      .should(($lexeme) => {
-        var expected = ['pîtosinâkwan', 'ê-pîtosinâkwak'].sort();
-        var actual = $lexeme.data('recording-word-forms').split(',').sort();
-        expect(actual).to.deep.equal(expected);
-      });
-
-    // The website SHOULD make an XHR request to get a list of recordings.
-    cy.wait('@searchRecordings');
 
     // Eventually, it should place 6 (see the fixture) audio recordings.
     cy.get('.lexeme .recordings a.play-audio')
