@@ -1,0 +1,38 @@
+[
+  {
+    "wordform": "êkiskisototaht",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/04b085f6aa94fedd4c2d8e2650f9b02640668075b9e95058b9399a2836857240.m4a"
+  },
+  {
+    "wordform": "êkiskisototaht",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/a76630ba18b93acdbb564ae2d39186908acfb7ca309ca1ac89d69d26f9400ee2.m4a"
+  },
+  {
+    "wordform": "êkiskisototaht",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/c171b380ec7c290a605ac23dbe1798b46b6e3f2204c8b247d13a176192dde1a4.m4a"
+  },
+  {
+    "wordform": "êkiskisototaht",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/37fb05d3e908dad21a9a6a48ff8c486f08e0094a85161f225396f75b271a2770.m4a"
+  },
+  {
+    "wordform": "êkiskisototaht",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/a644e6128bb79c3d502b0d4279dfcf5e5c6fa841d0bac9b9cabcbb6f55e945d5.m4a"
+  },
+  {
+    "wordform": "êkiskisototaht",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/8132124bc0adf5555a61a5b8adf35f4edd4a87c3b80667a70f54c1e3fadac60a.m4a"
+  }
+]

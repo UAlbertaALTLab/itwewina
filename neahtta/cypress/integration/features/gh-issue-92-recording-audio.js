@@ -24,7 +24,6 @@ describe('Maskwacîs recordings integration', function () {
       });
   });
 
-
   it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
     fetchRecordings({
       fixture: 'nikiskisin.json',
@@ -43,8 +42,13 @@ describe('Maskwacîs recordings integration', function () {
     });
   });
 
-  it.skip('should produce recordings for PV/e+...+V+TA+Conj+Pret+X+1SgO', function () {
-    cy.instantNeahttaSearch('crk', 'eng', 'ê-kiskisototâht');
+  it.only('should produce recordings for PV/e+...+V+TA+Conj+Pret+X+1SgO', function () {
+    fetchRecordings({
+      fixture: 'ekiskisototaht.json',
+      searchFor: 'ekiskisototaht',
+      lemma: 'kiskisototawêw',
+      expectedWordForms: ['kikiskisototâtin', 'kiskisototawêw', 'ê-kiskisototâht'],
+    });
   });
 
   it('should produce recordings for +V+TI+Indep+Pret+1Sg', function () {
