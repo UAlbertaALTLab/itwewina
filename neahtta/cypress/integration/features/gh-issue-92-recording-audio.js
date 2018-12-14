@@ -20,21 +20,23 @@ describe('Maskwacîs recordings integration', function () {
       });
   });
 
-  function fetchRecordings({ fixture, query, expectedWordforms, }) {
+  function fetchRecordings({ fixture, lemma, searchFor }) {
     // Mock the API endpoint; we want to provide it our own data from the
     // suppied fixture filename.
     cy.route(recordingSearchPattern, `fixture:recording/_search/${fixture}`)
       .as('searchRecordings');
+
+    // Find the term and click on its entry.
+    cy.instantNeahttaSearch('crk', 'eng', searchFor || lemma);
+    cy.contains('a', lemma).click();
   }
 
   it('should produce recordings for +V+AI+Indep+Pret+1Sg', function () {
     fetchRecordings({
       fixture: 'nikiskisin.json',
+      searchFor: 'nikiskisin',
+      lemma: 'kiskisiw',
     });
-
-    // Find 'kiskisiw' and click on its entry.
-    cy.instantNeahttaSearch('crk', 'eng', 'nikiskisin');
-    cy.contains('a', 'kiskisiw').click();
 
     // Make sure the different word forms are on the page.
     cy.get('.lexeme[data-recording-word-forms]')
@@ -62,11 +64,9 @@ describe('Maskwacîs recordings integration', function () {
   it('should produce recordings for PV/e+...+V+AI+Conj+Pret+3Sg', function () {
     fetchRecordings({
       fixture: 'esohkeyimot.json',
+      searchFor: 'esohkeyimot',
+      lemma: 'sôhkêyimow',
     });
-
-    // Find 'kiskisiw' and click on its entry.
-    cy.instantNeahttaSearch('crk', 'eng', 'ê-sôhkêyimot');
-    cy.contains('a', 'sôhkêyimow').click();
 
     // Make sure the different word forms are on the page.
     cy.get('.lexeme[data-recording-word-forms]')
@@ -98,11 +98,9 @@ describe('Maskwacîs recordings integration', function () {
   it('should produce recordings for +V+TI+Indep+Pret+1Sg', function () {
     fetchRecordings({
       fixture: 'nimihtaten.json',
+      searchFor: 'nimihtaten',
+      lemma: 'mihtâtam',
     });
-
-    // Find 'kiskisiw' and click on its entry.
-    cy.instantNeahttaSearch('crk', 'eng', 'nimihtâtên');
-    cy.contains('a', 'mihtâtam').click();
 
     // Make sure the different word forms are on the page.
     cy.get('.lexeme[data-recording-word-forms]')
@@ -134,10 +132,8 @@ describe('Maskwacîs recordings integration', function () {
   it('should produce recordings for +V+II+Indep+Prs+3Sg', function () {
     fetchRecordings({
       fixture: 'pitosinakwan.json',
+      lemma: 'pîtosinâkwan',
     });
-
-    cy.instantNeahttaSearch('crk', 'eng', 'pîtosinâkwan');
-    cy.contains('a', 'pîtosinâkwan').click();
 
     // Make sure the different word forms are on the page.
     cy.get('.lexeme[data-recording-word-forms]')
