@@ -1196,7 +1196,7 @@ def determine_recording_word_forms(paradigm):
         # XXX: what kind of a word is this?
         return []
 
-    if word_type in ('VII', 'VAI', 'VTI'):
+    if word_type in ('VII', 'VAI', 'VTI', 'VTA'):
         anim = animacy.decode('ASCII')
         assert anim in (u'AI', u'TI', u'II', u'TA')
         forms = []
@@ -1210,6 +1210,12 @@ def determine_recording_word_forms(paradigm):
             elif candidate.tag_raw == [u'V', u'II', u'Ind', u'Prs', u'3Sg']:
                 forms.append(candidate.form)
             elif candidate.tag_raw == [u'PV/e', u'V', u'II', u'Cnj', u'Prs', u'3Sg']:
+                forms.append(candidate.form)
+            elif candidate.tag_raw == [u'V', u'TA', u'Ind', u'Prs', u'1Sg', u'2SgO']:
+                forms.append(candidate.form)
+            elif candidate.tag_raw == [u'V', u'TA', u'Ind', u'Prs', u'3Sg', u'4Sg/PlO']:
+                forms.append(candidate.form)
+            elif candidate.tag_raw == [u'PV/e', u'V', u'TA', u'Cnj', u'Prs', u'X', u'3SgO']:
                 forms.append(candidate.form)
         return forms
     else:
