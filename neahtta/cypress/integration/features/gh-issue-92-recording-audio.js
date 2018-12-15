@@ -77,7 +77,7 @@ describe('Maskwacîs recordings integration', function () {
     });
   });
 
-  it.only('should produce recordings for +N+I+Sg', function () {
+  it('should produce recordings for +N+I+Sg', function () {
     fetchRecordings({
       fixture: 'kiskisomitowin.json',
       lemma: 'kiskisomitowin',
