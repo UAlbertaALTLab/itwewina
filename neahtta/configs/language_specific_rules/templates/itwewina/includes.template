@@ -1,6 +1,6 @@
 {% block template_doc %}{% if TEMPLATE_DOC %}
 Some js includes for itwewina-specific functionality
-  * soundmanager js & audio_links js, allow clickable audio
+  * audio_links js, allow clickable audio
   * include bootstrap tabs for paradigms
 
 Testing:
@@ -9,7 +9,6 @@ Testing:
 {% endif %}{% endblock %}
 
 
-<script type="text/javascript" src="{{url_for('static', filename='vendor/SoundManager2/script/soundmanager2-jsmin.js')}}"></script>
 {# Includes the endpoint data. #}
 <link rel="x-recording-search-endpoint" href="{{ recordings_endpoint }}">
 <script type="text/javascript" src="{{url_for('static', filename='js/audio_links.js')}}"></script>

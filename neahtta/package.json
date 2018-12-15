@@ -15,7 +15,6 @@
   "author": "",
   "license": "GNU",
   "dependencies": {
-    "bower": "^1.7.9",
     "uglify-js": "^2.4.19"
   },
   "devDependencies": {
