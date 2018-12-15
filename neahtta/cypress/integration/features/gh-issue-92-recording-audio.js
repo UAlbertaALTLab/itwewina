@@ -60,8 +60,13 @@ describe('Maskwacîs recordings integration', function () {
     });
   });
 
-  it.skip('should produce recordings for PV/e+...+V+TI+Conj+Pret+1Sg', function () {
-    cy.instantNeahttaSearch('crk', 'eng', 'ê-mihtâtamân');
+  it('should produce recordings for PV/e+...+V+TI+Conj+Pret+1Sg', function () {
+    fetchRecordings({
+      fixture: 'emihtataman.json',
+      searchFor: 'emihtataman',
+      lemma: 'mihtâtam',
+      expectedWordForms: ['nimihtâtên', 'mihtâtam', 'ê-mihtâtahk'],
+    });
   });
 
   it('should produce recordings for +V+II+Indep+Prs+3Sg', function () {
@@ -94,7 +99,7 @@ describe('Maskwacîs recordings integration', function () {
 
     // Find the term and click on its entry.
     cy.instantNeahttaSearch('crk', 'eng', searchFor || lemma);
-    cy.contains('a', lemma).click();
+    cy.contains('.lexeme a', lemma).click();
 
     // Make sure the expected word forms are on the page.
     cy.get('.lexeme[data-recording-word-forms]')

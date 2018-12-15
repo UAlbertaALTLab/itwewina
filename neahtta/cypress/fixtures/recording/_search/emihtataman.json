@@ -1,0 +1,38 @@
+[
+  {
+    "wordform": "êmihtataman",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/98d1c0d2f1d2c6ba20aebf697d991060e545604a2e73647d3611bd12d02f4efa.m4a"
+  },
+  {
+    "wordform": "êmihtataman",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/b773de3528556dca48ad9bd255694cd7fe50f92666672d3f6f4c1ca51cb534d4.m4a"
+  },
+  {
+    "wordform": "êmihtataman",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/bb0d5a9831d02d4898fc45e629e9aa87595332a0e0c520826f388e9058a7a665.m4a"
+  },
+  {
+    "wordform": "êmihtataman",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/8faa5fa7f3a2e06cb5354d4b41f1fdd09fa02caa0ae0c06401c5d983921525d9.m4a"
+  },
+  {
+    "wordform": "êmihtataman",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/eaa18b02e646417bcaab240e896a1acf7f65e8eb6d2fb76c47cc955284771da3.m4a"
+  },
+  {
+    "wordform": "êmihtataman",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/ada26e7e3877e21103e1819aae32bd0583d88bb96f251590ba386fb94ef0e518.m4a"
+  }
+]
