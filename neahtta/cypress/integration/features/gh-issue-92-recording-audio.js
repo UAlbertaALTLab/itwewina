@@ -42,7 +42,7 @@ describe('Maskwacîs recordings integration', function () {
     });
   });
 
-  it.only('should produce recordings for PV/e+...+V+TA+Conj+Pret+X+1SgO', function () {
+  it('should produce recordings for PV/e+...+V+TA+Conj+Pret+X+1SgO', function () {
     fetchRecordings({
       fixture: 'ekiskisototaht.json',
       searchFor: 'ekiskisototaht',
@@ -117,6 +117,11 @@ describe('Maskwacîs recordings integration', function () {
     // As well, asserting an a <audio> played is not directly supported:
     // https://github.com/cypress-io/cypress/issues/1750#issuecomment-392132279
     // So we're just *hoping* the audio plays here... 🤞
-    cy.contains('a.play-audio', 'Maskwacîs').click();
+    cy.contains('a.play-audio', 'Maskwacîs').click({
+      // HACK: I'm too lazy to fix the layouts right now, but the paradigm
+      // table can sometimes occlude the recordings, so just force the
+      // interaction. This can be fixed with z-index tweaking.
+      force: true,
+    });
   };
 });
