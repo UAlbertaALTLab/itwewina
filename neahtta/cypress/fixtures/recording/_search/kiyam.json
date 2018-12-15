@@ -1,0 +1,20 @@
+[
+  {
+    "wordform": "kiyam",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/638ddad243cefa99b025bbdb4e998d299b2a900e4e25a56767a8eb45feb998f0.m4a"
+  },
+  {
+    "wordform": "kiyam",
+    "speaker": "ROS2",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/fcc66009c36f74e6a9ad2b4cf21448e9ad59bbb084118954653f29f60cc6ad0d.m4a"
+  },
+  {
+    "wordform": "kiyam",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/a520689cd57d82ddf12ed49fa519a17dfee3e55f7dc8a991492dd7389e273daf.m4a"
+  }
+]

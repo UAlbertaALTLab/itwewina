@@ -81,8 +81,13 @@ describe('Maskwacîs recordings integration', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'kiskisiwin');
   });
 
-  it.skip('should produce recordings for +IPJ', function () {
-    cy.instantNeahttaSearch('crk', 'eng', 'kiyâm');
+  it('should produce recordings for +IPJ', function () {
+    fetchRecordings({
+      fixture: 'kiyam.json',
+      searchFor: 'kiyam',
+      lemma: 'kiyâm',
+      expectedWordForms: ['kiyâm'],
+    });
   });
 
   /**
