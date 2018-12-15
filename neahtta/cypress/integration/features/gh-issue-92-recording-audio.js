@@ -77,8 +77,12 @@ describe('Maskwacîs recordings integration', function () {
     });
   });
 
-  it.skip('should produce recordings for +N+I+Sg', function () {
-    cy.instantNeahttaSearch('crk', 'eng', 'kiskisiwin');
+  it.only('should produce recordings for +N+I+Sg', function () {
+    fetchRecordings({
+      fixture: 'kiskisomitowin.json',
+      lemma: 'kiskisomitowin',
+      expectedWordForms: ['kiskisomitowin'],
+    });
   });
 
   it('should produce recordings for +IPJ', function () {

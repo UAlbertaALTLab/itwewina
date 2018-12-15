@@ -1,0 +1,38 @@
+[
+  {
+    "wordform": "kiskisomowêwin",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/c07f84090fe26e40360357347cd430db07e33a3b143ae46aa3840d6d99ba8310.m4a"
+  },
+  {
+    "wordform": "kiskisomowêwin",
+    "speaker": "ROS",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/348eefbb913e307aab7a43717beb0ddd812a2274e8bf4d5f5279b253527541eb.m4a"
+  },
+  {
+    "wordform": "kiskisomowêwin",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/1a14911a8f47926479debbe64185d1a94069998552d5ff5d229daad081873fd1.m4a"
+  },
+  {
+    "wordform": "kiskisomowêwin",
+    "speaker": "GOR",
+    "gender": "M",
+    "recording_url": "http://localhost:8000/recording/b88ef4f4c25e1cc4824494066ed77333f88dca04bc312dd97b2ab05434aa151c.m4a"
+  },
+  {
+    "wordform": "kiskisomowêwin",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/e258c730c7c7577082c252f0b4e3e87540b839aa8678e0feea2ac7015293e350.m4a"
+  },
+  {
+    "wordform": "kiskisomowêwin",
+    "speaker": "LOU",
+    "gender": "F",
+    "recording_url": "http://localhost:8000/recording/2582cf2a60db7048375945b23b479020db8ebd591a75ee15c1dac83a73f10ac0.m4a"
+  }
+]
