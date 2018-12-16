@@ -79,4 +79,4 @@ play the corresponding audio.
 [recval-api]: https://github.com/UAlbertaALTLab/recording-validation-interface#web-api
 [recval-repo]: https://github.com/UAlbertaALTLab/recording-validation-interface
 [validation]: http://sapir.artsrn.ualberta.ca/validation/
-[word form]: ./glossary.md#word-form
+[word forms]: ./glossary.md#word-form
