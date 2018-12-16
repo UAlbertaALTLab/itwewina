@@ -12,6 +12,8 @@ Topics
  - [Overview of the projects][overview]
  - [Getting started with Giellatekno][getting-started-gt]
  - [Using the FSTs](./using-the-fsts.md)
+ - [The XML dictionary format][xml-dict]
+ - [Integration with the Recordings Validation app][recval]
  - [Glossary](./glossary.md)
 
 [itwêwina]: https://github.com/UAlbertaALTLab/itwewina
@@ -20,3 +22,5 @@ Topics
 [getting-started-gt]: ./getting-started-giellatekno.md
 [Neahttadigisánit]: #
 [Giellatekno]: #
+[recval]: ./integration-with-recordings-app.md
+[xml-dict]: ./xml-dictionary.md
