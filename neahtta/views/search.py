@@ -1182,8 +1182,25 @@ def determine_recording_word_forms(word_form, paradigm):
     :param paradigm: list of GeneratedForm instances
     :return: tuple of strs -- word forms
     """
-    return determine_recording_word_forms_from_paradigm(paradigm) or [word_form]
+    return determine_recording_word_forms_from_paradigm(paradigm) | {word_form}
 
+
+SUITABLE_WORD_FORMS = {
+    # VAI/VTI forms
+    (u'V', u'AI', u'Ind', u'Prs', u'1Sg'),
+    (u'V', u'TI', u'Ind', u'Prs', u'1Sg'),
+    (u'V', u'AI', u'Ind', u'Prs', u'3Sg'),
+    (u'V', u'TI', u'Ind', u'Prs', u'3Sg'),
+    (u'PV/e', u'V', u'AI', u'Cnj', u'Prs', u'3Sg'),
+    (u'PV/e', u'V', u'TI', u'Cnj', u'Prs', u'3Sg'),
+    # VII forms
+    (u'V', u'II', u'Ind', u'Prs', u'3Sg'),
+    (u'PV/e', u'V', u'II', u'Cnj', u'Prs', u'3Sg'),
+    # VTA forms
+    (u'V', u'TA', u'Ind', u'Prs', u'1Sg', u'2SgO'),
+    (u'V', u'TA', u'Ind', u'Prs', u'3Sg', u'4Sg/PlO'),
+    (u'PV/e', u'V', u'TA', u'Cnj', u'Prs', u'X', u'3SgO'),
+}
 
 def determine_recording_word_forms_from_paradigm(paradigm):
     """
@@ -1193,40 +1210,17 @@ def determine_recording_word_forms_from_paradigm(paradigm):
     See: https://github.com/UAlbertaALTLab/itwewina/issues/92
 
     :param paradigm: list of GeneratedForms
-    :return: list of word forms.
+    :return: set of word forms.
     """
-    if not paradigm:
-        return []
-    # XXX: this ONLY works Plains Cree/itwêwina
+    if len(paradigm) < 1:
+        return frozenset()
 
-    assert len(paradigm) >= 1
-    lc = get_crk_lemma_class(paradigm[0])
+    # NOTE: this ONLY works Plains Cree/itwêwina
+    return {
+        candidate.form for candidate in paradigm
+        if tuple(candidate.tag_raw) in SUITABLE_WORD_FORMS
+    }
 
-    if lc in ('VII', 'VAI', 'VTI', 'VTA'):
-        anim = lc[1:].decode('ASCII')
-        assert anim in (u'AI', u'TI', u'II', u'TA')
-        forms = []
-        for candidate in paradigm:
-            if candidate.tag_raw == [u'V', anim, u'Ind', u'Prs', u'1Sg']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'V', anim, u'Ind', u'Prs', u'3Sg']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'PV/e', u'V', anim, u'Cnj', u'Prs', u'3Sg']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'V', u'II', u'Ind', u'Prs', u'3Sg']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'PV/e', u'V', u'II', u'Cnj', u'Prs', u'3Sg']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'V', u'TA', u'Ind', u'Prs', u'1Sg', u'2SgO']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'V', u'TA', u'Ind', u'Prs', u'3Sg', u'4Sg/PlO']:
-                forms.append(candidate.form)
-            elif candidate.tag_raw == [u'PV/e', u'V', u'TA', u'Cnj', u'Prs', u'X', u'3SgO']:
-                forms.append(candidate.form)
-        return forms
-    else:
-        # XXX: not implemented
-        return []
 
 def get_crk_lemma_class(analysis):
     """
@@ -1243,4 +1237,5 @@ def get_crk_lemma_class(analysis):
     if pos == u'V':
         animacy = analysis.tag['animacy']
         return pos + animacy
+    # TODO: noun forms?
     return pos
