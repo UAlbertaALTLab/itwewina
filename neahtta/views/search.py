@@ -1180,10 +1180,12 @@ def determine_recording_word_forms(word_form, paradigm):
 
     :param word_form: str - the 'canonical' word form -- i.e., lemma
     :param paradigm: list of GeneratedForm instances
-    :return: tuple of strs -- word forms
+    :return: set of strs -- word forms
     """
     return determine_recording_word_forms_from_paradigm(paradigm) | {word_form}
 
+
+# This is a list of the tags of suitable word forms for parts of speech -- mostly verbs.
 SUITABLE_WORD_FORMS = {
     # VAI/VTI forms
     (u'V', u'AI', u'Ind', u'Prs', u'1Sg'),
@@ -1199,6 +1201,7 @@ SUITABLE_WORD_FORMS = {
     (u'V', u'TA', u'Ind', u'Prs', u'1Sg', u'2SgO'),
     (u'V', u'TA', u'Ind', u'Prs', u'3Sg', u'4Sg/PlO'),
     (u'PV/e', u'V', u'TA', u'Cnj', u'Prs', u'X', u'3SgO'),
+    # TODO: NID/NAD forms
 }
 
 
