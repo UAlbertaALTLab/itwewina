@@ -9,9 +9,14 @@ describe('Concise representations of dictionary sources', function () {
     cy.get('@lexeme')
       .contains('a', 'acâhkos');
     cy.get('@lexeme').find('.meanings').as('meanings');
+
     cy.get('@meanings')
-      .contains('cite', 'MD');
+      .contains('cite', 'MD')
+      .should('have.attr', 'title', 'Maskwacîs Cree Dictionary')
+      .and('have.css', 'vertical-align', 'superscript');
     cy.get('@meanings')
-      .contains('cite', 'CW');
+      .contains('cite', 'CW')
+      .should('have.attr', 'title', /Nēhiyawēwin\s*:\s+itwēwina/i)
+      .and('have.css', 'vertical-align', 'superscript');
   });
 });
