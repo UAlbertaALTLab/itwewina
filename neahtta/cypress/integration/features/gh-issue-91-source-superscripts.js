@@ -13,10 +13,9 @@ describe('Concise representations of dictionary sources', function () {
     cy.get('@meanings')
       .contains('cite', 'MD')
       .should('have.attr', 'title', 'Maskwacîs Cree Dictionary')
-      .and('have.css', 'vertical-align', 'superscript');
+      .and('have.css', 'vertical-align', 'super');
     cy.get('@meanings')
       .contains('cite', 'CW')
-      .should('have.attr', 'title', /Nēhiyawēwin\s*:\s+itwēwina/i)
-      .and('have.css', 'vertical-align', 'superscript');
+      .and('have.css', 'vertical-align', 'super');
   });
 });

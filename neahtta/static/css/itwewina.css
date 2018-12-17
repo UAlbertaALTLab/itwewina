@@ -171,3 +171,8 @@ table.miniparadigm tr:first-child th {
     text-transform: capitalize !important;
     text-align: right !important;
 }
+
+cite.entry_source {
+    vertical-align: super;
+    font-size: 75%;
+}

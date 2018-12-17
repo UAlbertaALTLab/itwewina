@@ -69,7 +69,7 @@
     {% if entry_sources|length > 0 %}
     <span class="sources">
        {% for source in entry_sources %}
-       <cite class="entry_source">{{ source.id }}</cite>
+       <cite class="entry_source" title="{{ source.title }}">{{ source.id }}</cite>
        {% endfor %}
     </span>
     {% endif %}
