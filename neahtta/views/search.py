@@ -1184,7 +1184,6 @@ def determine_recording_word_forms(word_form, paradigm):
     """
     return determine_recording_word_forms_from_paradigm(paradigm) | {word_form}
 
-
 SUITABLE_WORD_FORMS = {
     # VAI/VTI forms
     (u'V', u'AI', u'Ind', u'Prs', u'1Sg'),
@@ -1201,6 +1200,7 @@ SUITABLE_WORD_FORMS = {
     (u'V', u'TA', u'Ind', u'Prs', u'3Sg', u'4Sg/PlO'),
     (u'PV/e', u'V', u'TA', u'Cnj', u'Prs', u'X', u'3SgO'),
 }
+
 
 def determine_recording_word_forms_from_paradigm(paradigm):
     """
@@ -1220,22 +1220,3 @@ def determine_recording_word_forms_from_paradigm(paradigm):
         candidate.form for candidate in paradigm
         if tuple(candidate.tag_raw) in SUITABLE_WORD_FORMS
     }
-
-
-def get_crk_lemma_class(analysis):
-    """
-    Returns a short code for the "lemma class" of a Plains Cree analyzed form.
-    Lemma classes are things like VTA, NID, IPJ, etc. That is,
-    it's like the part-of-speech, but a little bit more.
-
-    :param analysis: a GeneratedForm
-    :return: a short code, as a str (ASCII).
-    """
-
-    # Determine the kind of Plains Cree word from the first entry.
-    pos = analysis.tag['pos']
-    if pos == u'V':
-        animacy = analysis.tag['animacy']
-        return pos + animacy
-    # TODO: noun forms?
-    return pos
