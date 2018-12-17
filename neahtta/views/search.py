@@ -717,9 +717,10 @@ class SearcherMixin(object):
         for lz, az, paradigm, has_layout in search_result_obj.entries_and_tags_and_paradigms:
             if lz is not None:
                 user_input = search_result_obj.search_term
+                candidate_word_forms = determine_recording_word_forms(user_input, paradigm)
                 tplkwargs = { 'lexicon_entry': lz
                             , 'analyses': az
-                            , 'recording_word_forms': determine_recording_word_forms(paradigm) or [user_input]
+                            , 'recording_word_forms': candidate_word_forms
                             , 'paradigm': paradigm
                             , 'layout': has_layout
                             , 'user_input': user_input
@@ -1172,9 +1173,22 @@ class DetailedLanguagePairSearchView(DictionaryView, SearcherMixin):
         return render_template(self.template_name, **search_result_context)
 
 
-def determine_recording_word_forms(paradigm):
+def determine_recording_word_forms(word_form, paradigm):
     """
-    Returns a list of word forms that
+    Returns a word forms suitable to be thrown at the Recordings Validation app
+    to return as recordings of a particular word.
+
+    :param word_form: str - the 'canonical' word form -- i.e., lemma
+    :param paradigm: list of GeneratedForm instances
+    :return: tuple of strs -- word forms
+    """
+    return determine_recording_word_forms_from_paradigm(paradigm) or [word_form]
+
+
+def determine_recording_word_forms_from_paradigm(paradigm):
+    """
+    Given the paradigm of a word, returns a list of common word forms that
+    are likely in the Recording Validation app's database.
 
     See: https://github.com/UAlbertaALTLab/itwewina/issues/92
 
@@ -1182,11 +1196,10 @@ def determine_recording_word_forms(paradigm):
     :return: list of word forms.
     """
     if not paradigm:
-        return [] # TODO: just return the analyzed form?
+        return []
     # XXX: this ONLY works Plains Cree/itwêwina
 
     # Determine the kind of Plains Cree word from the first entry.
-
     first_form = paradigm[0]
     pos = first_form.tag['pos']
     if pos == u'V':
