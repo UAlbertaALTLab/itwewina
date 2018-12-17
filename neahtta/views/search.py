@@ -1199,18 +1199,11 @@ def determine_recording_word_forms_from_paradigm(paradigm):
         return []
     # XXX: this ONLY works Plains Cree/itwêwina
 
-    # Determine the kind of Plains Cree word from the first entry.
-    first_form = paradigm[0]
-    pos = first_form.tag['pos']
-    if pos == u'V':
-        animacy = first_form.tag['animacy']
-        word_type = pos + animacy
-    else:
-        # XXX: what kind of a word is this?
-        return []
+    assert len(paradigm) >= 1
+    lc = get_crk_lemma_class(paradigm[0])
 
-    if word_type in ('VII', 'VAI', 'VTI', 'VTA'):
-        anim = animacy.decode('ASCII')
+    if lc in ('VII', 'VAI', 'VTI', 'VTA'):
+        anim = lc[1:].decode('ASCII')
         assert anim in (u'AI', u'TI', u'II', u'TA')
         forms = []
         for candidate in paradigm:
@@ -1235,3 +1228,19 @@ def determine_recording_word_forms_from_paradigm(paradigm):
         # XXX: not implemented
         return []
 
+def get_crk_lemma_class(analysis):
+    """
+    Returns a short code for the "lemma class" of a Plains Cree analyzed form.
+    Lemma classes are things like VTA, NID, IPJ, etc. That is,
+    it's like the part-of-speech, but a little bit more.
+
+    :param analysis: a GeneratedForm
+    :return: a short code, as a str (ASCII).
+    """
+
+    # Determine the kind of Plains Cree word from the first entry.
+    pos = analysis.tag['pos']
+    if pos == u'V':
+        animacy = analysis.tag['animacy']
+        return pos + animacy
+    return pos
