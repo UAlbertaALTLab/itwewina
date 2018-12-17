@@ -138,4 +138,8 @@ describe('Maskwacîs recordings integration', function () {
       force: true,
     });
   };
+  // TODO: ND(A|I): get PxX or Px3Sg form (unspecified possessor)
+  // e.g., mitêh = heart+N+D+I+Sg+PxX
+  // e.g., otêh = heart+N+D+I+Sg+Px3Sg
+  // TODO: Px1Sg and Px2Sg also common for kinship (e.g., nôhkom, kôhkom)
 });
