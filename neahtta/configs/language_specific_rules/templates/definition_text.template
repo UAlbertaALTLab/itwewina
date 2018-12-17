@@ -20,7 +20,7 @@
 {%- macro render_link(tg, t) -%}
     {# Render a link to the detailed page. One exception: if the lexicon
     annotation entry contains a @fra_ref attribute, then we make a
-    reference link, inserting this attribute's value in as a parameter. 
+    reference link, inserting this attribute's value in as a parameter.
 
          <tg xml:lang="sme">
             <re fra_ref="omtopersoner">om to personer</re>
@@ -33,7 +33,7 @@
             type="Recipr"
             orig_entry="hverandre"
             til_ref="omtopersoner">hverandre: om to personer</l>
-    
+
     #}
 
     {% set text = t.text %}
@@ -65,13 +65,13 @@
 
 {%- macro render_sources(t) -%}
     {# Render the title(s) of the source(s) of this <t> translation.  #}
-    {% set entry_sources = t|source_titles %}
+    {% set entry_sources = t|sources %}
     {% if entry_sources|length > 0 %}
-    <ul class="sources">
+    <span class="sources">
        {% for source in entry_sources %}
-       <li class="entry_source">{{ source }}</li>
+       <cite class="entry_source">{{ source.id }}</cite>
        {% endfor %}
-    </ul>
+    </span>
     {% endif %}
 {%- endmacro -%}
 
@@ -95,4 +95,4 @@
     {%- endif -%}
 {%- endif -%}
 
-{#  vim: set ts=4 sw=4 tw=72 syntax=htmljinja : #}
+{#  vim: set ts=4 sw=4 tw=72 syntax=jinja : #}

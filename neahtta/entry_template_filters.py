@@ -23,7 +23,7 @@ from flask import current_app, g
 def register_template_filters(app):
 
     # An idea, if specific forms need to be generated
-    # however, for this to be available from context files, some 
+    # however, for this to be available from context files, some
     # changes need to be made: context management should be moved from
     # config.py to TemplateConfig.
 
@@ -72,7 +72,7 @@ def register_template_filters(app):
         from operator import itemgetter
 
         # For some reason groupby with a key function did not work for
-        # this... 
+        # this...
 
         tag_by_form = [(g.tag.tag_string, g) for g in forms]
         groups = groupby( tag_by_form, itemgetter(0))
@@ -189,7 +189,7 @@ def register_template_filters(app):
 
         # TODO: PV/e tags cause problems because they have been shifted
         # to the right of the lemma. maybe the tag processor function
-        # needs to fix this 
+        # needs to fix this
 
         try:
             generated, raw_out, raw_errors = mx.generate(lemma, [tag_string], entry, return_raw_data=True, template_tag=True)
@@ -223,6 +223,36 @@ def register_template_filters(app):
             console.log("%s")
         </script>""" % string.strip().encode('unicode-escape')
 
+    @app.template_filter('sources')
+    def sources(t_element):
+        """
+        Given a <t> translation element from the dictionary, returns a list of
+        all of DictionarySource instances associated with it.
+
+        e.g.,
+
+            <source id="CW">
+                <title> Cree : Words </title>
+            </source>
+            <source id="MD">
+                <title> Maskwacîs Dictionary </title>
+            </source>
+            <e>
+                <t sources="MD CW">acâhkos</t>
+            </e>
+
+        This will return:
+
+        [DictionarySource(id='CW', u'Cree : Words'), DictionarySource(u'Maskwacîs Dictionary')]
+
+        :param t_element:
+        :return:
+        """
+        assert t_element.tag == 't'
+        lexicon = current_app.config.lexicon
+        sources = lexicon.get_sources(g._from, g._to, t_element)
+        return sources
+
     @app.template_filter('source_titles')
     def source_titles(t_element):
         """
@@ -253,4 +283,3 @@ def register_template_filters(app):
         return sources
 
     return app
-
