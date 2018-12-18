@@ -34,4 +34,18 @@ describe('Concise representations of dictionary sources', function () {
       .should('be.visible')
       .and('contain', 'Maskwacîs Cree Dictionary');
   });
+
+  it('should separate translation groups with a semicolon', function () {
+    cy.instantNeahttaSearch('crk', 'eng', 'acosis');
+
+    cy.get('.lexeme')
+      .contains('.lexeme', 'acosis')
+      .as('lexeme');
+
+    cy.get('@lexeme').get('.meanings')
+      .invoke('text')
+      .should('match', /An arrow[.]?\s+MD/)  // translation 1
+      .should('match', /arrow, little arrow\s+CW/)  // translation 2
+      .should('match', /An arrow[.]?\s+MD;\s+arrow, little arrow\s+CW/); // together!
+  });
 });
