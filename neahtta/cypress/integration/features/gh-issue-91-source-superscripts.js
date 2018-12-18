@@ -12,8 +12,9 @@ describe('Concise representations of dictionary sources', function () {
 
     cy.get('@meanings')
       .contains('cite', 'MD')
-      .should('have.attr', 'title', 'Maskwacîs Cree Dictionary')
       .and('have.css', 'vertical-align', 'super');
+    // NOTE: bootstrap-tooltip rewrites the [title] attribute, so don't go
+    // checking it!
     cy.get('@meanings')
       .contains('cite', 'CW')
       .and('have.css', 'vertical-align', 'super');
@@ -22,8 +23,9 @@ describe('Concise representations of dictionary sources', function () {
   it('should display the full title of the source on hover', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'acâhkos');
 
-    cy.get('.results .lexeme:first .meanings cite:first').as('citation')
-      .contains('MD');
+    cy.get('.results .lexeme:first .meanings')
+      .contains('cite', 'MD')
+      .as('citation');
 
     cy.get('@citation')
       .trigger('mouseover');
