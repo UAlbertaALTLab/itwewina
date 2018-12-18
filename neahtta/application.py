@@ -207,6 +207,7 @@ def prepare_assets(app):
         'js/base.js',
         'js/index.js',
         'js/detail.js',
+        'js/audio_links.js',
         # TODO: underscore? angular? async_paradigms? 
     ] + js_dev_assets
 

@@ -1,4 +1,4 @@
-{% block template_doc %}{% if TEMPLATE_DOC %}
+{%- block template_doc %}{% if TEMPLATE_DOC %}
 Some js includes for itwewina-specific functionality
   * audio_links js, allow clickable audio
   * include bootstrap tabs for paradigms
@@ -6,12 +6,13 @@ Some js includes for itwewina-specific functionality
 Testing:
  1.) Search for audio entry
  2.) View paradigm and click tabs
-{% endif %}{% endblock %}
+{% endif %}{% endblock -%}
 
 
-{# Includes the endpoint data. #}
+{#- Includes the endpoint data. #}
 <link rel="x-recording-search-endpoint" href="{{ recordings_endpoint }}">
-<script type="text/javascript" src="{{url_for('static', filename='js/audio_links.js')}}"></script>
-{%- if current_app_config.paradigm_layouts %}
-    <script src="{{url_for('static', filename='js/bootstrap-tab.js')}}"></script>
-{% endif -%}
+{# NB: audio_links.js is included in the 'main_js_assets' bundle by application.py #}
+{%- if current_app_config.paradigm_layouts -%}
+    <script src="{{ url_for('static', filename='js/bootstrap-tab.js') }}"></script>
+{%- endif -%}
+{# vim: syntax=jinja : #}
