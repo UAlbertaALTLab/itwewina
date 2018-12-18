@@ -29,6 +29,7 @@ describe("List of an entry's sources", function () {
 
     // We should see the source on the page.
     cy.get('.lexeme .entry_source')
-      .should('contain', 'Cree : Words');
+      .should('contain', 'CW');
+    // Behaviour changed! See https://github.com/UAlbertaALTLab/itwewina/issues/91
   });
 });
