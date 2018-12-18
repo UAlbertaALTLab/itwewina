@@ -65,23 +65,23 @@
 
 {%- macro render_sources(t) -%}
     {# Render the title(s) of the source(s) of this <t> translation.  #}
-    {% set entry_sources = t|sources %}
-    {% if entry_sources|length > 0 %}
+    {%- set entry_sources = t|sources -%}
+    {%- if entry_sources|length > 0 -%}
     <span class="sources">
-       {% for source in entry_sources %}
+       {%- for source in entry_sources -%}
        <cite class="entry_source" title="{{ source.title }}">{{ source.id }}</cite>
-       {% endfor %}
+       {%- endfor -%}
     </span>
-    {% endif %}
+    {%- endif -%}
 {%- endmacro -%}
 
 {%- macro render_tg(tg) -%}
     {# Render all the texts as individual links, followed by a potential
     annotation. #}
 
-    {% for t in tg.xpath('./t') %}
-        {{ render_link(tg, t) -}}{% if not loop.last %}, {% endif %}
-    {% endfor %}
+    {%- for t in tg.xpath('./t') -%}
+        {{- render_link(tg, t) -}}{% if not loop.last %}, {% endif -%}
+    {%- endfor -%}
 
     {{- render_annotation(tg) -}}
 {%- endmacro -%}
@@ -90,9 +90,8 @@
     <span lang="{{ _to }}">{{ render_tg(translation_group) }}</span>
     {%- if translation_group.xpath('./t/@sources')|length > 0 -%}
         {%- for t in translation_group -%}
-            {{ render_sources(t) }}
+            {{- render_sources(t) -}}
         {%- endfor -%}
     {%- endif -%}
 {%- endif -%}
-
 {#  vim: set ts=4 sw=4 tw=72 syntax=jinja : #}

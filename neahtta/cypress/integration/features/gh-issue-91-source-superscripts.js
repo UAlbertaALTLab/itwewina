@@ -35,7 +35,8 @@ describe('Concise representations of dictionary sources', function () {
       .and('contain', 'Maskwacîs Cree Dictionary');
   });
 
-  it('should separate translation groups with a semicolon', function () {
+  // XXX: blocked by https://github.com/UAlbertaALTLab/itwewina/issues/102
+  it.skip('should separate translation groups with a semicolon', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'acosis');
 
     cy.get('.lexeme')
