@@ -18,4 +18,18 @@ describe('Concise representations of dictionary sources', function () {
       .contains('cite', 'CW')
       .and('have.css', 'vertical-align', 'super');
   });
+
+  it('should display the full title of the source on hover', function () {
+    cy.instantNeahttaSearch('crk', 'eng', 'acâhkos');
+
+    cy.get('.results .lexeme:first .meanings cite:first').as('citation')
+      .contains('MD');
+      
+    cy.get('@citation')
+      .trigger('mouseover');
+
+    cy.get('.source-display')
+      .should('be.visible')
+      .and('contain', 'Maskwacîs Cree Dictionary');
+  });
 });
