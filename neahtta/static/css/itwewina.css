@@ -176,3 +176,7 @@ cite.entry_source {
     vertical-align: super;
     font-size: 75%;
 }
+
+.sources .tooltip {
+    font-size: 1rem;
+.}
