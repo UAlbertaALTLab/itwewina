@@ -50,6 +50,13 @@ $(document).ready(function(){
     if($('[data-toggle=tooltip]').length > 0) {
         $('[data-toggle=tooltip]').tooltip();
     }
+
+    /* Setup tooltips for <cite> elements (Dictionary source display). */
+    $('.lexeme .meanings cite').tooltip({
+        trigger: 'hover'
+    });
+
+
     if($('#keyboard').length > 0) {
 
         var unblurable = false;
@@ -269,9 +276,6 @@ $(document).ready(function(){
                     // });
                 }
             }
-
         });
-
     }
-
 });

@@ -24,11 +24,11 @@ describe('Concise representations of dictionary sources', function () {
 
     cy.get('.results .lexeme:first .meanings cite:first').as('citation')
       .contains('MD');
-      
+
     cy.get('@citation')
       .trigger('mouseover');
 
-    cy.get('.source-display')
+    cy.get('.tooltip')
       .should('be.visible')
       .and('contain', 'Maskwacîs Cree Dictionary');
   });
