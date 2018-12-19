@@ -1,4 +1,4 @@
-﻿{# This is the main entry template that is called each time in the loop
+{# This is the main entry template that is called each time in the loop
    of main page entry results. Variables are passed in for the
    `lexicon_entry`, and morphological `analyses`.
 
@@ -82,8 +82,9 @@
                 </div>
             </div>
         {% else %}&nbsp;{% endif %}
-        {# Display of recordings.  #}
+        {#- Display of recording audio links. -#}
         <div class="recordings" aria-live="polite">
+            {# TODO: nêhiyawêwin translations for these #}
             <noscript>
                 JavaScript is disabled.
                 <strong> You must have JavaScript enabled to hear recordings! </strong>
@@ -91,11 +92,10 @@
                 disabled JavaScript. Please turn off data-saving and/or enable
                 JavaScript to hear recordings.
             </noscript>
-            {# TODO: nêhiyawêwin translations for this #}
             <p class="loading-indicator"><i class="icon-repeat icon-spin"></i> Loading recordings...</p>
         </div>
     </div>{# </.lexeme> #}
-    <div class="span3 hidden-phone">{# TODO: I really hate that expanded analyses are only on the phone... #}
+    <div class="span3 hidden-phone">{# TODO: fix segregated desktop/phone styles: https://github.com/UAlbertaALTLab/itwewina/issues/96... #}
         {{- rendered_templates.analyses -}}
     </div>
 </div>

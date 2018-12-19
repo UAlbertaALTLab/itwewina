@@ -26,16 +26,18 @@ describe('Loading audio', function () {
     cy.url()
       .should('match', /[/]detail[/].+[/]kostam\b/);
 
+    cy.get('.lexeme:first .recordings').as('recordings');
 
     // At this point, there should be a loading indicator.
-    cy.get('.recordings')
-      .should('contain', 'Loading');
+    cy.get('@recordings')
+      .get('.loading-indicator')
+      .should('be.visible');
 
-    // Waiting is over: we have results!
+    // Wait for the results to come back.
     cy.wait('@searchRecordings');
 
     // The loading indicator should disappear now!
-    cy.get('.recordings')
-      .should('not.contain', 'Loading');
+    cy.get('@recordings')
+      .should('not.have.descendants', '.loading-indicator');
   });
 });
