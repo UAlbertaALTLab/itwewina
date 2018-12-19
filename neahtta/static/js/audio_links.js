@@ -43,16 +43,15 @@ $(function () {
         // Create the <a> link, substituting required information.
         var $link = $(
             '<a href="#" class="play-audio">' +
-            '<i class="icon-volume-up"></i> Listen:' +
+            '<i class="icon-volume-up"></i> ' +
             ' <span class="word-form"></span>' +
             // XXX: hard-coded spoken variety: Maskwacîs
-            ' (Maskwacîs, <span class="speaker-gender"></span>)' +
+            ' (<span class="speaker-name"></span>, Maskwacîs)' +
             '</a>');
         $link.children('.word-form')
             .text(recording.wordform);
-        console.assert(recording.gender === 'M' || recording.gender === 'F');
-        $link.children('.speaker-gender')
-            .text(recording.gender === 'M' ? '♂' : '♀');
+        $link.children('.speaker-name')
+            .text(recording.speaker_name);
 
         var audio = new Audio(recording.recording_url);
         // Don't preload the audio! Otherwise, this will make LOTS of requests
