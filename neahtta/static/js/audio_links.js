@@ -16,12 +16,14 @@ $(function () {
                 return;
             }
 
-            var $recordings = $('<div class="recordings">');
+            var $recordings = $lexeme.find('.recordings');
+
             data.forEach(function (recording) {
                 $recordings.append(makeRecordingAudioLink(recording));
             });
+            $recordings.find('.loading-indicator').remove();
 
-            // Reveal the rec;ordings pane once it finally loads.
+            // Reveal the recordings pane once it finally loads.
             $recordings.hide().show('slow');
             $lexeme.append($recordings);
         });

@@ -180,3 +180,12 @@ cite.entry_source {
 .sources .tooltip {
     font-size: 1rem;
 .}
+
+/* Make the loading spinner/throbber spin! */
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+i.icon-spin {
+    animation: spin 1s linear infinite;
+}

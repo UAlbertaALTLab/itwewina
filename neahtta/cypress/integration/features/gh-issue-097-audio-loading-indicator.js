@@ -29,9 +29,13 @@ describe('Loading audio', function () {
 
     // At this point, there should be a loading indicator.
     cy.get('.recordings')
-      .contains('Loading');
+      .should('contain', 'Loading');
 
     // Waiting is over: we have results!
     cy.wait('@searchRecordings');
+
+    // The loading indicator should disappear now!
+    cy.get('.recordings')
+      .should('not.contain', 'Loading');
   });
 });

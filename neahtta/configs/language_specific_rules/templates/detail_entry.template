@@ -82,11 +82,21 @@
                 </div>
             </div>
         {% else %}&nbsp;{% endif %}
-    </div>
-    <div class="span3 hidden-phone">
+        {# Display of recordings.  #}
+        <div class="recordings" aria-live="polite">
+            <noscript>
+                JavaScript is disabled.
+                <strong> You must have JavaScript enabled to hear recordings! </strong>
+                Either you're running on data-saving mode, or you have have
+                disabled JavaScript. Please turn off data-saving and/or enable
+                JavaScript to hear recordings.
+            </noscript>
+            {# TODO: nêhiyawêwin translations for this #}
+            <p class="loading-indicator"><i class="icon-repeat icon-spin"></i> Loading recordings...</p>
+        </div>
+    </div>{# </.lexeme> #}
+    <div class="span3 hidden-phone">{# TODO: I really hate that expanded analyses are only on the phone... #}
         {{- rendered_templates.analyses -}}
     </div>
 </div>
-
 {# vim: set ts=4 sw=4 tw=72 syntax=jinja : #}
-
