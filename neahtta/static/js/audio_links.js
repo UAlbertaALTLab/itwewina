@@ -11,22 +11,32 @@ $(function () {
     });
 
     function fetchRecordings($lexeme, wordforms) {
-        $.getJSON(baseURI + wordforms, function (data) {
-            if (data.length === 0) {
-                return;
-            }
+        var $recordings = $lexeme.find('.recordings');
+        $.getJSON(baseURI + wordforms)
+            .done(function (data) {
+                if (data.length === 0) {
+                    return;
+                }
 
-            var $recordings = $lexeme.find('.recordings');
+                data.forEach(function (recording) {
+                    $recordings.append(makeRecordingAudioLink(recording));
+                });
 
-            data.forEach(function (recording) {
-                $recordings.append(makeRecordingAudioLink(recording));
+                // Reveal the recordings pane once it finally loads.
+                $recordings.hide().show('slow');
+                $lexeme.append($recordings);
+            })
+            .fail(function (jqXHR) {
+                var $message = $('<p class="loading-failed"></p>');
+                $message.text('No recordings found.')
+                $recordings.append($message);
+            })
+            .always(function () {
+                $recordings.find('.loading-indicator').remove();
+                // I expect the item to never change after this, so tell
+                // assistive technologies this!
+                $recordings.attr('aria-live', 'off');
             });
-            $recordings.find('.loading-indicator').remove();
-
-            // Reveal the recordings pane once it finally loads.
-            $recordings.hide().show('slow');
-            $lexeme.append($recordings);
-        });
     }
 
     function makeRecordingAudioLink(recording) {
