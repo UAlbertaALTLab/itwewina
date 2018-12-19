@@ -1,5 +1,6 @@
 /**
- * TODO: description.
+ * Listing and hearing recording snippets from the Maskwacîs Recordings
+ * Validation application.
  *
  * See: https://github.com/UAlbertaALTLab/itwewina/issues/92
  */
@@ -94,6 +95,11 @@ describe('Maskwacîs recordings integration', function () {
     });
   });
 
+  // TODO: ND(A|I): get PxX or Px3Sg form (unspecified possessor)
+  // e.g., mitêh = heart+N+D+I+Sg+PxX
+  // e.g., otêh = heart+N+D+I+Sg+Px3Sg
+  // TODO: Px1Sg and Px2Sg also common for kinship (e.g., nôhkom, kôhkom)
+
   /**
    * Look up a word, and make sure we're getting back the correct recordings.
    * WARNING! This WILL need to be bound to the proper `this` context before
@@ -138,8 +144,4 @@ describe('Maskwacîs recordings integration', function () {
       force: true,
     });
   };
-  // TODO: ND(A|I): get PxX or Px3Sg form (unspecified possessor)
-  // e.g., mitêh = heart+N+D+I+Sg+PxX
-  // e.g., otêh = heart+N+D+I+Sg+Px3Sg
-  // TODO: Px1Sg and Px2Sg also common for kinship (e.g., nôhkom, kôhkom)
 });
