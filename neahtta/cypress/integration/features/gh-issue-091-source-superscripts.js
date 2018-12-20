@@ -35,18 +35,21 @@ describe('Concise representations of dictionary sources', function () {
       .and('contain', 'Maskwacîs Cree Dictionary');
   });
 
-  // XXX: blocked by https://github.com/UAlbertaALTLab/itwewina/issues/102
-  it.skip('should separate translation groups with a semicolon', function () {
-    cy.instantNeahttaSearch('crk', 'eng', 'acosis');
+  it('should separate translation groups with a semicolon', function () {
+    cy.instantNeahttaSearch('crk', 'eng', 'ahkameyihtam');
 
     cy.get('.lexeme')
-      .contains('.lexeme', 'acosis')
+      .contains('.lexeme', 'âhkamêyihtam')
       .as('lexeme');
 
+    let translation1 = /He keeps on thinking of what has to be done[.]?\s+MD/
+    let translation2 = /s\/he continues to think of future deeds or tasks[.]?\s+CW/;
+    let both = new RegExp(`${translation1.source};\\s+${translation2.source}|` +
+                          `${translation2.source};\\s+${translation1.source}`);
     cy.get('@lexeme').get('.meanings')
       .invoke('text')
-      .should('match', /An arrow[.]?\s+MD/)  // translation 1
-      .should('match', /arrow, little arrow\s+CW/)  // translation 2
-      .should('match', /An arrow[.]?\s+MD;\s+arrow, little arrow\s+CW/); // together!
+      .should('match', translation1)
+      .should('match', translation2)
+      .should('match', both); // together!
   });
 });
