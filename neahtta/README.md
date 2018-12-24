@@ -94,7 +94,7 @@ Copy the needed locales to the your virtualenv.
 
 ### Node.JS
 
-Install [NodeJS], however is most convenient for your system.
+Install [Node.JS], however is most convenient for your system.
 
 Now, install neahtta's additional dependencies:
 
@@ -115,7 +115,7 @@ number generator. You can use the included script that will do this for you:
 
 ## The FSTs and the dictionaries
 
-Make sure you copy the latest FSTs and dictionaries to the appriopriate places.
+Make sure you copy the latest FSTs and dictionaries to the appropriate places.
 
 What I do is copy all the dictionaries (XML files) from the server's copy of
 itwêwina to my local copy:
@@ -126,7 +126,6 @@ As for the FSTs, ask Antti (or me, Eddie) where the latest FSTs are, and copy
 them somewhere accessible. On Sapir, this is
 
     /home/ARTSRN/easantos/crk-fsts
-
 
 You will need configure this directory in `configs/itwewina.config.yml`. See
 later for "Configuration".
@@ -172,6 +171,7 @@ guide][cypress-guide].
 [cypress.io]: https://www.cypress.io/
 [cypress-guide]: https://docs.cypress.io/guides/getting-started/writing-your-first-test.html
 
+
 ## Deployment
 
 Always merge code you want to deploy into the `development` branch.
@@ -189,11 +189,11 @@ this instead:
 
     fab sapir itwewina deploy
 
-The code runs using [mod_wsgi].
+The code runs within [mod_wsgi].
 
 [mod_wsgi]: http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
 
-Copy `itwewina.wsgi.template` to `itwewina.wsgi` and customized as is required,
+Copy `itwewina.wsgi.template` to `itwewina.wsgi` and customize it as required,
 following the documentation for both Flask and [mod_wsgi].
 
 
@@ -269,9 +269,8 @@ See `make help` for more information.
 
 ## Developing
 
-### TODOs
-
-See `TODOs`.
+> 👇 this stuff was written a long time ago, and I don't know how much is
+> relevant anymore :/
 
 ### Module-specific documentation.
 
@@ -293,7 +292,4 @@ individual Python files. A short overview follows:
 
 ### XML format
 
-See http://giellatekno.uit.no/doc/dicts/dictionarywork.html
-
-
-vim: set ts=4 sw=4 tw=80 et syntax=markdown :
+See <https://github.com/UAlbertaALTLab/itwewina/blob/development/docs/xml-dictionary.md>
