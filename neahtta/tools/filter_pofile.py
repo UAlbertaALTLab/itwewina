@@ -1,4 +1,4 @@
-﻿# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 # Neahttadigisánit — online, inflectional dictionary
 # Copyright (C) 2013–2017 University of Tromsø
