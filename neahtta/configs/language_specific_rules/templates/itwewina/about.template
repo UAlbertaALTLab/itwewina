@@ -50,20 +50,49 @@
             <blockquote></blockquote>
         </div>
         <div class="row-fluid">
-            <h2 style="font-weight:300;">{% trans %}Source material{% endtrans %}</h2>
+            <h2 style="font-weight:300;">{% trans %}Source materials{% endtrans %}</h2>
         </div>
         <div class="row-fluid">
             <blockquote></blockquote>
         </div>
         <div class="row-fluid">
             <span class="span4">
-                <h3 class="red smaller">{% trans %}crk ↔ eng{% endtrans %}</h3>
+                <h3 class="red smaller">{% trans %}crk{% endtrans %}</h3>
 
-                <p>{% trans %}Dictionaries for Plains Cree and English are based
-                on the lexical materials and scientific research in <a href="https://uofrpress.ca/Books/C/Cree-Words"><em>nêhiyawêwin : itwêwina / Cree: Words</em></a>.
-                 Compiled by Arok Wolvengrey.  Regina: Canadian Plains Research Center, 2001.{% endtrans
+                <p>{% trans %}The computational model for analyzing Plains Cree words and generating the various inflectional paradigms
+                   is based on the lexical materials and scientific research in
+                   <a href="https://uofrpress.ca/Books/C/Cree-Words"><em>nêhiyawêwin : itwêwina / Cree: Words</em></a>
+                   (Compiled by Arok Wolvengrey.  Regina: Canadian Plains Research Center, 2001),
+                   and described in <a href="http://altlab.artsrn.ualberta.ca/wp-content/uploads/2019/01/Snoek_et_al_CEL1_2014.pdf">Modeling the Noun Morphology of Plains Cree</a> 
+                   (Conor Snoek, Dorothy Thunder, Kaidi Lõo, Antti Arppe, Jordan Lachler, Sjur Moshagen & Trond Trosterud, 2014)
+                   and <a href="http://altlab.artsrn.ualberta.ca/wp-content/uploads/2019/01/Harrigan_Schmirler_Arppe_Antonsen_Trosterud_Wolvengrey_2017fc.pdf">Learning from the Computational Modeling of Plains Cree Verbs</a> (Atticus G. Harrigan, Katherine Schmirler, Antti Arppe, Lene Antonsen, Trond Trosterud & Arok Wolvengrey. Morphology, 2018).{% endtrans
                 %}</p>
 
+            </span>
+            <span class="span4">
+                <h3 class="red smaller">{% trans %}crk ↔ eng{% endtrans %}</h3>
+
+               <p>{% trans %}The bilingual Dictionary for Plains Cree and Cree are based
+                 on the lexical materials in <a href="https://uofrpress.ca/Books/C/Cree-Words"><em>nêhiyawêwin : itwêwina / Cree: Words</em></a>. 
+                 (Compiled by Arok Wolvengrey.  Regina: Canadian Plains Research Center, 2001), and in the
+                 <a href=""><em>Maskwacîs Dictionary of Cree Words / Nehiyaw Pîkiskweninisa</em></a> (Maskwachees Cultural College, Maskwacîs, 2009).{% endtrans
+                %}</p>
+ 
+            </span>
+            <span class="span4">
+                <h3 class="red smaller">{% trans %}Spoken Cree -- nêhiyaw-pîkiskwêwina{% endtrans %}</h3>
+
+               <p>{% trans %}The careful pronunciations of the Cree words by first-language speakers in Maskwacîs, Alberta, have been recorded in the joint project
+                 <a href="">Spoken Dictionary of Maskwacïs Cree -- nêhiyaw-pîkiskwêwina maskwacîsihk</a>
+                 between then Miyo Wahkohtowin Education, now <a href="https://www.maskwacised.ca/">Maskwacîs Education Schools Commission</a> and
+                 the <a href="http://altlab.artsrn.ualberta.ca/">Alberta Language Technology Lab</a> (2014-2018) 
+                 (<a href="http://altlab.artsrn.ualberta.ca/wp-content/uploads/2019/01/Maskwacis_dictionary_recording_project_180609_SILS.pdf"><em>Towards a spoken dictionary of Maskwacîs Cree</em></a>,
+                 Mary Jean Littlechild, Louise Wildcat, Jerry Roasting, Harley Simon, Annette Lee, Arlene Makinaw,
+                 Rosie Rowan, Rose Makinaw, Kisikaw, Betty Simon, Brian Lightning, Brian Lee, Linda Oldpan, Miriam Buffalo, Debora Young, Ivy Raine, Paula Mackinaw,
+                 Norma Linda Saddleback, Renee Makinaw, Atticus Harrigan, Katherine Schmirler, Dustin Bowers, Megan Bontogon, Sarah Giesbrecht, Patricia Johnson,
+                 Timothy Mills, Jordan Lachler & Antti Arppe, Stabilizing Indigenous Languages Symposium (SILS), University of Lethbridge, 9 June 2018).{% endtrans
+                %}</p>
+ 
             </span>
             <span class="span4">
                 <h3 class="blue smaller">Neahttadigisánit</h3>
