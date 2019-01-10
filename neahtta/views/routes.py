@@ -128,6 +128,7 @@ from .main import ( session_clear
                   , externalFormSearch
                   , about
                   , about_sources
+                  , about_maskwacis_dictionary
                   , escape_tv
                   , config_docs
                   , config_doc
@@ -164,6 +165,12 @@ blueprint.add_url_rule( '/about/sources/'
                       , methods=['GET']
                       , endpoint='about_sources'
                       , view_func=about_sources
+                      )
+
+blueprint.add_url_rule( '/about/maskwacis-dictionary/'
+                      , methods=['GET']
+                      , endpoint='about_maskwacis_dictionary'
+                      , view_func=about_maskwacis_dictionary
                       )
 
 blueprint.add_url_rule( '/plugins/'

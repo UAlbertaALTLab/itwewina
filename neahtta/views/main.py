@@ -2,6 +2,7 @@
 
 # Neahttadigisánit — online, inflectional dictionary
 # Copyright (C) 2013–2017 University of Tromsø
+# Copyright (C) 2018–2019 Alberta Language Technology Laboratory, University of Alberta
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -96,6 +97,7 @@ def about():
     #     'about.template')
     return render_template('about.template')
 
+
 def about_sources():
     """ This is also tied to a context processer making this item
     visible in the navigational menu if the template is found. """
@@ -108,6 +110,15 @@ def about_sources():
         return render_template('sources.template')
     except:
         return render_template('about.template')
+
+
+def about_maskwacis_dictionary():
+    """
+    Route for the Maskwacîs (Cree) Dictionary content.
+    """
+    # TODO: Factor out into a parametrized route for about pages?
+    return render_template('maskwacis-dictionary.template')
+
 
 def gen_doc(from_language, docs_list):
     _docs = []
