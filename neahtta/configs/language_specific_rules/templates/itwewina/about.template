@@ -82,8 +82,9 @@
             <span class="span4">
                 <h3 class="red smaller">{% trans %}Spoken Cree — nêhiyaw-pîkiskwêwina{% endtrans %}</h3>
 
+               {%- set maskwacis_dictionary = url_for('.about_maskwacis_dictionary') -%}
                <p>{% trans %}The careful pronunciations of the Cree words by first-language speakers in Maskwacîs, Alberta, have been recorded in the joint project
-                 <strong>Spoken Dictionary of Maskwacîs Cree — nêhiyaw-pîkiskwêwina maskwacîsihk</strong>
+                 <a href="{{ maskwacis_dictionary }}">Spoken Dictionary of Maskwacîs Cree — nêhiyaw-pîkiskwêwina maskwacîsihk</a>
                  between then Miyo Wahkohtowin Education, now <a href="https://www.maskwacised.ca/">Maskwacîs Education Schools Commission</a> and
                  the <a href="http://altlab.artsrn.ualberta.ca/">Alberta Language Technology Lab</a> (2014-2018) 
                  (<a href="http://altlab.artsrn.ualberta.ca/wp-content/uploads/2019/01/Maskwacis_dictionary_recording_project_180609_SILS.pdf"><em>Towards a spoken dictionary of Maskwacîs Cree</em></a>,
