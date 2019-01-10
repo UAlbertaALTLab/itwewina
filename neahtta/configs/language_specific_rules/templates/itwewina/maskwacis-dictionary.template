@@ -14,11 +14,26 @@ Details about the Maskwacîs Dictionary source.
 <div class="container-fluid">
     <div class="marketing">
         <div class="row-fluid">
-            <h2 style="font-weight:300;" lang="{{ current_locale }}">{% trans %}TODO: TITLE{% endtrans %}</h2>
+            <h2 style="font-weight:300;" lang="{{ current_locale }}">{% trans %}Maskwacîs Cree Dictionary{% endtrans %}</h2>
         </div>
         <div class="row-fluid">
             <div class="span8">
-                <p> TODO: SOURCE INFO </p>
+            <p>This dictionary was developed by the Cree Language
+            Program of Maskwachees Cultural Collge. The chief
+            developer was Linda S. Saddleback. In the work of
+            compiling this book, Linda consulted with community Elders
+            and language experts. In particular, valued advice was
+            given by Elder Mrs. Amelia Potts.
+
+            <p>Assistance in the preparation of the manuscript for
+            publication was given by Beatrice Dennehy and Linda Oldpan
+            in reviewing the language portions, to Christine Hundter
+            for preparing the pronunciation guide, and to Bernice
+            Littlechild, Elaine Roasting, Peter Hyde, Geraldine Hill,
+            and Sharon Miller for technical production and
+            advice. Walter Lightning is thanked for his continuing
+            enthusiasm and encouragement.
+	    </p>
             </div>
         </div>
     </div>
