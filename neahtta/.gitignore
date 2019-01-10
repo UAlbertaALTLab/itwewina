@@ -120,6 +120,7 @@ user_log.txt
 # Generated or private data
 static/vendor
 secret_key.do.not.check.in
+fst/
 
 # PyCharm
 .idea/
