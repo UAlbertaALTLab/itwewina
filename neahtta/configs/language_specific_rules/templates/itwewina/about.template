@@ -57,7 +57,7 @@
         </div>
         <div class="row-fluid">
             <span class="span4">
-                <h3 class="red smaller">{% trans %}crk{% endtrans %}</h3>
+                <h3 class="red smaller">{% trans %}Plains Cree (crk){% endtrans %}</h3>
 
                 <p>{% trans %}The computational model for analyzing Plains Cree words and generating the various inflectional paradigms
                    is based on the lexical materials and scientific research in
@@ -70,7 +70,7 @@
 
             </span>
             <span class="span4">
-                <h3 class="red smaller">{% trans %}crk ↔ eng{% endtrans %}</h3>
+                <h3 class="red smaller">{% trans %}Plains Cree (crk) ↔ English{% endtrans %}</h3>
 
                <p>{% trans %}The bilingual Dictionary for Plains Cree and Cree are based
                  on the lexical materials in <a href="https://uofrpress.ca/Books/C/Cree-Words"><em>nêhiyawêwin : itwêwina / Cree: Words</em></a>. 
