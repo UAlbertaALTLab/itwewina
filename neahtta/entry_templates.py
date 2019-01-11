@@ -87,9 +87,12 @@ class TemplateConfig(object):
 
     """ Templates in this list will not be rendered on every other page load
     """
+    # TODO: THIS SHOULD BE AN ALLOW LIST AND NOT A DENY LIST! Regardless...
     no_subview_rendering = [
         'variant_search.template',
         'detail_search_form.template',
+        'about.template',
+        'maskwacis-dictionary.template',
     ]
 
     def __init__(self, app=None, debug=False, cache=True):
