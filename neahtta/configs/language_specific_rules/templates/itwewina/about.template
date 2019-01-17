@@ -84,14 +84,9 @@
 
                {%- set maskwacis_dictionary = url_for('.about_maskwacis_dictionary') -%}
                <p>{% trans %}The careful pronunciations of the Cree words by first-language speakers in Maskwacîs, Alberta, have been recorded in the joint project
-                 <a href="{{ maskwacis_dictionary }}">Spoken Dictionary of Maskwacîs Cree — nêhiyaw-pîkiskwêwina maskwacîsihk</a>
+                 <a href="http://altlab.ualberta.ca/maskwacis/">Spoken Dictionary of Maskwacîs Cree &ndash; nêhiyaw-pîkiskwêwina maskwacîsihk</a>
                  between then Miyo Wahkohtowin Education, now <a href="https://www.maskwacised.ca/">Maskwacîs Education Schools Commission</a> and
-                 the <a href="http://altlab.artsrn.ualberta.ca/">Alberta Language Technology Lab</a> (2014-2018) 
-                 (<a href="http://altlab.artsrn.ualberta.ca/wp-content/uploads/2019/01/Maskwacis_dictionary_recording_project_180609_SILS.pdf"><em>Towards a spoken dictionary of Maskwacîs Cree</em></a>,
-                 Mary Jean Littlechild, Louise Wildcat, Jerry Roasting, Harley Simon, Annette Lee, Arlene Makinaw,
-                 Rosie Rowan, Rose Makinaw, Kisikaw, Betty Simon, Brian Lightning, Brian Lee, Linda Oldpan, Miriam Buffalo, Debora Young, Ivy Raine, Paula Mackinaw,
-                 Norma Linda Saddleback, Renee Makinaw, Atticus Harrigan, Katherine Schmirler, Dustin Bowers, Megan Bontogon, Sarah Giesbrecht, Patricia Johnson,
-                 Timothy Mills, Jordan Lachler & Antti Arppe, Stabilizing Indigenous Languages Symposium (SILS), University of Lethbridge, 9 June 2018).{% endtrans
+                 the <a href="http://altlab.artsrn.ualberta.ca/">Alberta Language Technology Lab</a> (2014 - on-going).{% endtrans
                 %}</p>
  
             </span>
