@@ -54,11 +54,13 @@ You need:
 
 ### Python
 
-Use [virtualenv][venv] to create an environment with requirements.txt.
+**Make sure you're in `neahtta/`!**
+
+Use [virtualenv][venv] to create a **Python 2.7** environment with requirements.txt.
 The virtualenv could really go anywhere, but a common convention is to save it
 in the local directory so that you always know where it is.
 
-    virtualenv .venv
+    virtualenv --python=$(which python2.7) .venv
     source .venv/bin/activate
     pip install -r requirements.txt
 
@@ -79,6 +81,8 @@ located here:
     /srv/apps/nds/babel_locales/crk.dat
     /srv/apps/nds/babel_locales/crk_Macr.dat
     /srv/apps/nds/babel_locales/crk_Syll.dat
+
+> TODO: clarify the `cp`
 
 As a sloppy workaround, if you don't have access to these, you can copy the
 locales for `en_CA.bin`, located in your virtualenv:
@@ -123,12 +127,19 @@ itwêwina to my local copy:
     scp sapir.artsrn.ualberta.ca:/data/exps/itwewina/neahtta/dicts/*.xml dicts/
 
 As for the FSTs, ask Antti (or me, Eddie) where the latest FSTs are, and copy
-them somewhere accessible. On Sapir, this is
+them somewhere accessible. On **Sapir**, this is
 
-    /home/ARTSRN/easantos/crk-fsts
+    /opt/smi/crk/bin/
 
-You will need configure this directory in `configs/itwewina.config.yml`. See
-later for "Configuration".
+You will need configure this directory in `configs/itwewina.config.yml`.
+
+## Configuration
+
+Copy `configs/itwewina.config.yaml.in` to `configs/itwewina.config.yaml`:
+
+    cp configs/itwewina.config.yaml.in configs/itwewina.config.yaml
+
+Edit settings in `configs/itwewina.config.yaml`
 
 ## Running the development server
 
@@ -137,6 +148,8 @@ Activate the virtualenv, then:
     fab itwewina runserver
 
 Replace "itwewina" with the specific instance you need.
+
+> TODO: **FST CONFIGURATION FROM &OPT**
 
 
 ## Testing
