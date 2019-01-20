@@ -1,17 +1,32 @@
-name: "Inanimate noun basic paradigm"
+name: "Inanimate noun basic (plain) paradigm"
 paradigm: "noun-ni.paradigm"
 layout:
   type: "basic"
 tooltips:
   eng:
-    "1s poss (sg)": "1st person singular possessor, singular noun"
-    "2s poss (sg)": "2nd person singular possessor, singular noun"
-    "3s poss (sg)": "3rd person singular possessor, singular noun"
+    "my": "1st person singular possessor"
+    "your (one)": "2nd person singular possessor"
+    "his/her": "3rd person singular possessor"
+    "our": "myt person plural exclusive possessor"
+    "your and our": "myt person plural inclusive possessor"
+    "your (all)": "2nd person plural possessor"
+    "their": "3rd person plural possessor"
+    "his/her/their (further)": "3rd person obviative possessor"
+    "One": "One"
+    "Many": "Many"
+    "In/On": "In/On"
+    "Smaller/younger/lesser": "Diminutive"
+    "Ownership": "Possession"
 --
-| "Singular"     | =N+I+Sg        |
-| "Plural"       | =N+I+Pl        |
-| "Locative"     | =N+I+Loc       |
-|                | : "POSSESSION" |
-| "1s poss (sg)" | =N+I+Px1Sg+Sg  |
-| "2s poss (sg)" | =N+I+Px2Sg+Sg  |
-| "3s poss (sg)" | =N+I+Px3Sg+Sg  |
+| "One"        | =N+I+Sg                    |
+| "Many"       | =N+I+Pl                    |
+| "In/On"      | =N+I+Loc                   |
+|              |                            |
+|              | : "Smaller/younger/lesser" |
+| "One"        | Der/Dim+N+I+Sg             |
+|              |                            |
+|              | : "Ownership"              |
+|              | : "One"                    |
+| "my"         | =N+I+Px1Sg+Sg              |
+| "your (one)" | =N+I+Px2Sg+Sg              |
+| "his/her"    | =N+I+Px3Sg+Sg              |

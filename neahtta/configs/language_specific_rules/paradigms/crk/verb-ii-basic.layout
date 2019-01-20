@@ -1,17 +1,28 @@
-name: "Inanimate intransitive verb basic paradigm"
+name: "Inanimate intransitive verb full (plain) paradigm"
 paradigm: "verb-ii.paradigm"
 layout:
   type: "basic"
 tooltips:
   eng:
-    "3s": "inanimate singular actor"
-    "3p": "inanimate plural actor"
-    "4s": "inanimate singular obviative actor"
-    "4p": "inanimate plural obviative actor"
+    "it": "inanimate singular actor"
+    "they": "inanimate plural actor"
+    "it (further)": "inanimate singular obviative actor"
+    "they (further)": "inanimate plural obviative actor"
+    "Something is happening now": "Present Tense"
+    "Something happened earlier": "Past Tense"
+    "Someone wants something to happen": "Future Intentional Tense"
+    "Something will certainly happen": "Future Definite Tense" 
+    "For something to happen": "Future/Infinitive"
+    "When something happens": "Future Conditional"
+    "Command/Request": "Imperative"
+    "Right now": "Immediate"
+    "Later on": "Delayed"
+    "ni-/ki- word": "Independent"
+    "ê-/kâ- word": "ê-/kâ- word"
+    "ka- word": "ka-conjunct"
+    "ta- word": "ta-conjunct"
 --
-|      | "PRESENT TENSE" |                    |
-|      | : "Independent" | : "Conjunct"       |
-| "3s" | Ind+Prs+3Sg     | PV/e+*+Cnj+Prs+3Sg |
-| "3p" | Ind+Prs+3Pl     | PV/e+*+Cnj+Prs+3Pl |
-| "4s" | Ind+Prs+4Sg     | PV/e+*+Cnj+Prs+4Sg |
-| "4p" | Ind+Prs+4Pl     | PV/e+*+Cnj+Prs+4Pl |
+|        | "Something is happening now" |                    |
+|        | : "ni-/ki- word"             | : "ê-/kâ- word"    |
+| "it"   | Ind+Prs+3Sg                  | PV/e+*+Cnj+Prs+3Sg |
+| "they" | Ind+Prs+3Pl                  | PV/e+*+Cnj+Prs+3Pl |

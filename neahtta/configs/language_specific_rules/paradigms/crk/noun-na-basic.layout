@@ -1,19 +1,35 @@
-name: "Animate noun basic paradigm"
+name: "Animate noun basic (plain) paradigm"
 paradigm: "noun-na.paradigm"
 layout:
   type: "basic"
 tooltips:
   eng:
-    "1s poss (sg)": "1st person singular possessor, singular noun"
-    "2s poss (sg)": "2nd person singular possessor, singular noun"
-    "3s poss (obv)": "3rd person singular possessor, obviative noun"
+    "my": "1st person singular possessor"
+    "your (one)": "2nd person singular possessor"
+    "his/her": "3rd person singular possessor"
+    "our": "myt person plural exclusive possessor"
+    "your and our": "myt person plural inclusive possessor"
+    "your (all)": "2nd person plural possessor"
+    "their": "3rd person plural possessor"
+    "his/her/their (further)": "Obviative possessor"
+    "One": "Singular"
+    "Many": "Plural"
+    "Further": "Obviative"
+    "In/On": "Locative"
+    "Among": "Distributive"
+    "Smaller/Lesser/Younger": "Diminutive"
+    "Ownership": "Possession"
 --
-| "Singular"      | =N+A+Sg        |
-| "Plural"        | =N+A+Pl        |
-| "Obviative"     | =N+A+Obv       |
-| "Locative"      | =N+A+Loc       |
-| "Distributive"  | =N+A+Distr     |
-|                 | : "POSSESSION" |
-| "1s poss (sg)"  | =N+A+Px1Sg+Sg  |
-| "2s poss (sg)"  | =N+A+Px2Sg+Sg  |
-| "3s poss (obv)" | =N+A+Px3Sg+Obv |
+| "One"        | =N+A+Sg                    |
+| "Many"       | =N+A+Pl                    |
+| "Further"    | =N+A+Obv                   |
+|              |                            |
+|              | : "Smaller/Lesser/Younger" |
+| "One"        | Der/Dim+N+A+Sg             |
+|              |                            |
+|              | : "Ownership"              |
+|              | : "One"                    |
+| "my"         | =N+A+Px1Sg+Sg              |
+| "your (one)" | =N+A+Px2Sg+Sg              |
+|              | : "Further"                |
+| "his/her"    | =N+A+Px3Sg+Obv             |
