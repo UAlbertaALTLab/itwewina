@@ -927,7 +927,6 @@ table.miniparadigm th, table.miniparadigm td {
 
 table.miniparadigm tr:first-child th {
     font-size: 8pt;
-    text-transform: uppercase;
     text-align: center;
 }
 

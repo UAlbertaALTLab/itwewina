@@ -168,7 +168,6 @@ a.korp_search.lemma_action {
 
 table.miniparadigm tr:first-child th {
     font-size: 9pt;
-    text-transform: capitalize !important;
     text-align: right !important;
 }
 
