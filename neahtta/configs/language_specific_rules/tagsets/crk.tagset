@@ -62,11 +62,13 @@ invisible_in_paradigms:
 # .crk_tags. NB, these can be regex. The order of this list determines
 # the ordering of the processed tag.
 prelemma_tags:
+ - "IC"
  - "RdplW"
  - "RdplS"
  - match: "^PV"
    regex: true
 preverbs:
+ - "IC"
  - "RdplW"
  - "RdplS"
  - "PV/ka"

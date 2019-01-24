@@ -98,6 +98,7 @@ Relabel:
       II: "Inanimate Intransitive"
       TA: "Transitive Animate"
       TI: "Transitive Inaminate"
+      IC: "Initial Change"
       RdplW: "Reduplication: Weak/Light"
       RdplS: "Reduplication: Strong/Heavy"
       Der/Com: "Derived comitative"
@@ -108,7 +109,7 @@ Relabel:
       Qst: "Question"
       WAK: "-wak stem"
       Obv: "Obviative"
-      Err/Orth: "(Non-standard orthography)"
+      Err/Orth: ""
       Use/NG: "??"
 
       # This is a dummy tag that is inserted within NDS to handle inserting the
