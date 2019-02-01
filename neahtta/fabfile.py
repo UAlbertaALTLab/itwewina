@@ -80,6 +80,8 @@ from fabric.decorators import roles
 from fabric.operations import sudo
 from fabric.utils import abort
 
+here = os.path.dirname(os.path.realpath(__file__))
+
 # Hosts that have an nds- init.d script
 running_service = [
     'gtweb.uit.no',
@@ -794,7 +796,7 @@ def compile_strings():
     """ Compile .po translations to .mo strings for use in the live server. """
 
     if hasattr(env, 'current_dict'):
-        config = 'configs/%s.config.yaml.in' % env.current_dict
+        config = os.path.join(here, 'configs', ('%s.config.yaml.in' % env.current_dict))
         with open(config, 'r') as F:
             _y = yaml.load(F.read())
             langs = _y.get('ApplicationSettings', {}).get('locales_available')
