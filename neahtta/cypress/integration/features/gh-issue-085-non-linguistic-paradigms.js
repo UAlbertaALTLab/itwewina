@@ -7,10 +7,10 @@ describe('Non-linguistic paradigms', function () {
     cy.contains('a', 'miskinâhk').click();
 
     // Will load a new page
-    cy.contains('a', 'plain')
+    cy.contains('a', 'basic')
       .click();
     // Try out a few of the simplified header names.
-    cy.get('.miniparadigm[data-type=plain]').as('paradigm')
+    cy.get('.miniparadigm[data-type=basic]').as('paradigm')
     cy.get('@paradigm')
       .contains('th', 'One')
       .should('be.visible');
@@ -31,10 +31,10 @@ describe('Non-linguistic paradigms', function () {
     cy.contains('a', 'ôsi').click();
 
     // Will load a new page
-    cy.contains('a', 'plain')
+    cy.contains('a', 'basic')
       .click();
     // Try out a few of the simplified header names.
-    cy.get('.miniparadigm[data-type=plain]').as('paradigm')
+    cy.get('.miniparadigm[data-type=basic]').as('paradigm')
     cy.get('@paradigm')
       .contains('th', 'One')
       .should('be.visible');
@@ -55,10 +55,10 @@ describe('Non-linguistic paradigms', function () {
     cy.contains('a', 'nimosôm').click();
 
     // Will load a new page
-    cy.contains('a', 'plain')
+    cy.contains('a', 'basic')
       .click();
     // Try out a few of the simplified header names.
-    cy.get('.miniparadigm[data-type=plain]').as('paradigm')
+    cy.get('.miniparadigm[data-type=basic]').as('paradigm')
     cy.get('@paradigm')
       .contains('th', 'my')
       .should('be.visible');
@@ -73,10 +73,10 @@ describe('Non-linguistic paradigms', function () {
     cy.contains('a', 'mitêh').click();
 
     // Will load a new page
-    cy.contains('a', 'plain')
+    cy.contains('a', 'basic')
       .click();
     // Try out a few of the simplified header names.
-    cy.get('.miniparadigm[data-type=plain]').as('paradigm')
+    cy.get('.miniparadigm[data-type=basic]').as('paradigm')
     cy.get('@paradigm')
       .contains('th', 'my')
       .should('be.visible');
@@ -90,10 +90,10 @@ describe('Non-linguistic paradigms', function () {
     cy.contains('a', 'miyêw').click();
 
     // Will load a new page
-    cy.contains('a', 'plain')
+    cy.contains('a', 'basic')
       .click();
     // Try out a few of the simplified header names.
-    cy.get('.miniparadigm[data-type=plain]').as('paradigm')
+    cy.get('.miniparadigm[data-type=basic]').as('paradigm')
     cy.get('@paradigm')
       .contains('th', 'you (one) → me')
       .should('be.visible');
