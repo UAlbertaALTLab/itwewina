@@ -83,10 +83,8 @@ describe('Masckwacîs Dictionary validation', function () {
     // We should be on the results page now.
     cy.contains('√âyiman');
 
-    // There should be at least two entries: one for a noun, and one for a
-    // verb.
-    cy.get('a').contains('âyiman (Noun');
-    cy.get('a').contains('âyiman (Verb');
+    // Should find at least one definition for âyiman.
+    cy.contains('.lexeme a', 'âyiman');
   });
 
   it('should find "iyikohk"', function () {
