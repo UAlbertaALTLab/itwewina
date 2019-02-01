@@ -1,16 +1,15 @@
 describe("The basic noun paradigms", function () {
-
   it('should display all NI forms', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'astotin');
     cy.contains('a', 'astotin')
       .click();
 
-    findRowInBasicParadigm('Singular', 'astotin');
-    findRowInBasicParadigm('Plural', 'astotina');
-    findRowInBasicParadigm('Locative', 'astotinihk');
-    findRowInBasicParadigm('1s poss (sg)', 'nitastotin');
-    findRowInBasicParadigm('2s poss (sg)', 'kitastotin');
-    findRowInBasicParadigm('3s poss (sg)', 'otastotin');
+    findRowInLinguisticParadigm('Singular', 'astotin');
+    findRowInLinguisticParadigm('Plural', 'astotina');
+    findRowInLinguisticParadigm('Locative', 'astotinihk');
+    findRowInLinguisticParadigm('1s', 'nitastotin');
+    findRowInLinguisticParadigm('2s', 'kitastotin');
+    findRowInLinguisticParadigm('3s', 'otastotin');
   });
 
   it('should display all NA forms', function () {
@@ -18,15 +17,15 @@ describe("The basic noun paradigms", function () {
     cy.contains('a', 'niska')
       .click();
 
-    findRowInBasicParadigm('Singular', 'niska');
-    findRowInBasicParadigm('Plural', 'niskak');
-    findRowInBasicParadigm('Obviative', 'niska');
-    findRowInBasicParadigm('Locative', 'niskihk');
-    findRowInBasicParadigm('Distributive', 'niskinâhk');
+    findRowInLinguisticParadigm('Singular', 'niska');
+    findRowInLinguisticParadigm('Plural', 'niskak');
+    findRowInLinguisticParadigm('Obviative', 'niska');
+    findRowInLinguisticParadigm('Locative', 'niskihk');
+    findRowInLinguisticParadigm('Distributive', 'niskinâhk');
 
-    findRowInBasicParadigm('1s poss (sg)', 'niniskim');
-    findRowInBasicParadigm('2s poss (sg)', 'kiniskim');
-    findRowInBasicParadigm('3s poss (obv)', 'oniskima');
+    findRowInLinguisticParadigm('1s', 'niniskim');
+    findRowInLinguisticParadigm('2s', 'kiniskim');
+    findRowInLinguisticParadigm('3s', 'oniskima');
   });
 
   it('should display all NA-D forms', function () {
@@ -34,12 +33,12 @@ describe("The basic noun paradigms", function () {
     cy.contains('a', 'masakay')
       .click();
 
-    findRowInBasicParadigm('1s poss (sg)', 'nasakay');
-    findRowInBasicParadigm('2s poss (sg)', 'kasakay');
-    findRowInBasicParadigm('3s poss (obv)', 'wasakaya');
-    findRowInBasicParadigm('X poss (sg)', 'masakay');
-    findRowInBasicParadigm('X poss (pl)', 'masakayak');
-    findRowInBasicParadigm('X poss (obv)', 'masakaya');
+    findRowInLinguisticParadigm('1s', 'nasakay');
+    findRowInLinguisticParadigm('2s', 'kasakay');
+    findRowInLinguisticParadigm('3s', 'wasakaya');
+    findRowInLinguisticParadigm('X', 'masakay');
+    findRowInLinguisticParadigm('X', 'masakayak');
+    findRowInLinguisticParadigm('X', 'masakaya');
   });
 
   it('should display all NI-D forms', function () {
@@ -47,18 +46,21 @@ describe("The basic noun paradigms", function () {
     cy.contains('a', 'mitêh')
       .click();
 
-    findRowInBasicParadigm('1s poss (sg)', 'nitêh');
-    findRowInBasicParadigm('2s poss (sg)', 'kitêh');
-    findRowInBasicParadigm('3s poss (sg)', 'otêh');
-    findRowInBasicParadigm('X poss (sg)', 'mitêh');
-    findRowInBasicParadigm('X poss (pl)', 'mitêha');
-    findRowInBasicParadigm('X poss (loc)', 'mitêhihk');
+    findRowInLinguisticParadigm('1s', 'nitêh');
+    findRowInLinguisticParadigm('2s', 'kitêh');
+    findRowInLinguisticParadigm('3s', 'otêh');
+    findRowInLinguisticParadigm('Singular', 'mitêh');
+    findRowInLinguisticParadigm('Plural', 'mitêha');
+    findRowInLinguisticParadigm('Locative', 'mitêhihk');
   });
 
 
-  function findRowInBasicParadigm(header, wordform) {
+  function findRowInLinguisticParadigm(header, wordform) {
     // ensure this header is on the page.
-    cy.get('table[data-type="basic"]')
+    cy.contains('.nav a', 'linguistic')
+      .click();
+
+    cy.get('table[data-type="linguistic"]')
       .contains('th', header)
       .should('be.visible')
       .then($headerCell => {
