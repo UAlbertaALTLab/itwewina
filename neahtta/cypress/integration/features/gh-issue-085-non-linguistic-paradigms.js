@@ -25,8 +25,7 @@ describe('Non-linguistic paradigms', function () {
       .should('be.visible');
   });
 
-  // BLOCKED: Layout needs improvement
-  it.skip('should exist for NI nouns', function () {
+  it('should exist for NI nouns', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'osi');
     cy.contains('a', 'ôsi').click();
 
@@ -49,8 +48,7 @@ describe('Non-linguistic paradigms', function () {
       .should('be.visible');
   });
 
-  // BLOCKED: Layout does not exist!
-  it.skip('should exist for NAD nouns', function () {
+  it('should exist for NAD nouns', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'nimosom');
     cy.contains('a', 'nimosôm').click();
 
@@ -67,8 +65,7 @@ describe('Non-linguistic paradigms', function () {
       .should('be.visible');
   });
 
-  // BLOCKED: Layout does not exist!
-  it.skip('should exist for NID nouns', function () {
+  it('should exist for NID nouns', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'miteh');
     cy.contains('a', 'mitêh').click();
 
