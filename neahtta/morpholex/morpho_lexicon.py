@@ -532,6 +532,13 @@ def crk_analysis_matches_dict_entry(analysis, entry):
     assert lexeme_class is not None, \
         "Could not find a lexeme class for %r" % (entry.findtext('.//l'),)
 
+    if lexeme_class.strip() == '':
+        # XXX: as of 2019-01-15, some entries HAVE NOTHING for <lc>.
+        # See: https://github.com/UAlbertaALTLab/itwewina/issues/120
+        # They really, really *should*. Without it, we don't know the animacy of the word,
+        # and thus this match is meaningless. So say it doesn't match!
+        return False
+
     entry_pos, _, _variant = lexeme_class.partition(u'-')
     assert entry_pos in (u'NI', u'NA', u'NDI', u'NDA')
     entry_animacy = entry_pos[-1]
