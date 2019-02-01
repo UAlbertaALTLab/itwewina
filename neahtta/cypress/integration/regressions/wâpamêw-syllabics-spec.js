@@ -36,14 +36,15 @@ describe('Display of syllabic codas', function () {
       .should('include', ᐘᐸᒣᐤ_percent_encoded);
 
     // Get the full paradigm.
-    cy.contains('full')
+    cy.contains('a', 'linguistic')
       .click();
 
-    cy.get('#paradigm-tab-3')
+    cy.get('.miniparadigm[data-type="linguistic"]')
+      .as('paradigm')
       .should('be.visible', true);
 
     // Find the derivation in the full paradigm tab.
-    cy.get('#paradigm-tab-3')
+    cy.get('@paradigm')
       .contains('3s → 4')
       .parents('tr').first()
       .contains('ᐚᐸᒣᐤ')
