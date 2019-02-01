@@ -16,8 +16,7 @@ describe('Clicking a search suggestion', function () {
       .type('atim');
 
     /* WHEN I click a suggestion. */
-    cy.get('.dropdown-menu')
-      .contains('a', 'atim')
+    cy.contains('.dropdown-menu a', 'atim')
       .click();
 
     /* THEN The search should execute immediately. */
