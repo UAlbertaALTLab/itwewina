@@ -11,6 +11,8 @@ it's in Norwegian. There's also a tiny bit of documentation inline in
 
 > This document is not quite finished yet...
 
+---
+
 This is a description of the XML format as it is used in itwêwina.
 A single dictionary XML file is a collection of **dictionary entries**
 (the _lexicon_) that have translations that are cited from one or more
@@ -19,6 +21,9 @@ A single dictionary XML file is a collection of **dictionary entries**
 The original XML dictionary format appears to support more use cases,
 but we have opted to focus on a few key use cases pertinent to Plains
 Cree.
+
+  - Plains Cree to English
+  - English to Plains Cree
 
 
 ## `<r>`: The root element
@@ -71,7 +76,7 @@ required child: `<title>`.
 
 ### Example
 
-`<t>` elements will cite this source using the id `CW`:
+`<t>` and `<trunc>` elements will cite this source using the id `CW`:
 
 ```xml
 <source id="CW">
@@ -79,7 +84,7 @@ required child: `<title>`.
 </source>
 ```
 
-`<t>` elements will cite this source using the id `MD`:
+`<t>` and `<trunc>` elements will cite this source using the id `MD`:
 
 
 ```xml
@@ -91,14 +96,11 @@ required child: `<title>`.
 
 ## `<e>`: dictionary entry
 
-Represents a single lemma in the dictionary. In laymen's terms,
-this is like a word in one particular part of speech e.g., "bank"
-(Noun). In _itwêwina_, each
-[lemma][] is assumed to be assigned to exactly one `<e>` entry and each
-`<e>` is assigned to exactly one [lemma][]. Since the `<t>` element
-indicates which dictionary source a particular translation/definition
-comes from, a single `<e>` element may contain content from multiple
-dictionary sources.
+Represents a single lemma in the dictionary. In laymen's terms, this is
+like a word in one particular part of speech e.g., "bank" (Noun). Since
+the `<t>` and `<trunc>` elements indicate which dictionary source a particular
+translation/definition comes from, a single `<e>` element may contain
+content from multiple dictionary sources.
 
 An element may have more than one `<mg>` meaning, each with one or more
 `<t>` translations.
@@ -106,7 +108,7 @@ An element may have more than one `<mg>` meaning, each with one or more
 ### Required children
 
  - exactly one `<lg>` (lemma group) containing exactly one `<l>` lemma
-   and `<lc>` lemma category.
+   and optionally one `<lc>` lemma category.
  - one or more `<mg>` meaning groups.
 
 ### Example
@@ -210,11 +212,14 @@ children, and one optional child.
 ### Required children
 
  - exactly one `<l>` lemma element with a required `pos=""` attribute
- - exactly one `<lc>` lemma content element
+
+Note that the `<lc>` element is required in the Plains Cree to English
+direction.
 
 ### Optional children
 
  - one optional `<stem>` element
+ - one `<lc>` lemma content element
 
 ### Example
 
@@ -283,7 +288,9 @@ Note that the stem **MAY NOT** be a valid [word form][] by itself.
 ## `<mg>`: meaning group
 
 A **meaning group** contains one or more different possible meanings of
-the lemma. An entry would use more than one meaning groups when the
+the lemma. In the English to Plains Cree direction, this is
+a translation of the English word to Cree.
+An entry would use more than one meaning groups when the
 meanings are not obviously related.
 
 ## Required children
@@ -319,6 +326,11 @@ a particular meaning of a lemma.
 
  - one or more `<t>` translations
 
+### Optional children
+
+ - one or more `<trunc>` truncated glosses. This is required in the
+   English to Plains Cree direction.
+
 ### Required attributes
 
  - `xml:lang=""` attribute. This must be a three-letter ISO 639-3
@@ -351,17 +363,23 @@ while the `CW` source translates it as "arrow, little arrow".
 A translation, as quoted from one or more of the `<source>` dictionary
 sources. The translation text is the plain text translation of the
 lemma, for *one* given meaning. The translation **MUST** indicate the
-part-of-speech in the target language; it **MUST** also cite which
-dictionary source(s) the plain-text translation is quoted from.
+part-of-speech in the target language; in the Plains Cree to English
+direction, it **MUST** also cite which dictionary source(s) the
+plain-text translation is quoted from.
 
 ### Required attributes
 
  - `pos=""` the part-of-speech in the target language
+
+### Optional attributes
+
  - `source=""` a space-separated list containing `<source>` IDs. This
    means that this particular translation came from the source(s)
    indicated. If at least one `<source>` element exists in `<r>`, each
    `<t>` **MUST** list at least one source ID. If no `<source>` element
    exists in `<r>`, the `sources=""` attribute **MAY** be absent.
+   This attribute is **required** in the Plains Cree to English
+   direction.
 
 ### Example
 
@@ -372,7 +390,35 @@ The translation is "star" and it cites two different dictionary sources:
 ```
 
 
-## Complete dictionary example
+
+## `<trunc>`: truncated gloss
+
+A truncated gloss, is an abbreviated translation, to disambiguate the
+sibling `<t>` translation. This element is used exclusively in the
+English to Plains Cree direction. The `<trunc>` element **MUST** provide
+an non-empty `source=""` attribute.
+
+### Required attributes
+
+ - `source=""` a space-separated list containing `<source>` IDs. This is
+   identical in semantics to `source=""` attribute of `<t>` elements.
+
+### Example
+
+The English word "grandma" is `<t>` translated as "nôhkom" by both
+dictionary sources. Besides the `<t>` element, there must be a `<trunc>`
+element to list the truncated translation from the dictionary source(s).
+
+```xml
+<tg>
+  <t pos="N">nôhkom</t>
+  <trunc sources="CW">my grandmother</trunc>
+  <trunc sources="MD">grandma</trunc>
+</tg>
+```
+
+
+## Complete Plains Cree to English dictionary example
 
 Here is a full lexicon with two sources, and three dictionary entries.
 
@@ -437,14 +483,10 @@ Here is a full lexicon with two sources, and three dictionary entries.
 </r>
 ```
 
+## Complete English to Plains Cree dictionary example
 
-## Other elements and attributes
+**TODO**
 
-These elements exist as an extension of the base dictionary format,
-however, are not officially supported:
-
- - `<xg>` — example group (within `<tg>` or `<mg>`)
- - **DEPRECATED** `<audio>` for use with SoundManager 2 (within `<xg>`)
 
 [lemma]: ./glossary.md#lemma
 [word form]: ./glossary.md#word-form
