@@ -25,6 +25,9 @@ Cree.
   - Plains Cree to English
   - English to Plains Cree
 
+The two dictionary directions differ a bit in their required fields, and
+intended usage.
+
 
 ## `<r>`: The root element
 
@@ -76,15 +79,16 @@ required child: `<title>`.
 
 ### Example
 
-`<t>` and `<trunc>` elements will cite this source using the id `CW`:
+`<t>` and `<trunc>` elements will cite the following source using the id `CW`:
 
 ```xml
 <source id="CW">
   <title>Cree : Words / nehiýawewin : itwēwina</title>
 </source>
+
 ```
 
-`<t>` and `<trunc>` elements will cite this source using the id `MD`:
+`<t>` and `<trunc>` elements will cite the following source using the id `MD`:
 
 
 ```xml
@@ -115,7 +119,6 @@ An element may have more than one `<mg>` meaning, each with one or more
 
 Consider the following English utterance: "bank".
 
-
 It can be interpreted as a **noun**:
 
 ```
@@ -133,13 +136,13 @@ This noun can have multiple **meanings**:
 ```xml
   <mg>
     <tg xml:lang="eng">
-      <l sources="OED">the land alongside or sloping down to a river or lake</l>
+      <t sources="OED">the land alongside or sloping down to a river or lake</t>
     </tg>
   </mg>
 
   <mg>
     <tg xml:lang="eng">
-      <l sources="OED">A financial establishment that uses money deposited customers for investment [...] </l>
+      <t sources="OED">A financial establishment that uses money deposited customers for investment [...] </t>
     </tg>
   </mg>
 </e>
@@ -164,12 +167,14 @@ This verb can have multiple different meanings as well.
 ```xml
   <mg>
     <tg xml:lang="eng">
-      <l sources="OED">Heap a substance into a mass or mound</l>
+      <t sources="OED">Heap a substance into a mass or mound</t>
     </tg>
   </mg>
   <mg>
     <tg xml:lang="eng">
-      <l sources="OED">(with reference to an aircraft or vehicle) tilt or cause to tilt sideways in making a turn</l>
+      <!-- <re> is a restriction on the context of the definition -->
+      <re>with reference to an aircraft or vehicle</re>
+      <t sources="OED">tilt or cause to tilt sideways in making a turn</t>
     </tg>
   </mg>
 </e>
@@ -212,14 +217,12 @@ children, and one optional child.
 ### Required children
 
  - exactly one `<l>` lemma element with a required `pos=""` attribute
-
-Note that the `<lc>` element is required in the Plains Cree to English
-direction.
+ - (Plains Cree to English direction only) exactly one `<lc>` lemma
+   category element.
 
 ### Optional children
 
  - one optional `<stem>` element
- - one `<lc>` lemma content element
 
 ### Example
 
@@ -432,7 +435,7 @@ Here is a full lexicon with two sources, and three dictionary entries.
    <source id="MD">
       <title>Maskwacîs Cree Dictionary</title>
    </source>
-
+PP
    <!-- The dictionary entries -->
    <e>
       <lg>
@@ -483,10 +486,77 @@ Here is a full lexicon with two sources, and three dictionary entries.
 </r>
 ```
 
+
 ## Complete English to Plains Cree dictionary example
 
-**TODO**
+Here is a full lexicon with two sources, and four entries.
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<r>
+  <!-- The dictionary sources -->
+  <source id="CW">
+    <title>Cree : Words / nēhiyawēwin : itwēwina</title>
+  </source>
+  <source id="MD">
+    <title>Maskwacîs Cree Dictionary</title>
+  </source>
+
+  <!-- The dictionary sources -->
+  <e>
+    <lg xml:lang="eng">
+      <l pos="N">pow-wow</l>
+    </lg>
+    <mg>
+      <tg xml:lang="crk">
+        <!-- Entry in both, and broad gloss. -->
+        <trunc sources="MD">pow-wow dancing.</trunc>
+        <trunc sources="CW">the Grass Dance, pow-wow</trunc>
+        <t rank="1.0" pos="N">pwâtisimowin</t>
+      </tg>
+    </mg>
+  </e>
+
+  <e>
+    <lg xml:lang="eng">
+      <l pos="N">Dipper</l>
+    </lg>
+    <mg>
+      <tg xml:lang="crk">
+        <!-- Entry in both, exactly the same transcription -->
+        <trunc sources="MD CW">the Big Dipper, the Great Bear [constellation]</trunc>
+        <t rank="1.0" pos="N">ocêkatâhk</t>
+      </tg>
+    </mg>
+  </e>
+
+  <e>
+    <lg xml:lang="eng">
+      <l pos="N">hive</l>
+    </lg>
+    <mg>
+      <tg xml:lang="crk">
+        <!-- Entry only in Maskwacîs Dictionary -->
+        <trunc sources="MD">a bee's nest, [Bee hive].</trunc>
+        <t rank="1.0" pos="N">amowaciston</t>
+      </tg>
+    </mg>
+  </e>
+
+  <e>
+    <lg xml:lang="eng">
+      <l pos="V">hobble</l>
+    </lg>
+    <mg>
+      <tg xml:lang="crk">
+        <!-- Entry only in Cree : Words -->
+        <trunc sources="CW">hobble s.o. [e.g. a horse]</trunc>
+        <t rank="1.0" pos="V">napwahpitêw</t>
+      </tg>
+    </mg>
+  </e>
+</r>
+```
 
 [lemma]: ./glossary.md#lemma
 [word form]: ./glossary.md#word-form
