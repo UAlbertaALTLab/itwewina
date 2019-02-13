@@ -35,7 +35,8 @@ Find a language
     $ fab where_is:ISO
 
 
-## Overview
+Overview
+--------
 
 A service using the [Flask][1] framework to serve up dictionary entries
 using XML lexica and morphological analyzer services. Returns data in
@@ -51,6 +52,8 @@ You need:
 
   - Python 2.7.12, with Python virtualenv
   - [Node.JS][]
+  - [HFST](https://github.com/hfst/hfst/wiki/Download-And-Install)
+
 
 ### Python
 
@@ -82,16 +85,16 @@ located here:
     /srv/apps/nds/babel_locales/crk_Macr.dat
     /srv/apps/nds/babel_locales/crk_Syll.dat
 
-> TODO: clarify the `cp`
-
-As a sloppy workaround, if you don't have access to these, you can copy the
+As a sloppy workaround or if you don't have access to these, you can copy the
 locales for `en_CA.bin`, located in your virtualenv:
 
     .venv/lib/python2.7/site-packages/babel/locale-data/en_CA.dat
 
-Copy the needed locales to the your virtualenv.
+Copy `en_CA.bin` like so:
 
-    cp /srv/apps/nds/babel_locales/crk*.dat .venv/lib/python2.7/site-packages/babel/locale-data/
+    cp .venv/lib/python2.7/site-packages/babel/locale-data/{en_CA,crk}.dat
+    cp .venv/lib/python2.7/site-packages/babel/locale-data/{en_CA,crk_Macr}.dat
+    cp .venv/lib/python2.7/site-packages/babel/locale-data/{en_CA,crk_Syll}.dat
 
 [Babel]: http://babel.pocoo.org/en/latest/index.html
 [venv]: http://www.virtualenv.org/
@@ -105,6 +108,43 @@ Now, install neahtta's additional dependencies:
     npm install
 
 [Node.JS]: https://nodejs.org
+
+
+### HFST
+
+[Download HFST](https://github.com/hfst/hfst/wiki/Download-And-Install)
+for your platform and install it.
+
+#### How I installed it on macOS
+
+I happen to have [Homebrew][brew] installed, so my `/usr/local` directory is
+available for me to install things.
+
+I downloaded [HFST 3.15.0](hfst-3.15.0+g3693~1b601689.tar.bz2), and
+extracted it. I created the following directory:
+
+Homebrew operates by installing entire software distributions in
+`/usr/local/Cellar` in the format of `<software package>/<version>`.
+So I created the directory cooresponding to HFST 3.15.0:
+
+    mkdir -p /usr/local/Cellar/hfst/3.15.0
+
+I then moved the directories `bin/`, `include/`, `lib/`, and `share/`
+to said directory:
+
+    mv bin include lib share /usr/local/Cellar/hfst/3.15.0
+
+Now brew can manage symbolic links for us! Tell brew to link the latest
+version of hfst:
+
+    brew link hfst
+
+[brew]: https://brew.sh/
+
+Now you can test HFST:
+
+    hash hfst-optimized-lookup
+    echo "wapamew" | hfst-optimized-lookup -q analyser-gt-desc.omnivorous.hfstol
 
 
 ### Generating the secret key/token
@@ -139,7 +179,9 @@ Copy `configs/itwewina.config.yaml.in` to `configs/itwewina.config.yaml`:
 
     cp configs/itwewina.config.yaml.in configs/itwewina.config.yaml
 
-Edit settings in `configs/itwewina.config.yaml`
+Edit settings in `configs/itwewina.config.yaml` as necessary. You will
+probably want to change the FST paths (under `Morphology`), as well as
+`recordings_endpoint`.
 
 ## Running the development server
 
@@ -149,7 +191,9 @@ Activate the virtualenv, then:
 
 Replace "itwewina" with the specific instance you need.
 
-> TODO: **FST CONFIGURATION FROM &OPT**
+
+After waiting to see ` * Running on http://127.0.0.1:5000/`, you should
+be able to access itwêwina at <http://localhost:5000/itwewina/>.
 
 
 ## Testing
