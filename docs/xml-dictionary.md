@@ -243,8 +243,8 @@ The text of this entry is the canonical [word form][] of the dictionary
 entry. Look-ups in the dictionary will match for this [word form][]
 exactly. In addition to the text of the entry, the `<l>` lemma element
 has one required attribute: `pos=""`, or the **part-of-speech**. The
-part-of-speech is typically "V" or "N", and certain searches will match
-on this value exactly.
+part-of-speech is typically "V" or "N". Certain searches will match
+on the value of `pos=""` exactly.
 
 
 ## `<lc>`: lemma category
@@ -252,35 +252,8 @@ on this value exactly.
 The **lemma category** determines which layout will be be used when
 rendering the paradigm.
 
-In Plains Cree, the format of the **lemma category** is as follows:
+> See also: [the lemma categories for Plains Cree](./crk-lemma-categories.md)
 
-### Nouns
-
-`ND?(A|I)-(1|2|3|4|4w|5|[?]|x)`
-
-**N**oun, optionally **D**ependent, **A**nimate or **I**nanimate.
-After the hyphen, the noun class follows.
-
-
-### Verbs
-
-`V{class}-(n|v|1|2|3|4|5)`
-
-**V**erb, followed by its transitivity, and the animacy of its
-arguments. Note, that abbreviations are historical Algonquian
-linguistics terminology; Plains Cree verbs can be viewed as
-categorized by the quantity (0, 1, or 2) of its animate arguments (its
-*valency*). After the hyphen, the verb class follows.
-
- - VII — verb inanimate    intransitive (0 animate arguments)
- - VAI – verb intransitive animate      (1 animate argument)
- - VTI - verb transitive   inanimate    (1 animate argument)
- - VTA — verb transitive   animate      (2 animate arguments)
-
-
-### Other
-
-`IPC` — any word that does not inflect.
 
 ## `<stem>`: linguistic stem
 
@@ -292,9 +265,8 @@ Note that the stem **MAY NOT** be a valid [word form][] by itself.
 
 A **meaning group** contains one or more different possible meanings of
 the lemma. In the English to Plains Cree direction, this is
-a translation of the English word to Cree.
-An entry would use more than one meaning groups when the
-meanings are not obviously related.
+a translation of the English word to Cree. An entry would use more than
+one meaning groups when the meanings are not obviously related.
 
 ## Required children
 
@@ -328,11 +300,8 @@ a particular meaning of a lemma.
 ### Required children
 
  - one or more `<t>` translations
-
-### Optional children
-
- - one or more `<trunc>` truncated glosses. This is required in the
-   English to Plains Cree direction.
+ - (English to Plains Cree direction only) one or more `<trunc>`
+   truncated gloss.
 
 ### Required attributes
 
@@ -342,12 +311,14 @@ a particular meaning of a lemma.
    the translation is written in. Currently itwêwina only supports `crk`
    and `eng`. Thus, every `<tg>` in the `crkeng.xml` dictionary will have
    its `xml:lang="eng"`, as that is the only language it translates
-   into.
+   into; likewise, every `<tg>` in the `engcrk.xml` dictionary will have
+   its `xml:lang="crk"`.
 
 ### Example
 
-There is one meaning, but the `MD` source translates it as "an arrow",
-while the `CW` source translates it as "arrow, little arrow".
+In the Plains Cree to English direction, there is one meaning, but the
+`MD` source translates it as "an arrow", while the `CW` source
+translates it as "arrow, little arrow".
 
 ```xml
 <mg>
@@ -356,6 +327,19 @@ while the `CW` source translates it as "arrow, little arrow".
   </tg>
   <tg>
     <t pos="N" sources="CW">arrow, little arrow</t>
+  </tg>
+</mg>
+```
+
+In the English to Plains Cree direction, there is one meaning, but they
+have similar but distinct glosses in the various sources:
+
+```xml
+<mg>
+  <tg xml:lang="crk">
+    <trunc sources="MD">pow-wow dancing.</trunc>
+    <trunc sources="CW">the Grass Dance, pow-wow</trunc>
+    <t rank="1.0" pos="N">pwâtisimowin</t>
   </tg>
 </mg>
 ```
@@ -373,16 +357,17 @@ plain-text translation is quoted from.
 ### Required attributes
 
  - `pos=""` the part-of-speech in the target language
-
-### Optional attributes
-
- - `source=""` a space-separated list containing `<source>` IDs. This
+ - (Plains Cree to English direction only) `source=""` a space-separated list containing `<source>` IDs. This
    means that this particular translation came from the source(s)
    indicated. If at least one `<source>` element exists in `<r>`, each
    `<t>` **MUST** list at least one source ID. If no `<source>` element
    exists in `<r>`, the `sources=""` attribute **MAY** be absent.
-   This attribute is **required** in the Plains Cree to English
-   direction.
+
+### Optional attributes
+
+ - `rank=''` a floating point number that conveys the absolute rank of
+   the translation. A smaller value means the translation should be
+   presented first in a list of ranked results.
 
 ### Example
 
@@ -393,10 +378,9 @@ The translation is "star" and it cites two different dictionary sources:
 ```
 
 
-
 ## `<trunc>`: truncated gloss
 
-A truncated gloss, is an abbreviated translation, to disambiguate the
+A truncated gloss, is an abbreviated translation, to describe the
 sibling `<t>` translation. This element is used exclusively in the
 English to Plains Cree direction. The `<trunc>` element **MUST** provide
 an non-empty `source=""` attribute.
