@@ -1,0 +1,59 @@
+{# This entry is evaluated on a translation-group by translation-group
+   basis, and so far only receives the `translation_group` <tg> node.
+
+   An example of what a <tg> node looks like:
+
+        <tg xml:lang="crk">
+          <trunc sources="MD">pow-wow dancing.</trunc>
+          <trunc sources="CW">the Grass Dance, pow-wow</trunc>
+          <t rank="1.0" pos="N">pwâtisimowin</t>
+        </tg>
+
+   Customizations made here:
+    - remove support for <re> restriction or "annotation" tags
+    - add support for <trunc> "truncated gloss" tag
+    - add support for super-scripted citations.
+
+ #}
+
+{%- macro render_tg(tg) -%}
+    {# Render all the texts as individual links. #}
+    {# TODO: support interleaved <trunc> and <t> tags? #}
+    {%- for t in tg.xpath('./t') -%}
+        {{- render_link(tg, t) -}}
+        {# TODO: macro for rendering the glosses? #}
+        {{ ' ' }}{# A literal space between the link and the definitions. #}
+        ({%- for gloss in tg.xpath('./trunc') -%}
+            {{ gloss.text -}}{% if not loop.last %}, {% endif %}
+        {% endfor -%})
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{%- macro render_link(tg, t) -%}
+    {# Render a link to the detailed page. #}
+
+    {% set text = t.text %}
+    {% set link_target = '' %}
+    {# NB: swap from and to for these links since these are definitions. #}
+    <a href="{{ url_for('.detailed_language_pair_search', _from=_to, _to=_from, wordform=text, format='html') }}?no_compounds=true&lemma_match=true">
+        {{- text -}}
+    </a>
+{%- endmacro -%}
+
+{%- macro render_sources(elem) -%}
+    {# Render the title(s) of the source(s) of this <t> translation or <trunc> gloss.  #}
+    {%- set entry_sources = elem|sources -%}
+    {%- if entry_sources|length > 0 -%}
+    <span class="sources">
+       {%- for source in entry_sources -%}
+       <cite class="entry_source" title="{{ source.title }}">{{ source.id }}</cite>
+       {%- endfor -%}
+    </span>
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- if translation_group -%}
+    <span lang="{{ _to }}">{{ render_tg(translation_group) }}</span>
+{%- endif -%}
+{#  vim: set ts=4 sw=4 tw=72 syntax=jinja : #}
