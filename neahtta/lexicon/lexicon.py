@@ -384,7 +384,7 @@ class XMLDict(object):
         :return: [DictionarySource] a list of dictionary sources
         """
 
-        assert el.tag == 't', "Did not get a <t> tag; got a <%s> instead" % (el.tag,)
+        assert el.tag in ('t', 'trunc'), "Did not get a <t> or <trunc> tag; got a <%s> instead" % (el.tag,)
 
         try:
             source_text = el.attrib['sources']
@@ -393,6 +393,7 @@ class XMLDict(object):
             return []
 
         # Return all the source ID
+        # TODO: ensure the sources are unique
         return [self.dict_sources[source_id] for source_id in source_text.split()]
 
     def get_source_titles(self, el):

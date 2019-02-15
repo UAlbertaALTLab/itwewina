@@ -24,8 +24,8 @@
         {# TODO: macro for rendering the glosses? #}
         {{ ' ' }}{# A literal space between the link and the definitions. #}
         ({%- for gloss in tg.xpath('./trunc') -%}
-            {{ gloss.text -}}{% if not loop.last %}, {% endif %}
-        {% endfor -%})
+            {{ gloss.text -}}{{ render_sources(gloss) }}{% if not loop.last %}, {% endif -%}
+        {%- endfor -%})
         {%- if not loop.last %}, {% endif -%}
     {%- endfor -%}
 {%- endmacro -%}

@@ -226,7 +226,7 @@ def register_template_filters(app):
     @app.template_filter('sources')
     def sources(t_element):
         """
-        Given a <t> translation element from the dictionary, returns a list of
+        Given a <t> translation or <trunc> element from the dictionary, returns a list of
         all of DictionarySource instances associated with it.
 
         e.g.,
@@ -237,9 +237,12 @@ def register_template_filters(app):
             <source id="MD">
                 <title> Maskwacîs Dictionary </title>
             </source>
+
             <e>
                 <t sources="MD CW">acâhkos</t>
+                <trunc sources="MD">a big bright start</trunc>
             </e>
+
 
         This will return:
 
@@ -248,10 +251,9 @@ def register_template_filters(app):
         :param t_element:
         :return:
         """
-        assert t_element.tag == 't'
+        assert t_element.tag in ('t', 'trunc'), "expected <t> or <trunc> element"
         lexicon = current_app.config.lexicon
-        sources = lexicon.get_sources(g._from, g._to, t_element)
-        return sources
+        return lexicon.get_sources(g._from, g._to, t_element)
 
     @app.template_filter('source_titles')
     def source_titles(t_element):
