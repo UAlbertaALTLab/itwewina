@@ -392,9 +392,9 @@ class XMLDict(object):
             # No source="" attribute defined.
             return []
 
-        # Return all the source ID
-        # TODO: ensure the sources are unique
-        return [self.dict_sources[source_id] for source_id in source_text.split()]
+        # Get the list of all **UNIQUE** source IDs.
+        source_ids = sorted(frozenset(source_text.split()))
+        return [self.dict_sources[source_id] for source_id in source_ids]
 
     def get_source_titles(self, el):
         """

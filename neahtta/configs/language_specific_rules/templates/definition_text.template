@@ -80,7 +80,7 @@
     annotation. #}
 
     {%- for t in tg.xpath('./t') -%}
-        {{- render_link(tg, t) -}}{% if not loop.last %}, {% endif -%}
+        {{- render_link(tg, t) -}}{{- render_sources(t) -}}{% if not loop.last %}, {% endif -%}
     {%- endfor -%}
 
     {{- render_annotation(tg) -}}
@@ -88,10 +88,5 @@
 
 {%- if translation_group -%}
     <span lang="{{ _to }}">{{ render_tg(translation_group) }}</span>
-    {%- if translation_group.xpath('./t/@sources')|length > 0 -%}
-        {%- for t in translation_group -%}
-            {{- render_sources(t) -}}
-        {%- endfor -%}
-    {%- endif -%}
 {%- endif -%}
 {#  vim: set ts=4 sw=4 tw=72 syntax=jinja : #}
