@@ -1,0 +1,43 @@
+{#
+   The entry (search results) for eng->crk direction.
+
+   Expected context:
+     lexicon_entry
+       ~ one or more <e> elements from the dictionary (gross)
+     _from
+       ~ the source language: 'eng'
+     _to
+       ~ the translated language: crk | crk_Macr | crk_Syll
+
+#}
+
+{%- block template_doc %}{% if TEMPLATE_DOC %}
+    Customizations made here:
+      - removed audio links
+      - inlined macros
+{% endif %}{% endblock -%}
+
+{# Return a link to the lemma. #}
+{%- macro lemma_detail_link(entry, _from, _to) -%}
+  {%- set entry_hash = entry|hash_node -%}
+  {%- set params = 'no_compounds=true&lemma_match=true&e_node=' + entry_hash -%}
+  {{ url_for('.detailed_language_pair_search', _from=_from, _to=_to, wordform=lemma_text(entry), format='html') }}?{{ params }}
+{%- endmacro -%}
+
+{# Returns the the primary lemma of the entry. #}
+{%- macro lemma_text(entry) -%}
+  {{- entry|xpath('lg/l')|first|text }}
+{%- endmacro -%}
+
+<div class="row-fluid entry_row">
+  <div class="span8 lexeme">
+    {% if lexicon_entry|count > 0 %}
+      <p><a href="{{- lemma_detail_link(lexicon_entry, _from, _to) -}}">
+        {{- rendered_templates.entry_text -}}</a>
+      <ul class="meanings">
+        {{- rendered_templates.definition -}}
+      </ul>
+    {% else %}&nbsp;{% endif %}
+  </div>
+</div>
+{#- vim: set ts=2 sw=2 tw=72 syntax=jinja : -#}
