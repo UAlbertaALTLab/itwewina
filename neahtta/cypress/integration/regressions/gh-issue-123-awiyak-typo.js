@@ -2,8 +2,8 @@
  * See GitHub issue #123:
  * https://github.com/UAlbertaALTLab/itwewina/issues/123
  */
-describe('The nêhiyawêwin paradigm', function () {
-  it('should say ayiwak for "somebody"', function () {
+describe('GitHub issue 123', function () {
+  it('should say "awiyak" for [unspecfied actor] in the nêhiyawêwin paradigm', function () {
     cy.instantNeahttaSearch('crk', 'eng', 'wîcêwêw');
     cy.contains('.lexeme a', 'wîcêwêw').click();
     cy.contains('[data-toggle]', 'nêhiyawêwin').click();
