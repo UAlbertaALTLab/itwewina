@@ -42,10 +42,10 @@ describe('Concise representations of dictionary sources', function () {
       .contains('.lexeme', 'âhkamêyihtam')
       .as('lexeme');
 
-    let translation1 = /He keeps on thinking of what has to be done[.]?\s+MD/
-    let translation2 = /s\/he continues to think of future deeds or tasks[.]?\s+CW/;
-    let both = new RegExp(`${translation1.source};\\s+${translation2.source}|` +
-                          `${translation2.source};\\s+${translation1.source}`);
+    let translation1 = /He keeps on thinking of what has to be done[.]?\s*MD/
+    let translation2 = /s\/he continues to think of future deeds or tasks[.]?\s*CW/;
+    let both = new RegExp(`${translation1.source}\\s*;\\s+${translation2.source}|` +
+                          `${translation2.source}\\s*;\\s+${translation1.source}`);
     cy.get('@lexeme').get('.meanings')
       .invoke('text')
       .should('match', translation1)
