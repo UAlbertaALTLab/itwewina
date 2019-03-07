@@ -5,10 +5,10 @@ describe('The language selector', function () {
   it('should have a button for each language', function () {
     cy.visit('/');
 
-    cy.get('nav [data-cy=language-selector').as('langs');
-    cy.get('langs')
-      .contains('a, button', 'nê')
-      .contains('a, button', 'en')
-      .contains('a, button', 'ᓀ');
+    cy.get('[data-cy=language-select]').as('langs');
+    cy.get('@langs')
+      .contains('a, button', 'nêhiyawêwin')
+      .contains('a, button', 'English')
+      .contains('a, button', 'ᓀᐦᐃᔭᐍᐏᐣ');
   });
 });
