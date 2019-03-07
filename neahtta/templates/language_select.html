@@ -3,7 +3,9 @@
 {# Make a link for each of the ISO 639-3 (3 letter) codes.... #}
   {%- for iso in internationalizations -%}
   <li><a href="{{ url_for('.set_locale', iso=iso) }}">
-    <span lang="{{ iso }}">{{ iso|iso_to_language_own_name }}</span>
+    <span lang="{{ iso }}" {% if iso is current_locale_iso -%}
+          class="current-language" {%- endif -%}>
+      {{ iso|iso_to_language_own_name }}</span>
   </a></li>
   {%- endfor -%}
 </ul>

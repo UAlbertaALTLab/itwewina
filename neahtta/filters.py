@@ -164,4 +164,13 @@ def register_filters(app):
         s = urllib.quote(s, safe=safe)
         return Markup(s)
 
+    @app.template_test('current_locale_iso')
+    def is_current_locale_iso(iso):
+        """
+        True when the given ISO code matches the ISO code of the current
+        locale.
+        """
+        from flask import session
+        return session.get('locale', None) == iso
+
     return app

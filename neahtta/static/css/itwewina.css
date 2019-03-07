@@ -193,3 +193,7 @@ i.icon-spin {
     font-style: italic;
     color: #666;
 }
+
+a .current-language {
+    font-weight: bold;
+}
