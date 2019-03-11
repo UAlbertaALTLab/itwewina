@@ -174,3 +174,30 @@
     float: none;
     margin-top: .5em;
 }
+
+/* Fix the display of the detailed entries on mobile displays, using flexbox! */
+@media (max-width: 480px) {
+  /* Flex container that overrides a bunch of misused Bootstrap stuff. */
+  .weird-flex-but-okay {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  /* Undo terrible floating behaviour. */
+  .weird-flex-but-okay .pull-right {
+    float: none;
+  }
+
+  /* Rearrange the detail items, in a way that makes more sense than the order
+   * in the HTML. */
+  /* The title is first, then the definitions, and finally, the paradigm. */
+  .weird-flex-but-okay .flex-title { order: -3 }
+  .weird-flex-but-okay .flex-meanings { order: -2 }
+  .weird-flex-but-okay .flex-paradigm { order: -1 }
+  /* Any other element gets a default order of 0, which means it goes to the
+   * bottom of the column. */
+
+  .weird-flex-but-okay .flex-meanings {
+    margin-bottom: 2.5em;
+  }
+}
