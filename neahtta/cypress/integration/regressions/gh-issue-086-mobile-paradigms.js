@@ -14,12 +14,20 @@ describe('GitHub issue 86: mobile paradigms', function () {
     cy.contains('.lexeme a', 'mitêh').click();
     cy.url().should('contain', 'detail');
 
-    // Open the paradigm display, should display basic paradigm.
-    cy.get('.miniparadigm').should('not.be.visible');
-    cy.contains('button', 'Paradigm').click();
-    cy.get('.miniparadigm[data-type="basic"]').should('be.visible');
+    // The page should display the basic paradigm.
+    cy.get('.miniparadigm[data-type="basic"]')
+      .should('be.visible');
 
     // Access the full paradigm.
     cy.contains('[data-toggle="tab"]', 'full').click();
+
+    // We can see the labels of the full paradigm at least.
+    cy.contains('.miniparadigm[data-type="full"] th', "someone's")
+      .should('be.visible')
+
+    // Now navigate back to the basic paradigm.
+    cy.contains('[data-toggle="tab"]', 'basic').click();
+    cy.get('.miniparadigm[data-type="basic"]')
+      .should('be.visible');
   });
 });
