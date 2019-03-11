@@ -1,4 +1,5 @@
-{# This is the main entry template that is called each time in the loop
+{#
+   This is the main entry template that is called each time in the loop
    of main page entry results. Variables are passed in for the
    `lexicon_entry`, and morphological `analyses`.
 
@@ -9,12 +10,11 @@
    the freedom that is available is that everything must be within:
 
        <div class="row-fluid entry_row" />
-
 #}
 
 {%- import "lexicon.macros" as macros with context -%}
 <div class="row-fluid entry_row">
-    <div class="span9 lexeme" data-recording-word-forms="{{
+    <div class="span9 lexeme weird-flex-but-okay" data-recording-word-forms="{{
             recording_word_forms | join(',')
         }}"{#
 
@@ -24,8 +24,8 @@
 
         See audio_links.js and views/search.py.
      #}>
-        {% if lexicon_entry|count > 0 %}
-            <div class="pull-right hidden-phone floatingparadigm">
+        {%- if lexicon_entry|count > 0 -%}
+            <div class="pull-right floatingparadigm flex-paradigm">
                 {% if current_app_config.paradigm_layouts and layout %}
                     {{- rendered_templates.paradigm_layouts -}}
                 {% else %}
@@ -36,52 +36,15 @@
                     {% endif %}
                 {% endif %}
             </div>
-            <p class="lead">
+            <p class="lead flex-title">
                 {{- rendered_templates.entry_text -}}
             </p>
             {# TODO: figure out how this works for dictionaries without <source> elements #}
-            <ul class="meanings">
+            <ul class="meanings flex-meanings">
                 {{- rendered_templates.definition -}}
             </ul>
+        {%- endif -%}
 
-            {% set entry_sources = lexicon_entry|xpath('@src') %}
-            {% if entry_sources|length > 0 %}
-            <ul class="sources">
-               {% for source in entry_sources %}
-               <li class="entry_source">{{ source }}</li>
-               {% endfor %}
-            </ul>
-            {% endif %}
-            <div class="span3 visible-phone hidden-tablet hidden-desktop floatingparadigm">
-                <div class="row-fluid">
-                    {%- set lemma_key = lexicon_entry|xpath('lg/l')|first|text %}
-
-                    <div class="span6">
-                        <button href="#"
-                                class="btn btn-info pull-right"
-                                data-toggle="collapse"
-                                data-target="#paradigm-{{ lexicon_entry|hash_node }}"
-                                type="button"
-                                lang="{{ current_locale }}">
-                            {% trans %}Paradigm{% endtrans %}
-                        </button>
-                    </div>
-                    <div class="span6">
-                        <div class="paradigm-expanded collapse" id="paradigm-{{ lexicon_entry|hash_node }}">
-                            {% if current_app_config.paradigm_layouts and layout %}
-                                {{- rendered_templates.paradigm_layouts -}}
-                            {% else %}
-                                {% if current_pair_settings.asynchronous_paradigms %}
-                                    {{- rendered_templates.asynchronous_paradigm -}}
-                                {% else %}
-                                    {{- rendered_templates.paradigm -}}
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% else %}&nbsp;{% endif %}
         {#- Display of recording audio links. -#}
         <div class="recordings" aria-live="polite">
             {# TODO: nêhiyawêwin translations for these #}
