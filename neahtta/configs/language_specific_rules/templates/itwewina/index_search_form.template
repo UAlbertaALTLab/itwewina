@@ -44,6 +44,7 @@ Customizations here:
                     <div class="input-append">
                 {% endif -%}
                     <input type="search"
+                           role="search"
                            name="lookup"
                            lang="{{ _from }}"
                            autocapitalize="off"
