@@ -157,8 +157,8 @@ Dictionaries:
 ReaderConfig:
   Settings:
     # do not include scheme here, or things break
-    api_host: "localhost:5000/itwewina"
-    media_host: "localhost:5000/itwewina"
+    api_host: "altlab.ualberta.ca/itwewina"
+    media_host: "altlab.ualberta.ca/itwewina"
     reader_symbol: "Ā"
   crk:
     multiword_lookups: false
