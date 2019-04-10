@@ -20,25 +20,64 @@
 # however in order for it to work as a bookmarklet, it must be URL
 # encoded.
 
-from urllib import quote, quote_plus
+import re
 import os
+from urllib import quote
 
-cwd = lambda x: os.path.join(os.path.dirname(__file__), x)
 
-with open(cwd('static/js/bookmark.min.js'), 'r') as F:
-    bmark = F.read().replace('\n', '')
 
-bookmarklet_quote = lambda x: quote(x, safe="()")
-bookmarklet_escaped = bookmarklet_quote(bmark)
+__all__ = [
+    'bookmarklet_escaped',
+    'bookmarklet_quote',
+    'generate_bookmarklet_code',
+    'prod_host'
+]
 
-prod_host = "sanit.oahpa.no"
+
+def cwd(x):
+    return os.path.join(os.path.dirname(__file__), x)
+
+
+def minify(js_code):
+    """
+    Psuedo- JavaScript minification. Removes initial whitespace, double-slash comments, and all newlines.
+    :param js_code:
+    :return:
+    """
+    initial_whitespace = re.compile(r'^\s+', re.MULTILINE)
+    double_slash_comments = re.compile(r'^//.*$', re.MULTILINE)
+    newlines = re.compile(r'\n+')
+    js_code = initial_whitespace.sub('', js_code)
+    js_code = double_slash_comments.sub('', js_code)
+    return newlines.sub('', js_code)
+
+
+def bookmarklet_quote(x):
+    return quote(x, safe="()")
+
 
 def generate_bookmarklet_code(reader_settings, request_host):
+    """
+    Returns an escaped bookmarklet code, with the given reader settings.
+
+    :param reader_settings:
+    :param request_host:
+    :return:
+    """
     api_host = reader_settings.get('api_host', request_host)
     media_host = reader_settings.get('media_host', request_host)
 
-    bmarklet = bmark
-    bmarklet = bmarklet.replace('OMGNDS_API_HOSTBBQ', '//' + quote_plus(api_host))\
-                       .replace('OMGNDS_MEDIA_HOSTBBQ', '//' + quote_plus(media_host))
+    bmarklet = _bmark.replace('{{NDS_API_HOST}}', '//' + api_host)\
+                     .replace('{{NDS_MEDIA_HOST}}', '//' + media_host)
 
-    return bmarklet
+    return bookmarklet_quote(bmarklet)
+
+
+with open(cwd('static/js/bookmark.js'), 'r') as F:
+    _bmark = minify(F.read())
+
+bookmarklet_escaped = bookmarklet_quote(_bmark)
+
+# TODO: is this actually used for anything?
+prod_host = "sanit.oahpa.no"
+

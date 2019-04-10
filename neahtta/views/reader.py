@@ -412,6 +412,7 @@ def bookmarklet():
 
     reader_settings = current_app.config.reader_settings
 
+    # this is an ESCAPED bookmarklet, minus the javascript: bit.
     bkmklt = generate_bookmarklet_code( reader_settings
                                       , request.host
                                       )
