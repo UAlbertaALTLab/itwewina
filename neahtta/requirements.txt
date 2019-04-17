@@ -22,7 +22,7 @@ lxml==4.3.3
 MarkupSafe==0.23
 odict==1.6.2
 paramiko==1.17.6
-pexpect==2.4
+pexpect==4.7.0
 ply==3.4
 prompt-toolkit==0.20
 Pygments==1.6
