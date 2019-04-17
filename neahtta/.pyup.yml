@@ -1,0 +1,5 @@
+# Only ask to update insecure dependencies.
+update: insecure
+requirements:
+ - neahtta/requirements.txt:
+     update: insecure
