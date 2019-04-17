@@ -33,7 +33,7 @@ PyYAML==4.2b1
 simplejson==3.16.0
 requests==2.21.0
 six==1.8.0
-slimit==0.7.4
+slimit==0.8.1
 speaklater==1.3
 Sphinx==1.2b1
 sphinxcontrib-httpdomain==1.1.8
