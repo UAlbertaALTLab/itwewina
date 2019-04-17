@@ -24,7 +24,7 @@ MarkupSafe==0.23
 odict==1.5.1
 paramiko==1.17.6
 pexpect==2.4
-ply==3.4
+ply==3.11
 prompt-toolkit==0.20
 Pygments==1.6
 python-memcached==1.53
