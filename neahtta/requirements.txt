@@ -1,4 +1,4 @@
-Babel==2.3.1
+Babel==2.3.1  # pyup: ingore
 -e git+https://bitbucket.org/rtxanson/babel_yaml.git@b28ab9e4b98136b76091a4a6d02d65ddb3612f21#egg=babel_yaml-master
 caveman==1.0
 cssmin==0.2.0
@@ -6,7 +6,7 @@ docopt==0.6.2
 docutils==0.10
 ecdsa==0.13.2
 Fabric==1.11.1
-Flask==0.10.1
+Flask==0.10.1  # pyup: ignore
 Flask-Actions==0.6.6
 Flask-Assets==0.10
 Flask-Babel==0.10
@@ -15,11 +15,11 @@ Flask-Limiter==0.7.9
 Flask-Script==2.0.6
 gunicorn==19.5.0
 itsdangerous==0.24
-Jinja2==2.7.3
+Jinja2==2.10.1
 jsmin==2.2.2
 limits==1.0.6
 lxml==4.3.3
-MarkupSafe==0.23
+MarkupSafe==1.1.1
 odict==1.6.2
 paramiko==1.17.6
 pexpect==2.4
@@ -29,7 +29,7 @@ Pygments==1.6
 python-memcached==1.53
 pytz==2019.1
 pywatch==0.4
-PyYAML==4.2b1
+PyYAML==4.2b4  # pyup: ignore
 simplejson==3.16.0
 requests==2.21.0
 six==1.8.0
@@ -40,4 +40,4 @@ sphinxcontrib-httpdomain==1.1.8
 virtualenv==1.8.4
 wcwidth==0.1.7
 webassets==0.12.1
-Werkzeug==0.9.6
+Werkzeug==0.11.12
