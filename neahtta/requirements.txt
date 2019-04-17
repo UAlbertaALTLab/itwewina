@@ -1,4 +1,4 @@
-Babel==2.3.1
+Babel==2.6.0
 -e git+https://bitbucket.org/rtxanson/babel_yaml.git@b28ab9e4b98136b76091a4a6d02d65ddb3612f21#egg=babel_yaml-master
 caveman==1.0
 cssmin==0.2.0
