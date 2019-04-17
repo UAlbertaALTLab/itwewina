@@ -26,7 +26,7 @@ paramiko==1.17.6
 pexpect==2.4
 ply==3.4
 prompt-toolkit==0.20
-Pygments==1.6
+Pygments==2.3.1
 python-memcached==1.53
 pytz==2014.10
 pywatch==0.4
