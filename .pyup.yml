@@ -1,5 +1,10 @@
 # Only ask to update insecure dependencies.
 update: insecure
+branch: development
+schedule: "every week"
 requirements:
- - neahtta/requirements.txt:
+  - neahtta/requirements.txt:
      update: insecure
+     pin: True
+  - neahtta/requirements_dev.txt:
+      update: False
