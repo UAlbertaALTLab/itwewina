@@ -381,9 +381,9 @@ The translation is "star" and it cites two different dictionary sources:
 ## `<trunc>`: truncated gloss
 
 A truncated gloss, is an abbreviated translation, to describe the
-sibling `<t>` translation. This element is used exclusively in the
-English to Plains Cree direction. The `<trunc>` element **MUST** provide
-an non-empty `source=""` attribute.
+sibling `<t>` translation. This element is used **exclusively** in the
+English to Plains Cree direction (i.e., `engcrk.xml`). The `<trunc>`
+element **MUST** provide an non-empty `source=""` attribute.
 
 ### Required attributes
 
