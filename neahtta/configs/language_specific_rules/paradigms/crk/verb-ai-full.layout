@@ -67,7 +67,7 @@ tooltips:
 | "you (one)"           | Ind+Fut+Def+2Sg                     |                           |
 | "s/he"                | Ind+Fut+Def+3Sg                     |                           |
 | "we"                  | Ind+Fut+Def+1Pl                     |                           |
-| "you and we"          | Ind+Fut+Def+12P                     |                           |
+| "you and we"          | Ind+Fut+Def+12Pl                    |                           |
 | "you (all)"           | Ind+Fut+Def+2Pl                     |                           |
 | "they"                | Ind+Fut+Def+3Pl                     |                           |
 | "s/he/they (further)" | Ind+Fut+Def+4Sg/Pl                  |                           |
