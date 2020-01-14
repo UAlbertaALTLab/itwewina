@@ -34,9 +34,7 @@ if __name__ == "__main__":
     for e in root.findall("e"):
         ts = e.findall(".//*[@sources]")
         if len(ts) == 0:
-            print >>sys.stderr, "Warning: entry has no <t> elements: " + e.findtext(
-                "lg/l"
-            )
+            print >>sys.stderr, "Warning: entry has no <t> elements: " + ET.tostring(e)
             continue
 
         sources = frozenset(source for t in ts for source in get_sources(t))
