@@ -514,7 +514,8 @@ msgstr ""
 msgid "Search for a word, or a word form for a word analysis and definition."
 msgstr ""
 "nitona nêhiyaw-itwêwin ta-miskaman âkayâsiwascikêwin (êkwa mîna tânisi "
-"kâ-isi-âniskôpitamihk).\nnawac itwêwina: <a href="https://itwewina.dev/">itwewina.dev</a>"
+"kâ-isi-âniskôpitamihk). <br /><br /><b>nawac <em>itwêwina</em>: "
+"<a href=\"https://itwewina.dev/\">itwewina.dev</a></b>"
 
 #: configs/language_specific_rules/templates/gunaha/about.template:28
 #: configs/language_specific_rules/templates/itwewina/about.template:31

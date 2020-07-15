@@ -521,7 +521,8 @@ msgstr ""
 "Search for a word, or an inflected form. Click the word for a list of "
 "inflected forms. <br /><br /> You can also search for the word in a text "
 "corpus, or for all inflected forms of the word by clicking the 'texts' "
-"link next to it in the search results."
+"link next to it in the search results. <br /><br /><b>N.B. A new, greatly improved version of "
+"<em>itwêwina</em> is available at: <a href=\"https://itwewina.dev/\">itwewina.dev</a></b>"
 
 #: configs/language_specific_rules/templates/gunaha/about.template:28
 #: configs/language_specific_rules/templates/itwewina/about.template:31
