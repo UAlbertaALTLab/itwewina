@@ -18,7 +18,7 @@ itsdangerous==0.24
 Jinja2==2.10.1
 jsmin==2.2.2
 limits==1.0.6
-lxml==4.3.3
+lxml==4.6.2
 MarkupSafe==1.1.1
 odict==1.6.2
 paramiko==1.17.6
