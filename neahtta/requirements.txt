@@ -29,7 +29,7 @@ Pygments==1.6
 python-memcached==1.53
 pytz==2019.1
 pywatch==0.4
-PyYAML==4.2b4  # pyup: ignore
+PyYAML==5.4  # pyup: ignore
 simplejson==3.16.0
 requests==2.21.0
 six==1.8.0
